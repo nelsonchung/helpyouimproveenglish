@@ -85,14 +85,12 @@ class _EnglishPageState extends State<EnglishPage> {
       whereArgs: [_selectedCategory],
     );
 
-    
     final duplicateWord = wordsInCategory.firstWhere(
       (word) => word['english_word'] == englishWord,
-      orElse: (word) => null,
+      orElse: () => null,
     );
 
     if (duplicateWord != null) {
-      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (context) {
@@ -112,8 +110,7 @@ class _EnglishPageState extends State<EnglishPage> {
       );
       return;
     }
-    */
-
+*/
     final word = {
       'category': _selectedCategory,
       'english_word': englishWord,
@@ -163,7 +160,13 @@ class _EnglishPageState extends State<EnglishPage> {
                   .map(
                     (word) => ListTile(
                       title: Text(word['english_word'] as String),
-                      subtitle: Text(word['chinese_word'] as String),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('中文單字：${word['chinese_word']}'),
+                          Text('分類：${word['category']}'),
+                        ],
+                      ),
                     ),
                   )
                   .toList(),
@@ -206,19 +209,24 @@ class _EnglishPageState extends State<EnglishPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text('分類'),
-              DropdownButton<String>(
-                value: _selectedCategory,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedCategory = value;
-                  });
-                },
-                items: _categories.map((category) {
-                  return DropdownMenuItem<String>(
-                    value: category,
-                    child: Text(category),
-                  );
-                }).toList(),
+              ListTile(
+                trailing: PopupMenuButton<String>(
+                  icon: const Icon(Icons.arrow_drop_down),
+                  initialValue: _selectedCategory,
+                  onSelected: (value) {
+                    setState(() {
+                      _selectedCategory = value;
+                    });
+                  },
+                  itemBuilder: (BuildContext context) {
+                    return _categories.map((category) {
+                      return PopupMenuItem<String>(
+                        value: category,
+                        child: Text(category),
+                      );
+                    }).toList();
+                  },
+                ),
               ),
               const SizedBox(height: 16.0),
               const Text('英文單字'),
