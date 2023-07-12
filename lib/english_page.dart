@@ -6,6 +6,7 @@ class EnglishPage extends StatefulWidget {
   const EnglishPage({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _EnglishPageState createState() => _EnglishPageState();
 }
 
@@ -52,7 +53,7 @@ class _EnglishPageState extends State<EnglishPage> {
     );
   }
 
-  void _addWordToDatabase(BuildContext context) async {
+  Future<void> _addWordToDatabase(BuildContext context) async {
     final englishWord = _englishWordController.text;
     final chineseWord = _chineseWordController.text;
 
@@ -77,6 +78,42 @@ class _EnglishPageState extends State<EnglishPage> {
       return;
     }
 
+/*
+    final wordsInCategory = await _database.query(
+      'words',
+      where: 'category = ?',
+      whereArgs: [_selectedCategory],
+    );
+
+    
+    final duplicateWord = wordsInCategory.firstWhere(
+      (word) => word['english_word'] == englishWord,
+      orElse: (word) => null,
+    );
+
+    if (duplicateWord != null) {
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('錯誤'),
+            content: const Text('已添加過此單字'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('確定'),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+    */
+
     final word = {
       'category': _selectedCategory,
       'english_word': englishWord,
@@ -85,6 +122,11 @@ class _EnglishPageState extends State<EnglishPage> {
 
     await _database.insert('words', word);
 
+    setState(() {
+      _displayText = '單字已新增至資料庫';
+    });
+
+    // ignore: use_build_context_synchronously
     showDialog(
       context: context,
       builder: (context) {
@@ -109,6 +151,7 @@ class _EnglishPageState extends State<EnglishPage> {
   void _showAllWords(BuildContext context) async {
     final words = await _database.query('words');
 
+    // ignore: use_build_context_synchronously
     showDialog(
       context: context,
       builder: (context) {
