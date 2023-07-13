@@ -118,16 +118,8 @@ class _EnglishPageState extends State<EnglishPage> {
     _clearTextFields();
   }
 
-  Future<List<Map<String, dynamic>>> _getAllWords() async {
-    if (_database == null || !_database!.isOpen) {
-      await _initializeDatabase();
-    }
-
-    return await _database!.query('words');
-  }
-
   void _showAllWords(BuildContext context) async {
-    final words = await _getAllWords();
+    final words = await _database!.query('words');
 
     // ignore: use_build_context_synchronously
     showDialog(
@@ -140,9 +132,30 @@ class _EnglishPageState extends State<EnglishPage> {
               children: words
                   .map(
                     (word) => ListTile(
-                      title: Text(word['english_word'] as String),
-                      subtitle: Text(
-                        '${word['chinese_word']}, ${word['category']}',
+                      title: Text(
+                        word['english_word'] as String,
+                        style: const TextStyle(fontSize: 18.0),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '分類: ${word['category'] as String}',
+                            style: const TextStyle(fontSize: 18.0),
+                          ),
+                          Text(
+                            '中文: ${word['chinese_word'] as String}',
+                            style: const TextStyle(fontSize: 18.0),
+                          ),
+                        ],
+                      ),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () {
+                          _deleteWordFromDatabase(word['id'] as int);
+                          Navigator.pop(context);
+                          _showAllWords(context);
+                        },
                       ),
                     ),
                   )
@@ -159,6 +172,14 @@ class _EnglishPageState extends State<EnglishPage> {
           ],
         );
       },
+    );
+  }
+
+  void _deleteWordFromDatabase(int id) async {
+    await _database!.delete(
+      'words',
+      where: 'id = ?',
+      whereArgs: [id],
     );
   }
 
@@ -186,7 +207,10 @@ class _EnglishPageState extends State<EnglishPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('英文單字'),
+        title: const Text(
+          '英文單字',
+          style: TextStyle(fontSize: 20.0),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -194,52 +218,74 @@ class _EnglishPageState extends State<EnglishPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('分類'),
-              ListTile(
-                trailing: PopupMenuButton<String>(
-                  icon: const Icon(Icons.arrow_drop_down),
-                  initialValue: _selectedCategory,
-                  onSelected: (value) {
-                    setState(() {
-                      _selectedCategory = value;
-                    });
-                  },
-                  itemBuilder: (BuildContext context) {
-                    return _categories.map((category) {
-                      return PopupMenuItem<String>(
-                        value: category,
-                        child: Text(category),
-                      );
-                    }).toList();
-                  },
-                ),
+              const Text(
+                '分類',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              DropdownButton<String>(
+                value: _selectedCategory,
+                onChanged: (value) {
+                  setState(() {
+                    _selectedCategory = value;
+                  });
+                },
+                items: _categories.map((category) {
+                  return DropdownMenuItem<String>(
+                    value: category,
+                    child: Text(
+                      category,
+                      style: const TextStyle(fontSize: 18.0),
+                    ),
+                  );
+                }).toList(),
               ),
               const SizedBox(height: 16.0),
-              const Text('英文單字'),
-              TextField(controller: _englishWordController),
+              const Text(
+                '英文單字',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              TextField(
+                controller: _englishWordController,
+                style: const TextStyle(fontSize: 18.0),
+              ),
               const SizedBox(height: 16.0),
-              const Text('中文單字'),
-              TextField(controller: _chineseWordController),
+              const Text(
+                '中文單字',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              TextField(
+                controller: _chineseWordController,
+                style: const TextStyle(fontSize: 18.0),
+              ),
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
                   _addWordToDatabase(context);
                 },
-                child: const Text('新增單字到資料庫'),
+                child: const Text(
+                  '新增單字到資料庫',
+                  style: TextStyle(fontSize: 18.0),
+                ),
               ),
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
                   _showAllWords(context);
                 },
-                child: const Text('顯示所有單字'),
+                child: const Text(
+                  '顯示所有單字',
+                  style: TextStyle(fontSize: 18.0),
+                ),
               ),
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
                   _startWordTest(context);
                 },
-                child: const Text('開始測試單字'),
+                child: const Text(
+                  '開始測試單字',
+                  style: TextStyle(fontSize: 18.0),
+                ),
               ),
               const SizedBox(height: 16.0),
               Text(

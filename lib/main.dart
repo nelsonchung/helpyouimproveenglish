@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'create_new_word.dart';
-//import 'exam.dart';
 import 'main_page.dart';
 
 void main() {
@@ -18,24 +16,23 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         canvasColor: Colors.white,
         colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.deepPurple,
-          brightness: Brightness.dark,
+          primarySwatch: Colors.blue,
+          brightness: Brightness.light,
         ),
-        scaffoldBackgroundColor: const Color(0xFF41D62D), // 調整背景顏色
+        scaffoldBackgroundColor: const Color.fromARGB(255, 132, 227, 222),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFFD4D117), // 調整標題背景顏色
+          backgroundColor: Color.fromARGB(255, 21, 200, 191),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF3FB827), // 調整按鈕背景顏色
+            backgroundColor: const Color(0xFFFF7043),
           ),
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: {
         '/mainPage': (context) => const MainPage(),
-        //'/createNewWord': (context) => const CreateNewWordPage(),
-        //'/exam': (context) => const ExamPage(),
+        // ...
       },
       home: const MyHomePage(title: '助英台'),
     );
