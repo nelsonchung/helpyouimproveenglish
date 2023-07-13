@@ -107,9 +107,8 @@ class ExamPageState extends State<ExamPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(isCorrect ? 'Correct!' : 'Incorrect'),
-          content: Text(isCorrect
-              ? 'Congratulations, you got it right!'
-              : 'Sorry, better luck next time.'),
+          content:
+              Text(isCorrect ? '恭喜，答對囉!' : 'Sorry, better luck next time.'),
           actions: [
             TextButton(
               onPressed: () {

@@ -118,8 +118,16 @@ class _EnglishPageState extends State<EnglishPage> {
     _clearTextFields();
   }
 
+  Future<List<Map<String, dynamic>>> _getAllWords() async {
+    if (_database == null || !_database!.isOpen) {
+      await _initializeDatabase();
+    }
+
+    return await _database!.query('words');
+  }
+
   void _showAllWords(BuildContext context) async {
-    final words = await _database!.query('words');
+    final words = await _getAllWords();
 
     // ignore: use_build_context_synchronously
     showDialog(
@@ -133,7 +141,9 @@ class _EnglishPageState extends State<EnglishPage> {
                   .map(
                     (word) => ListTile(
                       title: Text(word['english_word'] as String),
-                      subtitle: Text(word['chinese_word'] as String),
+                      subtitle: Text(
+                        '${word['chinese_word']}, ${word['category']}',
+                      ),
                     ),
                   )
                   .toList(),
@@ -156,7 +166,8 @@ class _EnglishPageState extends State<EnglishPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => ExamPage(selectedCategory: _selectedCategory!)),
+        builder: (context) => ExamPage(selectedCategory: _selectedCategory!),
+      ),
     );
   }
 
