@@ -220,7 +220,9 @@ class _EnglishPageState extends State<EnglishPage> {
             children: [
               const Text(
                 '分類',
-                style: TextStyle(fontSize: 18.0),
+                style: TextStyle(
+                  fontSize: 18.0,
+                ),
               ),
               DropdownButton<String>(
                 value: _selectedCategory,

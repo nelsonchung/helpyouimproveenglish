@@ -39,6 +39,7 @@ class _MainPageState extends State<MainPage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
+        type: BottomNavigationBarType.fixed, // 設置為 fixed 以顯示彩色圖示
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage('assets/directory_icon.png')),

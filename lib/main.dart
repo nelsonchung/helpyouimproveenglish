@@ -19,20 +19,26 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           brightness: Brightness.light,
         ),
-        scaffoldBackgroundColor: const Color.fromARGB(255, 132, 227, 222),
+        scaffoldBackgroundColor:
+            const Color.fromARGB(255, 132, 227, 222), //type 1&2
+        //scaffoldBackgroundColor: const Color(0xFF009FB8), //type 3
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color.fromARGB(255, 21, 200, 191),
+          backgroundColor: Color.fromARGB(255, 21, 200, 191), //type 1&2
+          //backgroundColor: Color(0xFFF9BE00), //type 3
+          titleTextStyle: TextStyle(fontSize: 18), // 調整字型大小為 18
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFFFF7043),
+            //backgroundColor: const Color(0xFFFF7043), //type 1
+            //backgroundColor: const Color.fromARGB(255, 21, 200, 191), //type 2
+            backgroundColor: const Color(0xFFF9BE00), //type 3
+            textStyle: const TextStyle(fontSize: 18), // 調整字型大小為 18
           ),
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: {
         '/mainPage': (context) => const MainPage(),
-        // ...
       },
       home: const MyHomePage(title: '助英台'),
     );
