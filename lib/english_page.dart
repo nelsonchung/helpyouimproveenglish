@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
+import 'exam.dart';
 
 class EnglishPage extends StatefulWidget {
   const EnglishPage({Key? key}) : super(key: key);
@@ -23,11 +24,12 @@ class _EnglishPageState extends State<EnglishPage> {
   String? _selectedCategory;
   String _displayText = '';
 
-  late Database _database;
+  Database? _database;
 
   @override
   void initState() {
     super.initState();
+    _selectedCategory = _categories.first;
     _initializeDatabase();
   }
 
@@ -78,46 +80,17 @@ class _EnglishPageState extends State<EnglishPage> {
       return;
     }
 
-/*
-    final wordsInCategory = await _database.query(
-      'words',
-      where: 'category = ?',
-      whereArgs: [_selectedCategory],
-    );
-
-    final duplicateWord = wordsInCategory.firstWhere(
-      (word) => word['english_word'] == englishWord,
-      orElse: () => null,
-    );
-
-    if (duplicateWord != null) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('錯誤'),
-            content: const Text('已添加過此單字'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('確定'),
-              ),
-            ],
-          );
-        },
-      );
-      return;
+    if (_database == null || !_database!.isOpen) {
+      await _initializeDatabase();
     }
-*/
+
     final word = {
       'category': _selectedCategory,
       'english_word': englishWord,
       'chinese_word': chineseWord,
     };
 
-    await _database.insert('words', word);
+    await _database!.insert('words', word);
 
     setState(() {
       _displayText = '單字已新增至資料庫';
@@ -146,7 +119,7 @@ class _EnglishPageState extends State<EnglishPage> {
   }
 
   void _showAllWords(BuildContext context) async {
-    final words = await _database.query('words');
+    final words = await _database!.query('words');
 
     // ignore: use_build_context_synchronously
     showDialog(
@@ -160,13 +133,7 @@ class _EnglishPageState extends State<EnglishPage> {
                   .map(
                     (word) => ListTile(
                       title: Text(word['english_word'] as String),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('中文單字：${word['chinese_word']}'),
-                          Text('分類：${word['category']}'),
-                        ],
-                      ),
+                      subtitle: Text(word['chinese_word'] as String),
                     ),
                   )
                   .toList(),
@@ -185,6 +152,14 @@ class _EnglishPageState extends State<EnglishPage> {
     );
   }
 
+  void _startWordTest(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => ExamPage(selectedCategory: _selectedCategory!)),
+    );
+  }
+
   void _clearTextFields() {
     _englishWordController.clear();
     _chineseWordController.clear();
@@ -192,7 +167,7 @@ class _EnglishPageState extends State<EnglishPage> {
 
   @override
   void dispose() {
-    _database.close();
+    _database?.close();
     super.dispose();
   }
 
@@ -247,6 +222,13 @@ class _EnglishPageState extends State<EnglishPage> {
                   _showAllWords(context);
                 },
                 child: const Text('顯示所有單字'),
+              ),
+              const SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: () {
+                  _startWordTest(context);
+                },
+                child: const Text('開始測試單字'),
               ),
               const SizedBox(height: 16.0),
               Text(

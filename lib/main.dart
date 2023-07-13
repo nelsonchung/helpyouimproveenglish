@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'create_new_word.dart';
-import 'exam.dart';
+//import 'create_new_word.dart';
+//import 'exam.dart';
 import 'main_page.dart';
 
 void main() {
@@ -34,8 +34,8 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/mainPage': (context) => const MainPage(),
-        '/createNewWord': (context) => const CreateNewWordPage(),
-        '/exam': (context) => const ExamPage(),
+        //'/createNewWord': (context) => const CreateNewWordPage(),
+        //'/exam': (context) => const ExamPage(),
       },
       home: const MyHomePage(title: '助英台'),
     );
@@ -63,20 +63,6 @@ class MyHomePage extends StatelessWidget {
                 Navigator.pushNamed(context, '/mainPage');
               },
               child: const Text('進入主畫面'),
-            ),
-            const SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/createNewWord');
-              },
-              child: const Text('Add Word'),
-            ),
-            const SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/exam');
-              },
-              child: const Text('Start Exam'),
             ),
           ],
         ),
