@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
 import 'exam.dart';
+import 'exam_fill_word.dart';
 
 class EnglishPage extends StatefulWidget {
   const EnglishPage({Key? key}) : super(key: key);
@@ -22,7 +23,6 @@ class _EnglishPageState extends State<EnglishPage> {
     'Unit 5',
   ];
   String? _selectedCategory;
-  String _displayText = '';
 
   Database? _database;
 
@@ -92,10 +92,6 @@ class _EnglishPageState extends State<EnglishPage> {
 
     await _database!.insert('words', word);
 
-    setState(() {
-      _displayText = '單字已新增至資料庫';
-    });
-
     // ignore: use_build_context_synchronously
     showDialog(
       context: context,
@@ -115,10 +111,15 @@ class _EnglishPageState extends State<EnglishPage> {
       },
     );
 
-    _clearTextFields();
+    _englishWordController.clear();
+    _chineseWordController.clear();
   }
 
   void _showAllWords(BuildContext context) async {
+    if (_database == null || !_database!.isOpen) {
+      await _initializeDatabase();
+    }
+
     final words = await _database!.query('words');
 
     // ignore: use_build_context_synchronously
@@ -176,6 +177,10 @@ class _EnglishPageState extends State<EnglishPage> {
   }
 
   void _deleteWordFromDatabase(int id) async {
+    if (_database == null || !_database!.isOpen) {
+      await _initializeDatabase();
+    }
+
     await _database!.delete(
       'words',
       where: 'id = ?',
@@ -192,9 +197,14 @@ class _EnglishPageState extends State<EnglishPage> {
     );
   }
 
-  void _clearTextFields() {
-    _englishWordController.clear();
-    _chineseWordController.clear();
+  void _startWordFillTest(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            ExamFillWordPage(selectedCategory: _selectedCategory!),
+      ),
+    );
   }
 
   @override
@@ -220,9 +230,7 @@ class _EnglishPageState extends State<EnglishPage> {
             children: [
               const Text(
                 '分類',
-                style: TextStyle(
-                  fontSize: 18.0,
-                ),
+                style: TextStyle(fontSize: 18.0),
               ),
               DropdownButton<String>(
                 value: _selectedCategory,
@@ -290,9 +298,14 @@ class _EnglishPageState extends State<EnglishPage> {
                 ),
               ),
               const SizedBox(height: 16.0),
-              Text(
-                _displayText,
-                style: const TextStyle(fontSize: 16.0),
+              ElevatedButton(
+                onPressed: () {
+                  _startWordFillTest(context);
+                },
+                child: const Text(
+                  '開始測試填充單字',
+                  style: TextStyle(fontSize: 18.0),
+                ),
               ),
             ],
           ),
