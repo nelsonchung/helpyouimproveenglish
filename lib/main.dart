@@ -55,7 +55,10 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(
+          title,
+          style: const TextStyle(fontSize: 18), // 調整字型大小為 18
+        ),
       ),
       body: Center(
         child: Column(
