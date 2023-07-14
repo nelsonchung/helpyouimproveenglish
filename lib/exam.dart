@@ -58,6 +58,13 @@ class ExamPageState extends State<ExamPage> {
 
   @override
   Widget build(BuildContext context) {
+    // 將正確答案添加到選項列表中
+    final options = List<String>.from(_otherChineseWords);
+    options.add(_correctChineseWord ?? '');
+
+    // 隨機排序選項列表
+    options.shuffle();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Exam'),
@@ -75,25 +82,23 @@ class ExamPageState extends State<ExamPage> {
             const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
-                _showResultDialog(_correctChineseWord == _otherChineseWords[0]);
+                _showResultDialog(options[0] == _correctChineseWord);
               },
-              child: Text(
-                  _otherChineseWords.isNotEmpty ? _otherChineseWords[0] : ''),
+              child: Text(options.isNotEmpty ? options[0] : ''),
             ),
             const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
-                _showResultDialog(_correctChineseWord == _otherChineseWords[1]);
+                _showResultDialog(options[1] == _correctChineseWord);
               },
-              child: Text(
-                  _otherChineseWords.length > 1 ? _otherChineseWords[1] : ''),
+              child: Text(options.length > 1 ? options[1] : ''),
             ),
             const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
-                _showResultDialog(true);
+                _showResultDialog(options[2] == _correctChineseWord);
               },
-              child: Text(_correctChineseWord ?? ''),
+              child: Text(options.length > 2 ? options[2] : ''),
             ),
           ],
         ),
@@ -106,16 +111,15 @@ class ExamPageState extends State<ExamPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(isCorrect ? 'Correct!' : 'Incorrect'),
-          content:
-              Text(isCorrect ? '恭喜，答對囉!' : 'Sorry, better luck next time.'),
+          title: Text(isCorrect ? '正確!' : '錯誤'),
+          content: Text(isCorrect ? '恭喜，答對了！' : '很抱歉，再接再厲！'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
                 _loadWordsFromDatabase();
               },
-              child: const Text('Next'),
+              child: const Text('下一題'),
             ),
           ],
         );
