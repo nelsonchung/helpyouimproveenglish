@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'english_page.dart';
+import 'chemistry_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class _MainPageState extends State<MainPage> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     EnglishPage(),
-    Text('Chemistry Page'),
+    ChemistryPage(),
     Text('Science Page'),
     Text('Lab Page'),
     Text('Profile Page'),

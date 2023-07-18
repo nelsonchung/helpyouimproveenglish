@@ -1,4 +1,4 @@
-package com.example.helpyouimproveenglish
+package com.nelsonchung.helpyouimproveenglish
 
 import io.flutter.embedding.android.FlutterActivity
 

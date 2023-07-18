@@ -16,11 +16,11 @@ class _EnglishPageState extends State<EnglishPage> {
   final TextEditingController _englishWordController = TextEditingController();
   final TextEditingController _chineseWordController = TextEditingController();
   final List<String> _categories = [
-    'Unit 1',
-    'Unit 2',
-    'Unit 3',
-    'Unit 4',
-    'Unit 5',
+    '梁一伯',
+    '梁二伯',
+    '梁山伯',
+    '梁四伯',
+    '梁五伯',
   ];
   String? _selectedCategory;
 

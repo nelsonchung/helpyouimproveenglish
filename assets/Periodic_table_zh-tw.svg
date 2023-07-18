@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="450"
+	xmlns="http://www.w3.org/2000/svg">
+	<title>元素週期表</title>
+	<style>
+		text {
+			font-size: 12px;
+			dominant-baseline: middle;
+		}
+		.a {
+			text-anchor: middle;
+			font-weight: bold;
+			font-family: Courier New;
+			transform: scale(1,1.2);
+		}
+		.s {
+			font-size: 14px;
+			text-anchor: end;
+		}
+		.c {
+			text-anchor: middle;
+		}
+		.n {
+			text-anchor: start;
+		}
+		.l {
+			text-anchor: end;
+		}
+		.n,
+		.l {
+			font-size: 9px;
+			font-weight: bold;
+			font-family: Courier New;
+			transform: scale(1,1.2);
+		}
+	</style>
+	<text x="36" y="35">族</text>
+	<path d="M51.5,32v1h10v-2l4,2.5l-4,2.5v-2h-10"/>
+	<text x="24" y="49">週期</text>
+	<path d="M11,40.5h1v10h-2l2.5,4l2.5-4h-2v-10"/>
+	<g transform="translate(0.5,0.5)">
+		<g transform="translate(82,34)"><text class="a">1</text></g>
+		<g transform="translate(122,34)"><text class="a">2</text></g>
+		<g transform="translate(162,34)"><text class="a">3</text></g>
+		<g transform="translate(202,34)"><text class="a">4</text></g>
+		<g transform="translate(242,34)"><text class="a">5</text></g>
+		<g transform="translate(282,34)"><text class="a">6</text></g>
+		<g transform="translate(322,34)"><text class="a">7</text></g>
+		<g transform="translate(362,34)"><text class="a">8</text></g>
+		<g transform="translate(402,34)"><text class="a">9</text></g>
+		<g transform="translate(442,34)"><text class="a">10</text></g>
+		<g transform="translate(482,34)"><text class="a">11</text></g>
+		<g transform="translate(522,34)"><text class="a">12</text></g>
+		<g transform="translate(562,34)"><text class="a">13</text></g>
+		<g transform="translate(602,34)"><text class="a">14</text></g>
+		<g transform="translate(642,34)"><text class="a">15</text></g>
+		<g transform="translate(682,34)"><text class="a">16</text></g>
+		<g transform="translate(722,34)"><text class="a">17</text></g>
+		<g transform="translate(762,34)"><text class="a">18</text></g>
+		<g transform="translate(42,74)"><text class="a">1</text></g>
+		<g transform="translate(63,54)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#9fff9f"/><text class="n" x="3" y="8">1</text><text class="l" x="33" y="8">H</text><text class="c" x="18" y="27">氫</text></g>
+		<g transform="translate(743,54)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#c0ffff"/><text class="n" x="3" y="8">2</text><text class="l" x="33" y="8">He</text><text class="c" x="18" y="27">氦</text></g>
+		<g transform="translate(42,114)"><text class="a">2</text></g>
+		<g transform="translate(63,94)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ff6666"/><text class="n" x="3" y="8">3</text><text class="l" x="33" y="8">Li</text><text class="c" x="18" y="27">鋰</text></g>
+		<g transform="translate(103,94)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffddac"/><text class="n" x="3" y="8">4</text><text class="l" x="33" y="8">Be</text><text class="c" x="18" y="27">鈹</text></g>
+		<g transform="translate(543,94)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#cbcb98"/><text class="n" x="3" y="8">5</text><text class="l" x="33" y="8">B</text><text class="c" x="18" y="27">硼</text></g>
+		<g transform="translate(583,94)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#9fff9f"/><text class="n" x="3" y="8">6</text><text class="l" x="33" y="8">C</text><text class="c" x="18" y="27">碳</text></g>
+		<g transform="translate(623,94)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#9fff9f"/><text class="n" x="3" y="8">7</text><text class="l" x="33" y="8">N</text><text class="c" x="18" y="27">氮</text></g>
+		<g transform="translate(663,94)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#9fff9f"/><text class="n" x="3" y="8">8</text><text class="l" x="33" y="8">O</text><text class="c" x="18" y="27">氧</text></g>
+		<g transform="translate(703,94)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffff98"/><text class="n" x="3" y="8">9</text><text class="l" x="33" y="8">F</text><text class="c" x="18" y="27">氟</text></g>
+		<g transform="translate(743,94)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#c0ffff"/><text class="n" x="3" y="8">10</text><text class="l" x="33" y="8">Ne</text><text class="c" x="18" y="27">氖</text></g>
+		<g transform="translate(42,154)"><text class="a">3</text></g>
+		<g transform="translate(63,134)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ff6666"/><text class="n" x="3" y="8">11</text><text class="l" x="33" y="8">Na</text><text class="c" x="18" y="27">鈉</text></g>
+		<g transform="translate(103,134)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffddac"/><text class="n" x="3" y="8">12</text><text class="l" x="33" y="8">Mg</text><text class="c" x="18" y="27">鎂</text></g>
+		<g transform="translate(543,134)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#cccccc"/><text class="n" x="3" y="8">13</text><text class="l" x="33" y="8">Al</text><text class="c" x="18" y="27">鋁</text></g>
+		<g transform="translate(583,134)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#cbcb98"/><text class="n" x="3" y="8">14</text><text class="l" x="33" y="8">Si</text><text class="c" x="18" y="27">矽</text></g>
+		<g transform="translate(623,134)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#9fff9f"/><text class="n" x="3" y="8">15</text><text class="l" x="33" y="8">P</text><text class="c" x="18" y="27">磷</text></g>
+		<g transform="translate(663,134)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#9fff9f"/><text class="n" x="3" y="8">16</text><text class="l" x="33" y="8">S</text><text class="c" x="18" y="27">硫</text></g>
+		<g transform="translate(703,134)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffff98"/><text class="n" x="3" y="8">17</text><text class="l" x="33" y="8">Cl</text><text class="c" x="18" y="27">氯</text></g>
+		<g transform="translate(743,134)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#c0ffff"/><text class="n" x="3" y="8">18</text><text class="l" x="33" y="8">Ar</text><text class="c" x="18" y="27">氬</text></g>
+		<g transform="translate(42,194)"><text class="a">4</text></g>
+		<g transform="translate(63,174)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ff6666"/><text class="n" x="3" y="8">19</text><text class="l" x="33" y="8">K</text><text class="c" x="18" y="27">鉀</text></g>
+		<g transform="translate(103,174)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffddac"/><text class="n" x="3" y="8">20</text><text class="l" x="33" y="8">Ca</text><text class="c" x="18" y="27">鈣</text></g>
+		<g transform="translate(143,174)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">21</text><text class="l" x="33" y="8">Sc</text><text class="c" x="18" y="27">鈧</text></g>
+		<g transform="translate(183,174)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">22</text><text class="l" x="33" y="8">Ti</text><text class="c" x="18" y="27">鈦</text></g>
+		<g transform="translate(223,174)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">23</text><text class="l" x="33" y="8">V</text><text class="c" x="18" y="27">釩</text></g>
+		<g transform="translate(263,174)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">24</text><text class="l" x="33" y="8">Cr</text><text class="c" x="18" y="27">鉻</text></g>
+		<g transform="translate(303,174)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">25</text><text class="l" x="33" y="8">Mn</text><text class="c" x="18" y="27">錳</text></g>
+		<g transform="translate(343,174)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">26</text><text class="l" x="33" y="8">Fe</text><text class="c" x="18" y="27">鐵</text></g>
+		<g transform="translate(383,174)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">27</text><text class="l" x="33" y="8">Co</text><text class="c" x="18" y="27">鈷</text></g>
+		<g transform="translate(423,174)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">28</text><text class="l" x="33" y="8">Ni</text><text class="c" x="18" y="27">鎳</text></g>
+		<g transform="translate(463,174)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">29</text><text class="l" x="33" y="8">Cu</text><text class="c" x="18" y="27">銅</text></g>
+		<g transform="translate(503,174)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">30</text><text class="l" x="33" y="8">Zn</text><text class="c" x="18" y="27">鋅</text></g>
+		<g transform="translate(543,174)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#cccccc"/><text class="n" x="3" y="8">31</text><text class="l" x="33" y="8">Ga</text><text class="c" x="18" y="27">鎵</text></g>
+		<g transform="translate(583,174)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#cbcb98"/><text class="n" x="3" y="8">32</text><text class="l" x="33" y="8">Ge</text><text class="c" x="18" y="27">鍺</text></g>
+		<g transform="translate(623,174)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#cbcb98"/><text class="n" x="3" y="8">33</text><text class="l" x="33" y="8">As</text><text class="c" x="18" y="27">砷</text></g>
+		<g transform="translate(663,174)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#9fff9f"/><text class="n" x="3" y="8">34</text><text class="l" x="33" y="8">Se</text><text class="c" x="18" y="27">硒</text></g>
+		<g transform="translate(703,174)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffff98"/><text class="n" x="3" y="8">35</text><text class="l" x="33" y="8">Br</text><text class="c" x="18" y="27">溴</text></g>
+		<g transform="translate(743,174)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#c0ffff"/><text class="n" x="3" y="8">36</text><text class="l" x="33" y="8">Kr</text><text class="c" x="18" y="27">氪</text></g>
+		<g transform="translate(42,234)"><text class="a">5</text></g>
+		<g transform="translate(63,214)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ff6666"/><text class="n" x="3" y="8">37</text><text class="l" x="33" y="8">Rb</text><text class="c" x="18" y="27">銣</text></g>
+		<g transform="translate(103,214)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffddac"/><text class="n" x="3" y="8">38</text><text class="l" x="33" y="8">Sr</text><text class="c" x="18" y="27">鍶</text></g>
+		<g transform="translate(143,214)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">39</text><text class="l" x="33" y="8">Y</text><text class="c" x="18" y="27">釔</text></g>
+		<g transform="translate(183,214)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">40</text><text class="l" x="33" y="8">Zr</text><text class="c" x="18" y="27">鋯</text></g>
+		<g transform="translate(223,214)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">41</text><text class="l" x="33" y="8">Nb</text><text class="c" x="18" y="27">鈮</text></g>
+		<g transform="translate(263,214)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">42</text><text class="l" x="33" y="8">Mo</text><text class="c" x="18" y="27">鉬</text></g>
+		<g transform="translate(303,214)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">43</text><text class="l" x="33" y="8">Tc</text><text class="c" x="18" y="27">鎝</text></g>
+		<g transform="translate(343,214)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">44</text><text class="l" x="33" y="8">Ru</text><text class="c" x="18" y="27">釕</text></g>
+		<g transform="translate(383,214)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">45</text><text class="l" x="33" y="8">Rh</text><text class="c" x="18" y="27">銠</text></g>
+		<g transform="translate(423,214)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">46</text><text class="l" x="33" y="8">Pd</text><text class="c" x="18" y="27">鈀</text></g>
+		<g transform="translate(463,214)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">47</text><text class="l" x="33" y="8">Ag</text><text class="c" x="18" y="27">銀</text></g>
+		<g transform="translate(503,214)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">48</text><text class="l" x="33" y="8">Cd</text><text class="c" x="18" y="27">鎘</text></g>
+		<g transform="translate(543,214)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#cccccc"/><text class="n" x="3" y="8">49</text><text class="l" x="33" y="8">In</text><text class="c" x="18" y="27">銦</text></g>
+		<g transform="translate(583,214)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#cccccc"/><text class="n" x="3" y="8">50</text><text class="l" x="33" y="8">Sn</text><text class="c" x="18" y="27">錫</text></g>
+		<g transform="translate(623,214)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#cbcb98"/><text class="n" x="3" y="8">51</text><text class="l" x="33" y="8">Sb</text><text class="c" x="18" y="27">銻</text></g>
+		<g transform="translate(663,214)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#cbcb98"/><text class="n" x="3" y="8">52</text><text class="l" x="33" y="8">Te</text><text class="c" x="18" y="27">碲</text></g>
+		<g transform="translate(703,214)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffff98"/><text class="n" x="3" y="8">53</text><text class="l" x="33" y="8">I</text><text class="c" x="18" y="27">碘</text></g>
+		<g transform="translate(743,214)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#c0ffff"/><text class="n" x="3" y="8">54</text><text class="l" x="33" y="8">Xe</text><text class="c" x="18" y="27">氙</text></g>
+		<g transform="translate(42,274)"><text class="a">6</text></g>
+		<g transform="translate(63,254)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ff6666"/><text class="n" x="3" y="8">55</text><text class="l" x="33" y="8">Cs</text><text class="c" x="18" y="27">銫</text></g>
+		<g transform="translate(103,254)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffddac"/><text class="n" x="3" y="8">56</text><text class="l" x="33" y="8">Ba</text><text class="c" x="18" y="27">鋇</text></g>
+		<g transform="translate(143,254)"><rect width="36" height="36" fill="#ffc0ff"/><text class="c" x="18" y="27">鑭系</text></g>
+		<g transform="translate(183,254)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">72</text><text class="l" x="33" y="8">Hf</text><text class="c" x="18" y="27">鉿</text></g>
+		<g transform="translate(223,254)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">73</text><text class="l" x="33" y="8">Ta</text><text class="c" x="18" y="27">鉭</text></g>
+		<g transform="translate(263,254)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">74</text><text class="l" x="33" y="8">W</text><text class="c" x="18" y="27">鎢</text></g>
+		<g transform="translate(303,254)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">75</text><text class="l" x="33" y="8">Re</text><text class="c" x="18" y="27">錸</text></g>
+		<g transform="translate(343,254)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">76</text><text class="l" x="33" y="8">Os</text><text class="c" x="18" y="27">鋨</text></g>
+		<g transform="translate(383,254)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">77</text><text class="l" x="33" y="8">Ir</text><text class="c" x="18" y="27">銥</text></g>
+		<g transform="translate(423,254)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">78</text><text class="l" x="33" y="8">Pt</text><text class="c" x="18" y="27">鉑</text></g>
+		<g transform="translate(463,254)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">79</text><text class="l" x="33" y="8">Au</text><text class="c" x="18" y="27">金</text></g>
+		<g transform="translate(503,254)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">80</text><text class="l" x="33" y="8">Hg</text><text class="c" x="18" y="27">汞</text></g>
+		<g transform="translate(543,254)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#cccccc"/><text class="n" x="3" y="8">81</text><text class="l" x="33" y="8">Tl</text><text class="c" x="18" y="27">鉈</text></g>
+		<g transform="translate(583,254)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#cccccc"/><text class="n" x="3" y="8">82</text><text class="l" x="33" y="8">Pb</text><text class="c" x="18" y="27">鉛</text></g>
+		<g transform="translate(623,254)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#cccccc"/><text class="n" x="3" y="8">83</text><text class="l" x="33" y="8">Bi</text><text class="c" x="18" y="27">鉍</text></g>
+		<g transform="translate(663,254)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#cbcb98"/><text class="n" x="3" y="8">84</text><text class="l" x="33" y="8">Po</text><text class="c" x="18" y="27">釙</text></g>
+		<g transform="translate(703,254)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffff98"/><text class="n" x="3" y="8">85</text><text class="l" x="33" y="8">At</text><text class="c" x="18" y="27">砈</text></g>
+		<g transform="translate(743,254)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#c0ffff"/><text class="n" x="3" y="8">86</text><text class="l" x="33" y="8">Rn</text><text class="c" x="18" y="27">氡</text></g>
+		<g transform="translate(42,314)"><text class="a">7</text></g>
+		<g transform="translate(63,294)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ff6666"/><text class="n" x="3" y="8">87</text><text class="l" x="33" y="8">Fr</text><text class="c" x="18" y="27">鍅</text></g>
+		<g transform="translate(103,294)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffddac"/><text class="n" x="3" y="8">88</text><text class="l" x="33" y="8">Ra</text><text class="c" x="18" y="27">鐳</text></g>
+		<g transform="translate(143,294)"><rect width="36" height="36" fill="#ff98cb"/><text class="c" x="18" y="27">錒系</text></g>
+		<g transform="translate(183,294)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">104</text><text class="l" x="33" y="8">Rf</text><text class="c" x="18" y="27">鑪</text></g>
+		<g transform="translate(223,294)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">105</text><text class="l" x="33" y="8">Db</text><text class="c" x="18" y="27">𨧀</text></g>
+		<g transform="translate(263,294)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">106</text><text class="l" x="33" y="8">Sg</text><text class="c" x="18" y="27">𨭎</text></g>
+		<g transform="translate(303,294)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">107</text><text class="l" x="33" y="8">Bh</text><text class="c" x="18" y="27">𨨏</text></g>
+		<g transform="translate(343,294)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">108</text><text class="l" x="33" y="8">Hs</text><text class="c" x="18" y="27">𨭆</text></g>
+		<g transform="translate(383,294)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">109</text><text class="l" x="33" y="8">Mt</text><text class="c" x="18" y="27">䥑</text></g>
+		<g transform="translate(423,294)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">110</text><text class="l" x="33" y="8">Ds</text><text class="c" x="18" y="27">鐽</text></g>
+		<g transform="translate(463,294)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">111</text><text class="l" x="33" y="8">Rg</text><text class="c" x="18" y="27">錀</text></g>
+		<g transform="translate(503,294)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0c0"/><text class="n" x="3" y="8">112</text><text class="l" x="33" y="8">Cn</text><text class="c" x="18" y="27">鎶</text></g>
+		<g transform="translate(543,294)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#cccccc"/><text class="n" x="3" y="8">113</text><text class="l" x="33" y="8">Nh</text><text class="c" x="18" y="27">鉨</text></g>
+		<g transform="translate(583,294)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#cccccc"/><text class="n" x="3" y="8">114</text><text class="l" x="33" y="8">Fl</text><text class="c" x="18" y="27">鈇</text></g>
+		<g transform="translate(623,294)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#cccccc"/><text class="n" x="3" y="8">115</text><text class="l" x="33" y="8">Mc</text><text class="c" x="18" y="27">鏌</text></g>
+		<g transform="translate(663,294)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#cccccc"/><text class="n" x="3" y="8">116</text><text class="l" x="33" y="8">Lv</text><text class="c" x="18" y="27">鉝</text></g>
+		<g transform="translate(703,294)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffff98"/><text class="n" x="3" y="8">117</text><text class="l" x="33" y="8">Ts</text><text class="c" x="18" y="27">鿬</text></g>
+		<g transform="translate(743,294)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#c0ffff"/><text class="n" x="3" y="8">118</text><text class="l" x="33" y="8">Og</text><text class="c" x="18" y="27">鿫</text></g>
+		<text class="s" x="180" y="374">鑭系元素</text>
+		<g transform="translate(183,354)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0ff"/><text class="n" x="3" y="8">57</text><text class="l" x="33" y="8">La</text><text class="c" x="18" y="27">鑭</text></g>
+		<g transform="translate(223,354)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0ff"/><text class="n" x="3" y="8">58</text><text class="l" x="33" y="8">Ce</text><text class="c" x="18" y="27">鈰</text></g>
+		<g transform="translate(263,354)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0ff"/><text class="n" x="3" y="8">59</text><text class="l" x="33" y="8">Pr</text><text class="c" x="18" y="27">鐠</text></g>
+		<g transform="translate(303,354)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0ff"/><text class="n" x="3" y="8">60</text><text class="l" x="33" y="8">Nd</text><text class="c" x="18" y="27">釹</text></g>
+		<g transform="translate(343,354)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0ff"/><text class="n" x="3" y="8">61</text><text class="l" x="33" y="8">Pm</text><text class="c" x="18" y="27">鉕</text></g>
+		<g transform="translate(383,354)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0ff"/><text class="n" x="3" y="8">62</text><text class="l" x="33" y="8">Sm</text><text class="c" x="18" y="27">釤</text></g>
+		<g transform="translate(423,354)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0ff"/><text class="n" x="3" y="8">63</text><text class="l" x="33" y="8">Eu</text><text class="c" x="18" y="27">銪</text></g>
+		<g transform="translate(463,354)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0ff"/><text class="n" x="3" y="8">64</text><text class="l" x="33" y="8">Gd</text><text class="c" x="18" y="27">釓</text></g>
+		<g transform="translate(503,354)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0ff"/><text class="n" x="3" y="8">65</text><text class="l" x="33" y="8">Tb</text><text class="c" x="18" y="27">鋱</text></g>
+		<g transform="translate(543,354)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0ff"/><text class="n" x="3" y="8">66</text><text class="l" x="33" y="8">Dy</text><text class="c" x="18" y="27">鏑</text></g>
+		<g transform="translate(583,354)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0ff"/><text class="n" x="3" y="8">67</text><text class="l" x="33" y="8">Ho</text><text class="c" x="18" y="27">鈥</text></g>
+		<g transform="translate(623,354)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0ff"/><text class="n" x="3" y="8">68</text><text class="l" x="33" y="8">Er</text><text class="c" x="18" y="27">鉺</text></g>
+		<g transform="translate(663,354)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0ff"/><text class="n" x="3" y="8">69</text><text class="l" x="33" y="8">Tm</text><text class="c" x="18" y="27">銩</text></g>
+		<g transform="translate(703,354)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0ff"/><text class="n" x="3" y="8">70</text><text class="l" x="33" y="8">Yb</text><text class="c" x="18" y="27">鐿</text></g>
+		<g transform="translate(743,354)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ffc0ff"/><text class="n" x="3" y="8">71</text><text class="l" x="33" y="8">Lu</text><text class="c" x="18" y="27">鎦</text></g>
+		<text class="s" x="180" y="414">錒系元素</text>
+		<g transform="translate(183,394)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ff98cb"/><text class="n" x="3" y="8">89</text><text class="l" x="33" y="8">Ac</text><text class="c" x="18" y="27">錒</text></g>
+		<g transform="translate(223,394)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ff98cb"/><text class="n" x="3" y="8">90</text><text class="l" x="33" y="8">Th</text><text class="c" x="18" y="27">釷</text></g>
+		<g transform="translate(263,394)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ff98cb"/><text class="n" x="3" y="8">91</text><text class="l" x="33" y="8">Pa</text><text class="c" x="18" y="27">鏷</text></g>
+		<g transform="translate(303,394)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ff98cb"/><text class="n" x="3" y="8">92</text><text class="l" x="33" y="8">U</text><text class="c" x="18" y="27">鈾</text></g>
+		<g transform="translate(343,394)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ff98cb"/><text class="n" x="3" y="8">93</text><text class="l" x="33" y="8">Np</text><text class="c" x="18" y="27">錼</text></g>
+		<g transform="translate(383,394)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ff98cb"/><text class="n" x="3" y="8">94</text><text class="l" x="33" y="8">Pu</text><text class="c" x="18" y="27">鈽</text></g>
+		<g transform="translate(423,394)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ff98cb"/><text class="n" x="3" y="8">95</text><text class="l" x="33" y="8">Am</text><text class="c" x="18" y="27">鋂</text></g>
+		<g transform="translate(463,394)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ff98cb"/><text class="n" x="3" y="8">96</text><text class="l" x="33" y="8">Cm</text><text class="c" x="18" y="27">鋦</text></g>
+		<g transform="translate(503,394)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ff98cb"/><text class="n" x="3" y="8">97</text><text class="l" x="33" y="8">Bk</text><text class="c" x="18" y="27">鉳</text></g>
+		<g transform="translate(543,394)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ff98cb"/><text class="n" x="3" y="8">98</text><text class="l" x="33" y="8">Cf</text><text class="c" x="18" y="27">鉲</text></g>
+		<g transform="translate(583,394)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ff98cb"/><text class="n" x="3" y="8">99</text><text class="l" x="33" y="8">Es</text><text class="c" x="18" y="27">鑀</text></g>
+		<g transform="translate(623,394)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ff98cb"/><text class="n" x="3" y="8">100</text><text class="l" x="33" y="8">Fm</text><text class="c" x="18" y="27">鐨</text></g>
+		<g transform="translate(663,394)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ff98cb"/><text class="n" x="3" y="8">101</text><text class="l" x="33" y="8">Md</text><text class="c" x="18" y="27">鍆</text></g>
+		<g transform="translate(703,394)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ff98cb"/><text class="n" x="3" y="8">102</text><text class="l" x="33" y="8">No</text><text class="c" x="18" y="27">鍩</text></g>
+		<g transform="translate(743,394)"><rect width="36" height="36" stroke="#000" stroke-width="1" fill="#ff98cb"/><text class="n" x="3" y="8">103</text><text class="l" x="33" y="8">Lr</text><text class="c" x="18" y="27">鐒</text></g>
+	</g>
+</svg>
