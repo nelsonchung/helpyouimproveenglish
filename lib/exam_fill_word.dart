@@ -16,7 +16,7 @@ class ExamFillWordPage extends StatefulWidget {
 
 class ExamFillWordPageState extends State<ExamFillWordPage> {
   final TextEditingController _chineseWordController = TextEditingController();
-  String? _englishWord;
+  String? _chineseWord;
 
   Database? _database;
 
@@ -41,9 +41,9 @@ class ExamFillWordPageState extends State<ExamFillWordPage> {
     if (words.isNotEmpty) {
       final randomIndex = _getRandomIndex(words.length);
       final randomWord = words[randomIndex];
-      _englishWord = randomWord['english_word'] as String?;
+      _chineseWord = randomWord['chinese_word'] as String?;
     } else {
-      _englishWord = null;
+      _chineseWord = null;
     }
 
     setState(() {});
@@ -55,16 +55,16 @@ class ExamFillWordPageState extends State<ExamFillWordPage> {
   }
 
   Future<void> _checkAnswer(BuildContext context) async {
-    final enteredChineseWord = _chineseWordController.text;
+    final enteredEnglishWord = _chineseWordController.text;
 
-    if (_englishWord == null || enteredChineseWord.isEmpty) {
+    if (_chineseWord == null || enteredEnglishWord.isEmpty) {
       return;
     }
 
     final word = await _database!.query(
       'words',
-      where: 'category = ? AND english_word = ? AND chinese_word = ?',
-      whereArgs: [widget.selectedCategory, _englishWord, enteredChineseWord],
+      where: 'category = ? AND chinese_word = ? AND english_word = ?',
+      whereArgs: [widget.selectedCategory, _chineseWord, enteredEnglishWord],
     );
 
     // ignore: use_build_context_synchronously
@@ -99,7 +99,7 @@ class ExamFillWordPageState extends State<ExamFillWordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('填充單字測試'),
+        title: Text('填充單字測試 - 分類: ${widget.selectedCategory}'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -107,7 +107,7 @@ class ExamFillWordPageState extends State<ExamFillWordPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              _englishWord ?? '',
+              _chineseWord ?? '',
               style:
                   const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
             ),
@@ -116,7 +116,7 @@ class ExamFillWordPageState extends State<ExamFillWordPage> {
               controller: _chineseWordController,
               style: const TextStyle(fontSize: 18.0),
               decoration: const InputDecoration(
-                labelText: '請輸入中文翻譯',
+                labelText: '請輸入此單字的英文',
               ),
             ),
             const SizedBox(height: 16.0),
