@@ -218,7 +218,7 @@ class _EnglishPageState extends State<EnglishPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          '英文單字',
+          '英文單字 English term',
           style: TextStyle(fontSize: 20.0),
         ),
       ),
@@ -229,7 +229,7 @@ class _EnglishPageState extends State<EnglishPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                '分類',
+                '分類 Category',
                 style: TextStyle(fontSize: 18.0),
               ),
               DropdownButton<String>(
@@ -251,7 +251,7 @@ class _EnglishPageState extends State<EnglishPage> {
               ),
               const SizedBox(height: 16.0),
               const Text(
-                '英文單字',
+                '英文單字 English vocabulary',
                 style: TextStyle(fontSize: 18.0),
               ),
               TextField(
@@ -260,7 +260,7 @@ class _EnglishPageState extends State<EnglishPage> {
               ),
               const SizedBox(height: 16.0),
               const Text(
-                '中文單字',
+                '中文單字 Chinese vocabulary',
                 style: TextStyle(fontSize: 18.0),
               ),
               TextField(
@@ -293,7 +293,7 @@ class _EnglishPageState extends State<EnglishPage> {
                   _startWordTest(context);
                 },
                 child: const Text(
-                  '開始測試單字',
+                  '單字測試',
                   style: TextStyle(fontSize: 18.0),
                 ),
               ),
@@ -303,7 +303,7 @@ class _EnglishPageState extends State<EnglishPage> {
                   _startWordFillTest(context);
                 },
                 child: const Text(
-                  '開始測試填充單字',
+                  '拼字測試',
                   style: TextStyle(fontSize: 18.0),
                 ),
               ),

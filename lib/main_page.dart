@@ -16,9 +16,11 @@ class _MainPageState extends State<MainPage> {
   static const List<Widget> _widgetOptions = <Widget>[
     EnglishPage(),
     ChemistryPage(),
+    /*
     Text('Science Page'),
     Text('Lab Page'),
     Text('Profile Page'),
+    */
   ];
 
   void _onItemTapped(int index) {
@@ -50,6 +52,7 @@ class _MainPageState extends State<MainPage> {
             icon: ImageIcon(AssetImage('assets/chemistry_icon.png')),
             label: 'Chemistry',
           ),
+          /*
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage('assets/science_icon.png')),
             label: 'Science',
@@ -62,6 +65,7 @@ class _MainPageState extends State<MainPage> {
             icon: ImageIcon(AssetImage('assets/personal_icon.png')),
             label: 'Profile',
           ),
+          */
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
