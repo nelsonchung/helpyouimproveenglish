@@ -11,33 +11,49 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   List<String> _categories = List.generate(50, (index) => '梁 ${index + 1} 伯');
-  int _selectedCategoryCount = 5;
+  int _selectedCategoryCount = 3;
   Database? _database;
-  
+  FixedExtentScrollController? _pickerController;
+
   @override
   void initState() {
     super.initState();
     _initializeDatabase();
     _loadCategoriesFromDatabase();
+    
+    _loadCategoryCountFromDatabase().then((_) {
+      _pickerController = FixedExtentScrollController(initialItem: _selectedCategoryCount - 1);
+    });
+    
+  }
+
+  @override
+  void didChangeDependencies() {
+    print("Enter didChangeDependencies");
+    super.didChangeDependencies();
     _loadCategoryCountFromDatabase();
   }
-  
+
+
+
   Future<void> _initializeDatabase() async {
     final databasePath = await getDatabasesPath();
     final pathToDatabase = path.join(databasePath, 'categories_database.db');
 
     _database = await openDatabase(
       pathToDatabase,
-      version: 1,
+      version: 2,
       onCreate: (db, version) {
-        return db.execute(
-          '''
-          CREATE TABLE IF NOT EXISTS categories(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT UNIQUE
-          )
-          ''',
-        );
+        db.execute(
+            "CREATE TABLE categories(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE);");
+        db.execute(
+            "CREATE TABLE settings(id INTEGER PRIMARY KEY, category_count INTEGER);");
+      },
+      onUpgrade: (db, oldVersion, newVersion) {
+        if (oldVersion < 2) {
+          db.execute(
+              "CREATE TABLE IF NOT EXISTS settings(id INTEGER PRIMARY KEY, category_count INTEGER);");
+        }
       },
     );
   }
@@ -59,31 +75,49 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {});
   }
 
-  Future<void> _loadCategoryCountFromDatabase() async {
+    Future<void> _loadCategoryCountFromDatabase() async {
+        if (_database == null || !_database!.isOpen) {
+            await _initializeDatabase();
+        }
+
+        print("Enter _loadCategoryCountFromDatabase");
+
+        final settingsData = await _database!.query('settings');
+        if (settingsData.isNotEmpty) {
+            setState(() {
+                _selectedCategoryCount = settingsData.first['category_count'] as int;
+                _pickerController = FixedExtentScrollController(initialItem: _selectedCategoryCount - 1);
+            });
+            print("_selectedCategoryCount: $_selectedCategoryCount");
+        }
+    }
+
+
+  Future<void> _updateCategoryCountInDatabase(int newCount) async {
+
+    print("newCount is $newCount");
     if (_database == null || !_database!.isOpen) {
       await _initializeDatabase();
     }
 
-    final settingsData = await _database!.query('settings');
-    if (settingsData.isNotEmpty) {
-      _selectedCategoryCount = settingsData.first['category_count'] as int;
+    final existingSettings = await _database!.query('settings');
+    if (existingSettings.isEmpty) {
+      await _database!.insert(
+        'settings',
+        {'category_count': newCount},
+      );
+    } else {
+      await _database!.update(
+        'settings',
+        {'category_count': newCount},
+        where: 'id = ?',
+        whereArgs: [existingSettings.first['id']],
+      );
     }
-    setState(() {});
-  }
-
-    Future<void> _updateCategoryCountInDatabase(int newCount) async {
-    if (_database == null || !_database!.isOpen) {
-      await _initializeDatabase();
-    }
-
-    await _database!.insert(
-      'settings',
-      {'category_count': newCount},
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
 
     setState(() {
       _selectedCategoryCount = newCount;
+      print("_selectedCategoryCount: $_selectedCategoryCount");
     });
   }
 
@@ -91,20 +125,38 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('個人設定'),
+        title: const Text(
+          '個人設定',
+          style: TextStyle(fontSize: 20.0),
+        ),
       ),
       body: Column(
         children: [
           Container(
             height: 200,
-            child: CupertinoPicker(
-              itemExtent: 32.0,
-              onSelectedItemChanged: (int index) {
-                _updateCategoryCountInDatabase(index + 1);
-              },
-              children: List.generate(50, (index) {
-                return Center(child: Text('${index + 1}'));
-              }),
+            child: Column(
+              children: [
+                Text(
+                  "分類數量: $_selectedCategoryCount",
+                  style: TextStyle(fontSize: 20),
+                ),
+                CupertinoPicker(
+                  scrollController: _pickerController ??= FixedExtentScrollController(initialItem: _selectedCategoryCount - 1),
+                  itemExtent: 32.0,
+                  useMagnifier: true,
+                  magnification: 1.2,
+                  diameterRatio: 0.8,
+                  onSelectedItemChanged: (int value) {
+                    _updateCategoryCountInDatabase(value + 1);
+                    setState(() {
+                      _selectedCategoryCount = value + 1;
+                    });
+                  },
+                  children: List.generate(50, (index) {
+                    return Center(child: Text('${index + 1}'));
+                  }),
+                ),
+              ],
             ),
           ),
           Expanded(
@@ -129,59 +181,39 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Future<void> _showCategoryCountPicker(BuildContext context) {
-    return showCupertinoModalPopup<void>(
+  Future<void> _editCategory(BuildContext context, int index) async {
+    final controller = TextEditingController(text: _categories[index]);
+    await showDialog(
       context: context,
-      builder: (BuildContext context) {
-        return Container(
-          height: 200,
-          child: CupertinoPicker(
-            itemExtent: 32.0,
-            onSelectedItemChanged: (int index) {
-              _updateCategoryCountInDatabase(index + 1);
-            },
-            children: List.generate(50, (index) {
-              return Center(child: Text('${index + 1}'));
-            }),
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Edit Category'),
+          content: SingleChildScrollView(
+            child: TextField(controller: controller),
           ),
+          actions: [
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () => Navigator.pop(context),
+            ),
+            TextButton(
+              child: const Text('Save'),
+              onPressed: () async {
+                final newName = controller.text;
+                if (newName.isNotEmpty) {
+                  await _database!.update(
+                    'categories',
+                    {'name': newName},
+                    where: 'name = ?',
+                    whereArgs: [_categories[index]],
+                  );
+                }
+                Navigator.pop(context);
+              },
+            ),
+          ],
         );
       },
     );
   }
-
-    Future<void> _editCategory(BuildContext context, int index) async {
-        final controller = TextEditingController(text: _categories[index]);
-        await showDialog(
-        context: context,
-        builder: (context) {
-            return AlertDialog(
-            title: Text('Edit Category'),
-            content: SingleChildScrollView(  // Add this line
-                child: TextField(controller: controller),
-            ),  // and this line
-            actions: [
-                TextButton(
-                child: const Text('Cancel'),
-                onPressed: () => Navigator.pop(context),
-                ),
-                TextButton(
-                child: const Text('Save'),
-                onPressed: () async {
-                    final newName = controller.text;
-                    if (newName.isNotEmpty) {
-                    await _database!.update(
-                        'categories',
-                        {'name': newName},
-                        where: 'name = ?',
-                        whereArgs: [_categories[index]],
-                    );
-                    }
-                    Navigator.pop(context);
-                },
-                ),
-            ],
-            );
-        },
-        );
-    }
 }
