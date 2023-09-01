@@ -19,6 +19,18 @@
 import 'package:flutter/material.dart';
 import 'main_page.dart';
 
+import 'package:path/path.dart' as path;
+import 'package:sqflite/sqflite.dart';
+
+
+
+  Future<void> _deleteDatabase(BuildContext context) async {
+    final databasePath = await getDatabasesPath();
+    final pathToDatabase = path.join(databasePath, 'categories_database.db');
+    await deleteDatabase(pathToDatabase);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Database Deleted!')));
+  }
+
 void main() {
   runApp(const MyApp());
 }
@@ -82,6 +94,14 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            
+            ElevatedButton(
+              onPressed: () {
+                _deleteDatabase(context);
+              },
+              child: const Text('Delete Database'),
+            ),
+
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/mainPage');
