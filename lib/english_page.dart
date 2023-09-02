@@ -33,22 +33,76 @@ class EnglishPage extends StatefulWidget {
 class _EnglishPageState extends State<EnglishPage> {
   final TextEditingController _englishWordController = TextEditingController();
   final TextEditingController _chineseWordController = TextEditingController();
-  final List<String> _categories = [
-    '梁一伯',
-    '梁二伯',
-    '梁山伯',
-    '梁四伯',
-    '梁五伯',
-  ];
+  List<String> _categories = [];
   String? _selectedCategory;
+  int? _categoryCount;  // To hold the category_count value from the settings table
 
   Database? _database;
+  Database? _database_categories; //for 分類數量，跟分類名稱
 
   @override
   void initState() {
     super.initState();
-    _selectedCategory = _categories.first;
-    _initializeDatabase();
+    _initializeDatabase().then((_) {
+      _loadCategoryCountFromDatabase().then((_) {
+        _loadCategoriesFromDatabase();
+      });
+    });
+  }
+
+
+  Future<void> _loadCategoryCountFromDatabase() async {
+    if (_database_categories == null) {
+      final databasePath = await getDatabasesPath();
+      final pathToDatabase = path.join(databasePath, 'categories_database.db');
+
+      _database_categories = await openDatabase(
+        pathToDatabase,
+        version: 1,
+      );
+    }
+    
+    final settingsData = await _database_categories!.query('settings');
+    if (settingsData.isNotEmpty) {
+      _categoryCount = settingsData.first['category_count'] as int?;
+      if (_categoryCount == null) {
+        print("Failed to load category_count from settings table");
+        return;
+      }
+      print("_categoryCount is $_categoryCount");
+    } else {
+      print("Settings table returned empty data");
+    }
+  }
+
+
+  Future<void> _loadCategoriesFromDatabase() async {
+    final databasePath = await getDatabasesPath();
+    final pathToDatabase = path.join(databasePath, 'categories_database.db');
+
+    _database_categories = await openDatabase(
+      pathToDatabase,
+      version: 1,  // Assuming this is the version
+      // ... Other parameters ...
+    );
+
+    List<Map<String, dynamic>> result;
+    if (_categoryCount != null) {
+      result = await _database_categories!.query(
+        'categories',
+        limit: _categoryCount,
+      );
+    } else {
+      result = await _database_categories!.query('categories');
+    }
+
+    List<String> categoriesFromDb = result.map((e) => e['name'] as String).toList();
+    print("categoriesFromDb is $categoriesFromDb");
+
+    setState(() {
+      _categories = categoriesFromDb;
+      _selectedCategory = _categories.first;
+    });
   }
 
   Future<void> _initializeDatabase() async {
@@ -228,6 +282,7 @@ class _EnglishPageState extends State<EnglishPage> {
   @override
   void dispose() {
     _database?.close();
+    _database_categories?.close();
     super.dispose();
   }
 
