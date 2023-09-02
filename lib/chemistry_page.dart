@@ -18,6 +18,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:photo_view/photo_view.dart';
 
 class ChemistryPage extends StatelessWidget {
   const ChemistryPage({Key? key}) : super(key: key);
@@ -29,10 +30,12 @@ class ChemistryPage extends StatelessWidget {
         title: const Text('元素週期表'),
       ),
       body: Center(
-        child: SvgPicture.asset(
-          'assets/Periodic_table_zh-tw.svg',
-          width: MediaQuery.of(context).size.width, // 調整寬度以適應螢幕
-          height: MediaQuery.of(context).size.height, // 調整高度以適應螢幕
+        child: PhotoView(
+          minScale: PhotoViewComputedScale.contained,
+          maxScale: PhotoViewComputedScale.covered * 2,
+          imageProvider: AssetImage('assets/Periodic_table_zh-tw.jpeg'),
+          customSize: Size(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height),
+          basePosition: Alignment.center,
         ),
       ),
     );
