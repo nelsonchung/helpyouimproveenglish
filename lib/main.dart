@@ -90,26 +90,30 @@ class MyHomePage extends StatelessWidget {
           style: const TextStyle(fontSize: 18), // 調整字型大小為 18
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            
-            ElevatedButton(
-              onPressed: () {
-                _deleteDatabase(context);
-              },
-              child: const Text('Delete Database'),
-            ),
-
-            ElevatedButton(
+      body: Stack(
+        children: [
+          // Your main content
+          Center(
+            child: ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/mainPage');
               },
               child: const Text('進入主畫面'),
             ),
-          ],
-        ),
+          ),
+
+          // Positioning the delete button at the bottom left
+          Positioned(
+            bottom: 10,  // Adjust these values as needed
+            left: 10,
+            child: ElevatedButton(
+              onPressed: () {
+                _deleteDatabase(context);
+              },
+              child: const Text('刪除資料庫'),
+            ),
+          ),
+        ],
       ),
     );
   }
