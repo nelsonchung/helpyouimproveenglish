@@ -187,6 +187,59 @@ class _EnglishPageState extends State<EnglishPage> {
     _chineseWordController.clear();
   }
 
+  void _showWordsOfSelectedCategory(BuildContext context) async {
+    if (_database == null || !_database!.isOpen) {
+      await _initializeDatabase();
+    }
+
+    final words = await _database!.query(
+      'words',
+      where: 'category = ?',
+      whereArgs: [_selectedCategory],
+    );
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('分類：$_selectedCategory'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: words.map((word) {
+                return ListTile(
+                  title: Text(
+                    word['english_word'] as String,
+                    style: const TextStyle(fontSize: 18.0),
+                  ),
+                  subtitle: Text(
+                    '中文: ${word['chinese_word'] as String}',
+                    style: const TextStyle(fontSize: 18.0),
+                  ),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: () {
+                      _deleteWordFromDatabase(word['id'] as int);
+                      Navigator.pop(context);
+                      _showAllWords(context);
+                    },
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('確定'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void _showAllWords(BuildContext context) async {
     if (_database == null || !_database!.isOpen) {
       await _initializeDatabase();
@@ -347,6 +400,16 @@ class _EnglishPageState extends State<EnglishPage> {
                 },
                 child: const Text(
                   '新增單字到資料庫',
+                  style: TextStyle(fontSize: 18.0),
+                ),
+              ),
+              const SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: () {
+                  _showWordsOfSelectedCategory(context);
+                },
+                child: const Text(
+                  '顯示當前分類單字',
                   style: TextStyle(fontSize: 18.0),
                 ),
               ),
