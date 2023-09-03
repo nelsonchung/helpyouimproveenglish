@@ -43,7 +43,8 @@ class _EnglishPageState extends State<EnglishPage> {
   @override
   void initState() {
     super.initState();
-    _initializeDatabase().then((_) {
+    _initializeDatabase();
+    _initializeCategoriesDatabase().then((_) {
       _loadCategoryCountFromDatabase().then((_) {
         _loadCategoriesFromDatabase();
       });
@@ -103,6 +104,47 @@ class _EnglishPageState extends State<EnglishPage> {
       _categories = categoriesFromDb;
       _selectedCategory = _categories.first;
     });
+  }
+
+  Future<void> _initializeCategoriesDatabase() async {
+    final databasePath = await getDatabasesPath();
+    final pathToDatabase = path.join(databasePath, 'categories_database.db');
+
+    _database = await openDatabase(
+      pathToDatabase,
+      version: 1,
+      onCreate: (db, version) async {
+        // 如果数据库是新创建的，我们还需要设置类别表
+        await db.execute(
+          '''
+          CREATE TABLE IF NOT EXISTS categories(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT UNIQUE
+          )
+          ''',
+        );
+        await db.execute(
+          '''
+          CREATE TABLE IF NOT EXISTS settings(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            category_count INTEGER
+          )
+          ''',
+        );
+        // 初始化 category_count 的值
+        await db.insert('settings', {'category_count': 3});
+
+        // 现在我们添加三个默认类别
+        List<String> defaultCategories = ['梁 1 伯', '梁 2 伯', '梁 3 伯'];
+        for (String category in defaultCategories) {
+          await db.insert('categories', {'name': category});
+        }
+      },
+    );
+
+    // 由于我们可能已经创建了新的数据库和类别，所以我们需要重新加载类别和类别计数
+    await _loadCategoryCountFromDatabase();
+    await _loadCategoriesFromDatabase();
   }
 
   Future<void> _initializeDatabase() async {

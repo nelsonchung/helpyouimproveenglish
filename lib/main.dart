@@ -26,8 +26,10 @@ import 'package:sqflite/sqflite.dart';
 
   Future<void> _deleteDatabase(BuildContext context) async {
     final databasePath = await getDatabasesPath();
-    final pathToDatabase = path.join(databasePath, 'categories_database.db');
+    final pathToDatabase = path.join(databasePath, 'word_database.db');
     await deleteDatabase(pathToDatabase);
+    final pathToDatabase_categories = path.join(databasePath, 'categories_database.db');
+    await deleteDatabase(pathToDatabase_categories);
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Database Deleted!')));
   }
 
@@ -110,7 +112,7 @@ class MyHomePage extends StatelessWidget {
               onPressed: () {
                 _deleteDatabase(context);
               },
-              child: const Text('刪除資料庫'),
+              child: const Text('恢復初始設定'),
             ),
           ),
         ],
