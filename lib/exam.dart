@@ -92,31 +92,45 @@ class ExamPageState extends State<ExamPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              _englishWord ?? '',
-              style:
-                  const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+            Center (
+              child: Text(
+                _englishWord ?? '',
+                style:
+                  const TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold),
+              ),
             ),
-            const SizedBox(height: 16.0),
+            const SizedBox(height: 48.0),
             ElevatedButton(
               onPressed: () {
                 _showResultDialog(options[0] == _correctChineseWord);
               },
               child: Text(options.isNotEmpty ? options[0] : ''),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0),),
+              ),
             ),
-            const SizedBox(height: 16.0),
+            const SizedBox(height: 32.0),
             ElevatedButton(
               onPressed: () {
                 _showResultDialog(options[1] == _correctChineseWord);
               },
               child: Text(options.length > 1 ? options[1] : ''),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0),),
+              ),
             ),
-            const SizedBox(height: 16.0),
+            const SizedBox(height: 32.0),
             ElevatedButton(
               onPressed: () {
                 _showResultDialog(options[2] == _correctChineseWord);
               },
               child: Text(options.length > 2 ? options[2] : ''),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0),),
+              ),
             ),
           ],
         ),
