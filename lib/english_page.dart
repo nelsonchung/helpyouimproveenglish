@@ -134,8 +134,11 @@ class _EnglishPageState extends State<EnglishPage> {
         // 初始化 category_count 的值
         await db.insert('settings', {'category_count': 3});
 
-        // 现在我们添加三个默认类别
-        List<String> defaultCategories = ['梁 1 伯', '梁 2 伯', '梁 3 伯'];
+        // Now, we'll add 50 default categories
+        List<String> defaultCategories = [];
+        for (int i = 1; i <= 50; i++) {
+          defaultCategories.add('梁 $i 伯');
+        }
         for (String category in defaultCategories) {
           await db.insert('categories', {'name': category});
         }

@@ -148,38 +148,39 @@ class _ProfilePageState extends State<ProfilePage> {
             child: ListView.builder(
                 itemCount: _selectedCategoryCount + 1,  // +1 for the header
                 itemBuilder: (context, index) {
-                if (index == 0) {
-                    // This is the header row
-                    return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                        Text('分類 Category', style: TextStyle(fontWeight: FontWeight.bold)),
-                        Text('功能', style: TextStyle(fontWeight: FontWeight.bold)),
-                        Icon(Icons.edit, color: Colors.transparent),  // Invisible icon for alignment
-                        ],
-                    ),
-                    );
-                }
-
-                index = index - 1;  // Adjust index for actual data
-                return ListTile(
-                    title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                        Expanded(child: Text(_categories[index])),
-                        Expanded(child: Text(_addInfoOneList[index])),
-                        IconButton(
-                        icon: const Icon(Icons.edit),
-                        onPressed: () async {
-                            await _editCategory(context, index);
-                            _loadCategoriesFromDatabase();
-                        },
+                    if (index == 0) {
+                        // This is the header row
+                        return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                            Text('分類 Category', style: TextStyle(fontWeight: FontWeight.bold)),
+                            Text('功能', style: TextStyle(fontWeight: FontWeight.bold)),
+                            Text('編輯', style: TextStyle(fontWeight: FontWeight.bold)),
+                            //Icon(Icons.edit, color: Colors.transparent),  // Invisible icon for alignment
+                            ],
                         ),
-                    ],
-                    ),
-                );
+                        );
+                    }
+
+                    index = index - 1;  // Adjust index for actual data
+                    return ListTile(
+                        title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                                Expanded(child: Text(index < _categories.length ? _categories[index] : 'Unknown Category')),
+                                Expanded(child: Text(index < _addInfoOneList.length ? _addInfoOneList[index] : '')),
+                                IconButton(
+                                    icon: const Icon(Icons.edit),
+                                    onPressed: () async {
+                                        await _editCategory(context, index);
+                                        _loadCategoriesFromDatabase();
+                                    },
+                                ),
+                            ],
+                        ),
+                    );
                 },
             ),
           ),
