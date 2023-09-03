@@ -255,12 +255,12 @@ Future<void> _editCategory(BuildContext context, int index) async {
 						onPressed: () async {
 						final newName = controller.text;
 						if (newName.isNotEmpty) {
-						await _database!.update(
+						    await _database!.update(
 								'categories',
 								{'addInfoOne': newName},
-where: 'id = ?',
-whereArgs: [index + 1],  // Adjusted to match the database id
-);
+                                where: 'id = ?',
+                                whereArgs: [index + 1],  // Adjusted to match the database id
+                        );
 						}
 						Navigator.pop(context);
 						},

@@ -21,6 +21,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
 import 'exam.dart';
 import 'exam_fill_word.dart';
+import "phrase_data.dart"; 
 
 class EnglishPage extends StatefulWidget {
   const EnglishPage({Key? key}) : super(key: key);
@@ -40,13 +41,17 @@ class _EnglishPageState extends State<EnglishPage> {
   Database? _database;
   Database? _database_categories; //for 分類數量，跟分類名稱
 
+  bool _isLoading = false;
+
   @override
   void initState() {
     super.initState();
     _initializeDatabase();
     _initializeCategoriesDatabase().then((_) {
       _loadCategoryCountFromDatabase().then((_) {
-        _loadCategoriesFromDatabase();
+        _loadCategoriesFromDatabase().then((_) {
+          _integratePhraseData();
+        });
       });
     });
   }
@@ -75,7 +80,6 @@ class _EnglishPageState extends State<EnglishPage> {
       print("Settings table returned empty data");
     }
   }
-
 
   Future<void> _loadCategoriesFromDatabase() async {
     final databasePath = await getDatabasesPath();
@@ -110,7 +114,7 @@ class _EnglishPageState extends State<EnglishPage> {
     final databasePath = await getDatabasesPath();
     final pathToDatabase = path.join(databasePath, 'categories_database.db');
 
-    _database = await openDatabase(
+    _database_categories = await openDatabase(
       pathToDatabase,
       version: 1,
       onCreate: (db, version) async {
@@ -384,8 +388,46 @@ class _EnglishPageState extends State<EnglishPage> {
     super.dispose();
   }
 
+Future<void> _integratePhraseData() async {
+    setState(() {
+      _isLoading = true;  // Show loading indicator
+    });
+
+    if (_database == null || !_database!.isOpen) {
+      await _initializeDatabase();
+    }
+
+    for (var phrase in phrases) {
+      final existingWords = await _database!.query(
+        'words',
+        where: 'english_word = ? AND category = ?',
+        whereArgs: [phrase.english, '梁 1 伯'],
+      );
+
+      if (existingWords.isEmpty) {
+        await _database!.insert('words', {
+          'category': '梁 1 伯',
+          'english_word': phrase.english,
+          'chinese_word': phrase.chinese,
+        });
+      }
+    }
+
+    setState(() {
+      _isLoading = false;  // Hide loading indicator
+    });
+}
+
+
   @override
   Widget build(BuildContext context) {
+
+        if (_isLoading) {
+      return Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
