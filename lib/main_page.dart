@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'english_page.dart';
 import 'chemistry_page.dart';
 import 'profile_page.dart';
+import 'juniorhighschool_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -34,6 +35,7 @@ class _MainPageState extends State<MainPage> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     EnglishPage(),
+    JuniorHighSchoolPage(),
     ChemistryPage(),
     ProfilePage(),
     /*
@@ -67,6 +69,10 @@ class _MainPageState extends State<MainPage> {
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage('assets/directory_icon.png')),
             label: 'English',
+          ),
+          BottomNavigationBarItem(
+            icon: ImageIcon(AssetImage('assets/directory_icon.png')),
+            label: 'Junior',
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage('assets/chemistry_icon.png')),

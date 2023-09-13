@@ -24,8 +24,9 @@ import 'package:path/path.dart' as path;
 
 class ExamFillWordPage extends StatefulWidget {
   final String selectedCategory;
+  final String database_name;
 
-  const ExamFillWordPage({Key? key, required this.selectedCategory})
+  const ExamFillWordPage({Key? key, required this.selectedCategory, required this.database_name})
       : super(key: key);
 
   @override
@@ -45,8 +46,9 @@ class ExamFillWordPageState extends State<ExamFillWordPage> {
   }
 
   Future<void> _loadRandomWordFromDatabase() async {
+    final databasename = widget.database_name;
     final databasePath = await getDatabasesPath();
-    final pathToDatabase = path.join(databasePath, 'word_database.db');
+    final pathToDatabase = path.join(databasePath, databasename);
 
     _database = await openDatabase(
       pathToDatabase,

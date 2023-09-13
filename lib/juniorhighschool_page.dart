@@ -21,55 +21,51 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
 import 'exam.dart';
 import 'exam_fill_word.dart';
-import "phrase_data.dart"; 
+import "juniorhighschool_data.dart"; 
 
-class EnglishPage extends StatefulWidget {
-  const EnglishPage({Key? key}) : super(key: key);
+class JuniorHighSchoolPage extends StatefulWidget {
+  const JuniorHighSchoolPage({Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
-  _EnglishPageState createState() => _EnglishPageState();
+  _JuniorHighSchoolPageState createState() => _JuniorHighSchoolPageState();
 }
 
-class _EnglishPageState extends State<EnglishPage> {
+class _JuniorHighSchoolPageState extends State<JuniorHighSchoolPage> {
   final TextEditingController _englishWordController = TextEditingController();
   final TextEditingController _chineseWordController = TextEditingController();
-  List<String> _categories = [];
-  String? _selectedCategory;
+  List<String> _unit = [];
+  String? _selectedCategory = 'unit1';
   int? _categoryCount;  // To hold the category_count value from the settings table
 
-  Database? _database;
-  Database? _database_categories; //for 分類數量，跟分類名稱
-  String? _databasename = 'word_database.db';
-
+  Database? _database_juniorhighschool;
+  String _database_name = 'juniorhighschool_database.db';
+  
   bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    _initializeDatabase();
-    _initializeCategoriesDatabase().then((_) {
-      _loadCategoryCountFromDatabase().then((_) {
-        _loadCategoriesFromDatabase().then((_) {
-          _integratePhraseData();
-        });
+    _initializeJuniorHighSchoolDatabase().then((_) {
+      _loadJuniorHighSchoolFromDatabase().then((_) {
+          _integrateJuniorHighSchoolData();
       });
     });
   }
 
-
-  Future<void> _loadCategoryCountFromDatabase() async {
-    if (_database_categories == null) {
+/*
+  Future<void> _loadJuniorHighSchoolCountFromDatabase() async {
+    if (_database_juniorhighschool == null) {
       final databasePath = await getDatabasesPath();
-      final pathToDatabase = path.join(databasePath, 'categories_database.db');
+      final pathToDatabase = path.join(databasePath, 'juniorhighschool_database.db');
 
-      _database_categories = await openDatabase(
+      _database_juniorhighschool = await openDatabase(
         pathToDatabase,
         version: 1,
       );
     }
     
-    final settingsData = await _database_categories!.query('settings');
+    final settingsData = await _database_juniorhighschool!.query('settings');
     if (settingsData.isNotEmpty) {
       _categoryCount = settingsData.first['category_count'] as int?;
       if (_categoryCount == null) {
@@ -81,85 +77,67 @@ class _EnglishPageState extends State<EnglishPage> {
       print("Settings table returned empty data");
     }
   }
+*/
 
-  Future<void> _loadCategoriesFromDatabase() async {
-    final databasePath = await getDatabasesPath();
-    final pathToDatabase = path.join(databasePath, 'categories_database.db');
+Future<void> _integrateJuniorHighSchoolData() async {
+    setState(() {
+      _isLoading = true;  // Show loading indicator
+    });
 
-    _database_categories = await openDatabase(
-      pathToDatabase,
-      version: 1,  // Assuming this is the version
-      // ... Other parameters ...
-    );
-
-    List<Map<String, dynamic>> result;
-    if (_categoryCount != null) {
-      result = await _database_categories!.query(
-        'categories',
-        limit: _categoryCount,
-      );
-    } else {
-      result = await _database_categories!.query('categories');
+    if (_database_juniorhighschool == null || !_database_juniorhighschool!.isOpen) {
+      await _initializeJuniorHighSchoolDatabase();
     }
 
-    List<String> categoriesFromDb = result.map((e) => e['name'] as String).toList();
-    print("categoriesFromDb is $categoriesFromDb");
+    for (var unit in unit1) {
+      final existingWords = await _database_juniorhighschool!.query(
+        'words',
+        where: 'english_word = ? AND category = ?',
+        whereArgs: [unit.english, 'unit1'],
+      );
+
+      if (existingWords.isEmpty) {
+        await _database_juniorhighschool!.insert('words', {
+          'category': 'unit1',
+          'english_word': unit.english,
+          'chinese_word': unit.chinese,
+        });
+      }
+    }
 
     setState(() {
-      _categories = categoriesFromDb;
-      _selectedCategory = _categories.first;
+      _isLoading = false;  // Hide loading indicator
     });
+}
+
+  Future<void> _loadJuniorHighSchoolFromDatabase() async {
+      final databasePath = await getDatabasesPath();
+      final pathToDatabase = path.join(databasePath, _database_name);
+
+      _database_juniorhighschool = await openDatabase(
+        pathToDatabase,
+        version: 1,
+      );
+
+      List<Map<String, dynamic>> result;
+      result = await _database_juniorhighschool!.query('words');
+
+      List<String> informationFromDb = result.map((e) => e['category'] as String).toSet().toList();
+      print("informationFromDb is $informationFromDb");
+
+      setState(() {
+          _unit = informationFromDb;
+          if (_selectedCategory == null && _unit.isNotEmpty) {
+              _selectedCategory = _unit.first;
+          }
+      });
   }
 
-  Future<void> _initializeCategoriesDatabase() async {
+
+  Future<void> _initializeJuniorHighSchoolDatabase() async {
     final databasePath = await getDatabasesPath();
-    final pathToDatabase = path.join(databasePath, 'categories_database.db');
+    final pathToDatabase = path.join(databasePath, _database_name);
 
-    _database_categories = await openDatabase(
-      pathToDatabase,
-      version: 1,
-      onCreate: (db, version) async {
-        // 如果数据库是新创建的，我们还需要设置类别表
-        await db.execute(
-          '''
-          CREATE TABLE IF NOT EXISTS categories(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT UNIQUE
-          )
-          ''',
-        );
-        await db.execute(
-          '''
-          CREATE TABLE IF NOT EXISTS settings(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            category_count INTEGER
-          )
-          ''',
-        );
-        // 初始化 category_count 的值
-        await db.insert('settings', {'category_count': 3});
-
-        // Now, we'll add 50 default categories
-        List<String> defaultCategories = [];
-        for (int i = 1; i <= 50; i++) {
-          defaultCategories.add('梁 $i 伯');
-        }
-        for (String category in defaultCategories) {
-          await db.insert('categories', {'name': category});
-        }
-      },
-    );
-
-    // 由于我们可能已经创建了新的数据库和类别，所以我们需要重新加载类别和类别计数
-    await _loadCategoryCountFromDatabase();
-    await _loadCategoriesFromDatabase();
-  }
-
-  Future<void> _initializeDatabase() async {
-    final databasePath = await getDatabasesPath();
-    final pathToDatabase = path.join(databasePath, _databasename);
-
-    _database = await openDatabase(
+    _database_juniorhighschool = await openDatabase(
       pathToDatabase,
       version: 1,
       onCreate: (db, version) {
@@ -175,74 +153,15 @@ class _EnglishPageState extends State<EnglishPage> {
         );
       },
     );
-  }
 
-  Future<void> _addWordToDatabase(BuildContext context) async {
-    final englishWord = _englishWordController.text;
-    final chineseWord = _chineseWordController.text;
-
-    if (englishWord.isEmpty || chineseWord.isEmpty) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('錯誤'),
-            content: const Text('請輸入英文單字和中文單字'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('確定'),
-              ),
-            ],
-          );
-        },
-      );
-      return;
-    }
-
-    if (_database == null || !_database!.isOpen) {
-      await _initializeDatabase();
-    }
-
-    final word = {
-      'category': _selectedCategory,
-      'english_word': englishWord,
-      'chinese_word': chineseWord,
-    };
-
-    await _database!.insert('words', word);
-
-    // ignore: use_build_context_synchronously
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('成功'),
-          content: const Text('單字已新增至資料庫'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('確定'),
-            ),
-          ],
-        );
-      },
-    );
-
-    _englishWordController.clear();
-    _chineseWordController.clear();
   }
 
   void _showWordsOfSelectedCategory(BuildContext context) async {
-    if (_database == null || !_database!.isOpen) {
-      await _initializeDatabase();
+    if (_database_juniorhighschool == null || !_database_juniorhighschool!.isOpen) {
+      await _initializeJuniorHighSchoolDatabase();
     }
 
-    final words = await _database!.query(
+    final words = await _database_juniorhighschool!.query(
       'words',
       where: 'category = ?',
       whereArgs: [_selectedCategory],
@@ -265,14 +184,14 @@ class _EnglishPageState extends State<EnglishPage> {
                     '中文: ${word['chinese_word'] as String}',
                     style: const TextStyle(fontSize: 18.0),
                   ),
-                  trailing: IconButton(
+                  /*trailing: IconButton(
                     icon: const Icon(Icons.delete),
                     onPressed: () {
                       _deleteWordFromDatabase(word['id'] as int);
                       Navigator.pop(context);
                       _showAllWords(context);
                     },
-                  ),
+                  ),*/
                 );
               }).toList(),
             ),
@@ -291,11 +210,11 @@ class _EnglishPageState extends State<EnglishPage> {
   }
 
   void _showAllWords(BuildContext context) async {
-    if (_database == null || !_database!.isOpen) {
-      await _initializeDatabase();
+    if (_database_juniorhighschool == null || !_database_juniorhighschool!.isOpen) {
+      await _initializeJuniorHighSchoolDatabase();
     }
 
-    final words = await _database!.query('words');
+    final words = await _database_juniorhighschool!.query('words');
 
     // ignore: use_build_context_synchronously
     showDialog(
@@ -325,14 +244,14 @@ class _EnglishPageState extends State<EnglishPage> {
                           ),
                         ],
                       ),
-                      trailing: IconButton(
+                      /*trailing: IconButton(
                         icon: const Icon(Icons.delete),
                         onPressed: () {
                           _deleteWordFromDatabase(word['id'] as int);
                           Navigator.pop(context);
                           _showAllWords(context);
                         },
-                      ),
+                      ),*/
                     ),
                   )
                   .toList(),
@@ -351,41 +270,30 @@ class _EnglishPageState extends State<EnglishPage> {
     );
   }
 
-  void _deleteWordFromDatabase(int id) async {
-    if (_database == null || !_database!.isOpen) {
-      await _initializeDatabase();
-    }
-
-    await _database!.delete(
-      'words',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-  }
-
   void _startWordTest(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ExamPage(selectedCategory: _selectedCategory!, database_name: _databasename!),
+        builder: (context) => ExamPage(selectedCategory: _selectedCategory!, database_name: _database_name),
+        //required this.selectedCategory, required this.database_name
       ),
     );
   }
+
 
   void _startWordFillTest(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) =>
-            ExamFillWordPage(selectedCategory: _selectedCategory!, database_name: _databasename!),
+            ExamFillWordPage(selectedCategory: _selectedCategory!, database_name: _database_name),
       ),
     );
   }
 
   @override
   void dispose() {
-    _database?.close();
-    _database_categories?.close();
+    _database_juniorhighschool?.close();
     super.dispose();
   }
 
@@ -394,22 +302,22 @@ Future<void> _integratePhraseData() async {
       _isLoading = true;  // Show loading indicator
     });
 
-    if (_database == null || !_database!.isOpen) {
-      await _initializeDatabase();
+    if (_database_juniorhighschool == null || !_database_juniorhighschool!.isOpen) {
+      await _initializeJuniorHighSchoolDatabase();
     }
 
-    for (var phrase in phrases) {
-      final existingWords = await _database!.query(
+    for (var unit in unit1) {
+      final existingWords = await _database_juniorhighschool!.query(
         'words',
         where: 'english_word = ? AND category = ?',
-        whereArgs: [phrase.english, '梁 1 伯'],
+        whereArgs: [unit.english, 'unit1'],
       );
 
       if (existingWords.isEmpty) {
-        await _database!.insert('words', {
-          'category': '梁 1 伯',
-          'english_word': phrase.english,
-          'chinese_word': phrase.chinese,
+        await _database_juniorhighschool!.insert('words', {
+          'category': 'unit1',
+          'english_word': unit.english,
+          'chinese_word': unit.chinese,
         });
       }
     }
@@ -432,7 +340,7 @@ Future<void> _integratePhraseData() async {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          '英文單字 English term',
+          '2500 英文單字',
           style: TextStyle(fontSize: 20.0),
         ),
       ),
@@ -447,23 +355,24 @@ Future<void> _integratePhraseData() async {
                 style: TextStyle(fontSize: 18.0),
               ),
               DropdownButton<String>(
-                value: _selectedCategory,
+                value: 'unit1',
+                items: [
+                  DropdownMenuItem<String>(
+                    value: 'unit1',
+                    child: const Text(
+                      'unit1',
+                      style: TextStyle(fontSize: 18.0),
+                    ),
+                  ),
+                ],
                 onChanged: (value) {
                   setState(() {
                     _selectedCategory = value;
                   });
                 },
-                items: _categories.map((category) {
-                  return DropdownMenuItem<String>(
-                    value: category,
-                    child: Text(
-                      category,
-                      style: const TextStyle(fontSize: 18.0),
-                    ),
-                  );
-                }).toList(),
               ),
               const SizedBox(height: 16.0),
+              /*
               const Text(
                 '英文單字 English vocabulary',
                 style: TextStyle(fontSize: 18.0),
@@ -492,6 +401,7 @@ Future<void> _integratePhraseData() async {
                 ),
               ),
               const SizedBox(height: 16.0),
+              */
               ElevatedButton(
                 onPressed: () {
                   _showWordsOfSelectedCategory(context);

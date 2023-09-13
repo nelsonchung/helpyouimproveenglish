@@ -30,6 +30,8 @@ import 'package:sqflite/sqflite.dart';
     await deleteDatabase(pathToDatabase);
     final pathToDatabase_categories = path.join(databasePath, 'categories_database.db');
     await deleteDatabase(pathToDatabase_categories);
+    final pathToDatabase_juniorhighschool = path.join(databasePath, 'juniorhighschool_database.db');
+    await deleteDatabase(pathToDatabase_juniorhighschool);
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Database Deleted!')));
   }
 

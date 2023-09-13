@@ -15,7 +15,7 @@
  * Author: Nelson Chung
  * Creation Date: August 10, 2023
  */
- 
+
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 import 'package:path/path.dart' as path;
@@ -23,8 +23,9 @@ import 'dart:math';
 
 class ExamPage extends StatefulWidget {
   final String selectedCategory;
+  final String database_name;
 
-  const ExamPage({Key? key, required this.selectedCategory}) : super(key: key);
+  const ExamPage({Key? key, required this.selectedCategory, required this.database_name}) : super(key: key);
 
   @override
   ExamPageState createState() => ExamPageState();
@@ -34,6 +35,9 @@ class ExamPageState extends State<ExamPage> {
   String? _englishWord;
   String? _correctChineseWord;
   List<String> _otherChineseWords = [];
+  String? _selectedOption;
+  String? _correctOption;
+  bool _isShuffled = false;
 
   @override
   void initState() {
@@ -42,15 +46,17 @@ class ExamPageState extends State<ExamPage> {
   }
 
   Future<void> _loadWordsFromDatabase() async {
+    final databasename = widget.database_name;
     final databasePath = await sqflite.getDatabasesPath();
     final database = await sqflite.openDatabase(
-      path.join(databasePath, 'word_database.db'),
+      path.join(databasePath, databasename),
       version: 1,
     );
 
     final selectedCategory = widget.selectedCategory;
     final words = await database
         .query('words', where: 'category = ?', whereArgs: [selectedCategory]);
+
     if (words.isNotEmpty) {
       final random = Random.secure();
       final randomIndex = random.nextInt(words.length);
@@ -70,18 +76,19 @@ class ExamPageState extends State<ExamPage> {
     }
 
     database.close();
-
+    _isShuffled = false;  // Ensure options will be shuffled again for the next question
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    // 將正確答案添加到選項列表中
     final options = List<String>.from(_otherChineseWords);
     options.add(_correctChineseWord ?? '');
 
-    // 隨機排序選項列表
-    options.shuffle();
+    if (!_isShuffled) {
+      options.shuffle();
+      _isShuffled = true;
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -92,70 +99,64 @@ class ExamPageState extends State<ExamPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Center (
+            Center(
               child: Text(
                 _englishWord ?? '',
-                style:
-                  const TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 32.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             const SizedBox(height: 48.0),
-            ElevatedButton(
-              onPressed: () {
-                _showResultDialog(options[0] == _correctChineseWord);
-              },
-              child: Text(options.isNotEmpty ? options[0] : ''),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0),),
-              ),
-            ),
+            _buildOptionButton(options, 0),
             const SizedBox(height: 32.0),
-            ElevatedButton(
-              onPressed: () {
-                _showResultDialog(options[1] == _correctChineseWord);
-              },
-              child: Text(options.length > 1 ? options[1] : ''),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0),),
-              ),
-            ),
+            _buildOptionButton(options, 1),
             const SizedBox(height: 32.0),
-            ElevatedButton(
-              onPressed: () {
-                _showResultDialog(options[2] == _correctChineseWord);
-              },
-              child: Text(options.length > 2 ? options[2] : ''),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0),),
-              ),
-            ),
+            _buildOptionButton(options, 2),
           ],
         ),
       ),
     );
   }
 
-  Future<void> _showResultDialog(bool isCorrect) async {
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(isCorrect ? '正確!' : '錯誤'),
-          content: Text(isCorrect ? '恭喜，答對了！' : '很抱歉，再接再厲！'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                _loadWordsFromDatabase();
-              },
-              child: const Text('下一題'),
-            ),
-          ],
-        );
+  Widget _buildOptionButton(List<String> options, int index) {
+    Color? backgroundColor;
+    if (_selectedOption == options[index]) {
+      backgroundColor = Colors.deepOrange;
+    }
+    if (_correctOption == options[index]) {
+      backgroundColor = Colors.yellow;
+    }
+
+    return ElevatedButton(
+      onPressed: () {
+        setState(() {
+          _selectedOption = options[index];
+          _correctOption = _correctChineseWord;
+
+          if (_selectedOption == _correctOption) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("恭喜你答對囉，準備下一題"),
+                duration: Duration(seconds: 3),
+              ),
+            );
+            Future.delayed(Duration(seconds: 3), () {
+              _loadWordsFromDatabase();
+              _isShuffled = false;
+            });
+          }
+        });
       },
+      child: Text(options.length > index ? options[index] : ''),
+      style: ElevatedButton.styleFrom(
+        primary: backgroundColor,
+        padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+      ),
     );
   }
 }
