@@ -173,58 +173,85 @@ for (var entry in unitsData.entries) {
 
   }
 
-  void _showWordsOfSelectedCategory(BuildContext context) async {
-    if (_database_juniorhighschool == null || !_database_juniorhighschool!.isOpen) {
-      await _initializeJuniorHighSchoolDatabase();
-    }
+//word['english_word']
+//word['chinese_word']
+//https://firebasestorage.googleapis.com/v0/b/nelson-orderhotel.appspot.com/o/1.jpeg?alt=media&token=0180045c-af56-44b1-a819-c363f83bfd3a
 
-    final words = await _database_juniorhighschool!.query(
-      'words',
-      where: 'category = ?',
-      whereArgs: [_selectedCategory],
-    );
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('分類：$_selectedCategory'),
-          content: SingleChildScrollView(
-            child: Column(
-              children: words.map((word) {
-                return ListTile(
-                  title: Text(
-                    word['english_word'] as String,
-                    style: const TextStyle(fontSize: 18.0),
-                  ),
-                  subtitle: Text(
-                    '中文: ${word['chinese_word'] as String}',
-                    style: const TextStyle(fontSize: 18.0),
-                  ),
-                  /*trailing: IconButton(
-                    icon: const Icon(Icons.delete),
-                    onPressed: () {
-                      _deleteWordFromDatabase(word['id'] as int);
-                      Navigator.pop(context);
-                      _showAllWords(context);
-                    },
-                  ),*/
-                );
-              }).toList(),
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('確定'),
-            ),
-          ],
-        );
-      },
-    );
+void _showWordsOfSelectedCategory(BuildContext context) async {
+  if (_database_juniorhighschool == null || !_database_juniorhighschool!.isOpen) {
+    await _initializeJuniorHighSchoolDatabase();
   }
+
+  final words = await _database_juniorhighschool!.query(
+    'words',
+    where: 'category = ?',
+    whereArgs: [_selectedCategory],
+  );
+
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        content: Container(
+          width: double.maxFinite,
+          height: MediaQuery.of(context).size.height * 0.5,  // Adjust this value if needed
+          child: PageView.builder(
+            itemCount: words.length,
+            itemBuilder: (context, index) {
+              final word = words[index];
+              return Column(
+                children: [
+                  // 1. Image
+                  Container(
+                    height: MediaQuery.of(context).size.height / 6,
+                    width: double.infinity,
+                    color: Colors.grey,
+                    child: Image.network(
+                      'https://firebasestorage.googleapis.com/v0/b/nelson-orderhotel.appspot.com/o/1.jpeg?alt=media&token=0180045c-af56-44b1-a819-c363f83bfd3a',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  // 2. English Word
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          word['english_word'] as String,
+                          style: TextStyle(fontSize: 36.0, color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // 3. Chinese Word with Heart Icon
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.favorite,  // Heart icon from material icons
+                        color: Colors.red,
+                      ),
+                      SizedBox(width: 8.0),  // Provide some spacing between the word and the icon
+                      Text(
+                        word['chinese_word'] as String,
+                        style: TextStyle(fontSize: 18.0, color: Colors.black),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16.0),
+                  // 4. Sentence
+                  Text(
+                    'TBD: sentence',
+                    style: TextStyle(fontSize: 24.0, color: Colors.black),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      );
+    },
+  );
+}
 
   void _showAllWords(BuildContext context) async {
     if (_database_juniorhighschool == null || !_database_juniorhighschool!.isOpen) {
