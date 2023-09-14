@@ -22,6 +22,7 @@ import 'package:path/path.dart' as path;
 import 'exam.dart';
 import 'exam_fill_word.dart';
 import "juniorhighschool_data.dart"; 
+import 'package:flutter/cupertino.dart';
 
 class JuniorHighSchoolPage extends StatefulWidget {
   const JuniorHighSchoolPage({Key? key}) : super(key: key);
@@ -366,28 +367,33 @@ Future<void> _integratePhraseData() async {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                '分類 Category',
-                style: TextStyle(fontSize: 18.0),
+              Center( // Add this
+                child: const Text(
+                  '分類 Category',
+                  style: TextStyle(fontSize: 18.0, color: Colors.white),
+                ),
               ),
-              DropdownButton<String>(
-                value: _selectedCategory,
-                items: [
-                    'unit1', 'unit2', 'unit3', 'unit4', 'unit5', 'unit6', 'unit7', 'unit8'
-                ].map((String unit) {
-                    return DropdownMenuItem<String>(
-                        value: unit,
-                        child: Text(
-                            unit,
-                            style: TextStyle(fontSize: 18.0),
-                        ),
-                    );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _selectedCategory = value;
-                  });
-                },
+              Container(
+                height: 200.0, // Adjust the height as needed
+                child: CupertinoPicker(
+                  backgroundColor: Color.fromARGB(255, 132, 227, 222),
+                  itemExtent: 30.0, // Adjust the item height as needed
+                  onSelectedItemChanged: (int index) {
+                    setState(() {
+                      _selectedCategory = ['unit1', 'unit2', 'unit3', 'unit4', 'unit5', 'unit6', 'unit7', 'unit8'][index];
+                    });
+                  },
+                  children: const [
+                    Text('unit1', style: TextStyle(color: Colors.white)),
+                    Text('unit2', style: TextStyle(color: Colors.white)),
+                    Text('unit3', style: TextStyle(color: Colors.white)),
+                    Text('unit4', style: TextStyle(color: Colors.white)),
+                    Text('unit5', style: TextStyle(color: Colors.white)),
+                    Text('unit6', style: TextStyle(color: Colors.white)),
+                    Text('unit7', style: TextStyle(color: Colors.white)),
+                    Text('unit8', style: TextStyle(color: Colors.white)),
+                  ],
+                ),
               ),
               const SizedBox(height: 16.0),
               /*
