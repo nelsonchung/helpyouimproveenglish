@@ -88,26 +88,42 @@ Future<void> _integrateJuniorHighSchoolData() async {
       await _initializeJuniorHighSchoolDatabase();
     }
 
-    for (var unit in unit1) {
-      final existingWords = await _database_juniorhighschool!.query(
-        'words',
-        where: 'english_word = ? AND category = ?',
-        whereArgs: [unit.english, 'unit1'],
-      );
+Map<String, List<Junior_High_School_Word>> unitsData = {
+  'unit1': unit1,
+  'unit2': unit2,
+  'unit3': unit3,
+  'unit4': unit4,
+  'unit5': unit5,
+  'unit6': unit6,
+  'unit7': unit7,
+  'unit8': unit8,
+};
 
-      if (existingWords.isEmpty) {
-        await _database_juniorhighschool!.insert('words', {
-          'category': 'unit1',
-          'english_word': unit.english,
-          'chinese_word': unit.chinese,
-        });
-      }
+
+for (var entry in unitsData.entries) {
+  for (var unit in entry.value) {
+    final existingWords = await _database_juniorhighschool!.query(
+      'words',
+      where: 'english_word = ? AND category = ?',
+      whereArgs: [unit.english, entry.key],  // Accessing the `english` property directly
+    );
+
+    if (existingWords.isEmpty) {
+      await _database_juniorhighschool!.insert('words', {
+        'category': entry.key,
+        'english_word': unit.english,   // Accessing the `english` property directly
+        'chinese_word': unit.chinese,   // Accessing the `chinese` property directly
+      }, conflictAlgorithm: ConflictAlgorithm.ignore);
     }
+  }
+}
+
 
     setState(() {
       _isLoading = false;  // Hide loading indicator
     });
 }
+
 
   Future<void> _loadJuniorHighSchoolFromDatabase() async {
       final databasePath = await getDatabasesPath();
@@ -318,7 +334,7 @@ Future<void> _integratePhraseData() async {
           'category': 'unit1',
           'english_word': unit.english,
           'chinese_word': unit.chinese,
-        });
+        }, conflictAlgorithm: ConflictAlgorithm.ignore);
       }
     }
 
@@ -355,16 +371,18 @@ Future<void> _integratePhraseData() async {
                 style: TextStyle(fontSize: 18.0),
               ),
               DropdownButton<String>(
-                value: 'unit1',
+                value: _selectedCategory,
                 items: [
-                  DropdownMenuItem<String>(
-                    value: 'unit1',
-                    child: const Text(
-                      'unit1',
-                      style: TextStyle(fontSize: 18.0),
-                    ),
-                  ),
-                ],
+                    'unit1', 'unit2', 'unit3', 'unit4', 'unit5', 'unit6', 'unit7', 'unit8'
+                ].map((String unit) {
+                    return DropdownMenuItem<String>(
+                        value: unit,
+                        child: Text(
+                            unit,
+                            style: TextStyle(fontSize: 18.0),
+                        ),
+                    );
+                }).toList(),
                 onChanged: (value) {
                   setState(() {
                     _selectedCategory = value;
