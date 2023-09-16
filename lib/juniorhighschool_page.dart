@@ -261,7 +261,7 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
                   Text(
                     word['sentence'] as String,
                         style: GoogleFonts.sairaCondensed(
-                          fontSize: 16.0,
+                          fontSize: 42.0,
                           color: Colors.black,
                         ),
                   ),
@@ -419,28 +419,28 @@ Future<void> _integratePhraseData() async {
               Center( // Add this
                 child: const Text(
                   '分類 Category',
-                  style: TextStyle(fontSize: 18.0, color: Colors.white),
+                  style: TextStyle(fontSize: 40.0, color: Colors.white),
                 ),
               ),
               Container(
                 height: 200.0, // Adjust the height as needed
                 child: CupertinoPicker(
                   backgroundColor: Color.fromARGB(255, 132, 227, 222),
-                  itemExtent: 30.0, // Adjust the item height as needed
+                  itemExtent: 52.0, // Adjust the item height as needed
                   onSelectedItemChanged: (int index) {
                     setState(() {
                       _selectedCategory = ['unit1', 'unit2', 'unit3', 'unit4', 'unit5', 'unit6', 'unit7', 'unit8'][index];
                     });
                   },
                   children: const [
-                    Text('unit1', style: TextStyle(color: Colors.white)),
-                    Text('unit2', style: TextStyle(color: Colors.white)),
-                    Text('unit3', style: TextStyle(color: Colors.white)),
-                    Text('unit4', style: TextStyle(color: Colors.white)),
-                    Text('unit5', style: TextStyle(color: Colors.white)),
-                    Text('unit6', style: TextStyle(color: Colors.white)),
-                    Text('unit7', style: TextStyle(color: Colors.white)),
-                    Text('unit8', style: TextStyle(color: Colors.white)),
+                    Text('unit1', style: TextStyle(color: Colors.white, fontSize: 44.0)),
+                    Text('unit2', style: TextStyle(color: Colors.white, fontSize: 44.0)),
+                    Text('unit3', style: TextStyle(color: Colors.white, fontSize: 44.0)),
+                    Text('unit4', style: TextStyle(color: Colors.white, fontSize: 44.0)),
+                    Text('unit5', style: TextStyle(color: Colors.white, fontSize: 44.0)),
+                    Text('unit6', style: TextStyle(color: Colors.white, fontSize: 44.0)),
+                    Text('unit7', style: TextStyle(color: Colors.white, fontSize: 44.0)),
+                    Text('unit8', style: TextStyle(color: Colors.white, fontSize: 44.0)),
                   ],
                 ),
               ),
