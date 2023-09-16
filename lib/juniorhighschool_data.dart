@@ -34,16 +34,16 @@ Junior_High_School_Word(id: 2, english: "back", chinese: "背部, 背面, 退後
 Junior_High_School_Word(id: 3, english: "Bite", chinese: "咬", phrase: "bite off more than one can chew咬得比嘴大", sentence: "Be careful, that dog might bite."),
 Junior_High_School_Word(id: 4, english: "blow", chinese: "吹氣", phrase: "blow off steam發洩情緒", sentence: "The wind blew the leaves away."),
 Junior_High_School_Word(id: 5, english: "body", chinese: "身體", phrase: "body language身體語言", sentence: "She has a strong body."),
-Junior_High_School_Word(id: 6, english: "bottom", chinese: "臀部, 底部", phrase: "from the bottom of sb’s heart衷心的", sentence: "The letter was hidden at the bottom of the drawer.").
+Junior_High_School_Word(id: 6, english: "bottom", chinese: "臀部, 底部", phrase: "from the bottom of sb’s heart衷心的", sentence: "The letter was hidden at the bottom of the drawer."),
 Junior_High_School_Word(id: 7, english: "bow", chinese: "鞠躬彎腰", phrase: "bow down to向...鞠躬", sentence: "He took a bow after his performance."),
 Junior_High_School_Word(id: 8, english: "carry", chinese: "提, 運載", phrase: "carrier運送工具", sentence: "She carried the bag on her shoulder."),
 Junior_High_School_Word(id: 9, english: "catch", chinese: "接住, 趕上, 染上", phrase: "catch one's eye引人注目", sentence: "I will catch the next bus."),
 Junior_High_School_Word(id: 10, english: "clap", chinese: "拍手", phrase: "clap along隨著節奏拍手", sentence: "The audience clapped loudly."),
 Junior_High_School_Word(id: 11, english: "cry", chinese: "哭泣", phrase: "cry over spilled milk後悔", sentence: "She started to cry when she lost her toy."),
 Junior_High_School_Word(id: 12, english: "drop", chinese: "摔, 丟下", phrase: "drop by順道拜訪", sentence: "He dropped his phone and the screen cracked."),
-Junior_High_School_Word(id: 13, english: "ear", chinese: "耳朵, 聽力, 音感", phrase: "all ears洗耳恭聽", sentence: "She whispered a secret into my ear.").
+Junior_High_School_Word(id: 13, english: "ear", chinese: "耳朵, 聽力, 音感", phrase: "all ears洗耳恭聽", sentence: "She whispered a secret into my ear."),
 Junior_High_School_Word(id: 14, english: "eye", chinese: "眼睛, 視力, ]眼光", phrase: "keep an eye on留意", sentence: "She has beautiful blue eyes."),
-Junior_High_School_Word(id: 15, english: "face", chinese: "臉, 面對", phrase: "to put on/pull a long face板起臉來;to lose face丟臉/to face the music面對現實", sentence: "When she heard the news, she bravely faced the situation.").
+Junior_High_School_Word(id: 15, english: "face", chinese: "臉, 面對", phrase: "to put on/pull a long face板起臉來;to lose face丟臉/to face the music面對現實", sentence: "When she heard the news, she bravely faced the situation."),
 Junior_High_School_Word(id: 16, english: "fall", chinese: "跌倒", phrase: "fall apart破碎", sentence: "Be careful not to fall on the slippery floor."),
 Junior_High_School_Word(id: 17, english: "finger", chinese: "手指", phrase: "", sentence: "She wore a ring on her index finger."),
 Junior_High_School_Word(id: 18, english: "follow", chinese: "跟隨, 在…之後", phrase: "", sentence: "I'll follow you wherever you go."),
@@ -174,7 +174,7 @@ List<Junior_High_School_Word> unit3 = [
 Junior_High_School_Word(id: 1, english: "actor", chinese: "男演員", phrase: "lead actor", sentence: "The actor received an award for his performance."),
 Junior_High_School_Word(id: 2, english: "actress", chinese: "女演員", phrase: "supporting actress", sentence: "The actress played the role brilliantly."),
 Junior_High_School_Word(id: 3, english: "boss", chinese: "老闆", phrase: "like a boss", sentence: "The boss gave us a day off."),
-Junior_High_School_Word(id: 4, english: "business", chinese: "生意, 職責", phrase: "on business出差;none of sb's business無關某人的事", sentence: "After years of hard work, her small shop grew into a successful business empire.").
+Junior_High_School_Word(id: 4, english: "business", chinese: "生意, 職責", phrase: "on business出差;none of sb's business無關某人的事", sentence: "After years of hard work, her small shop grew into a successful business empire."),
 Junior_High_School_Word(id: 5, english: "businessman", chinese: "商人", phrase: "shrewd businessman", sentence: "The businessman sealed the deal."),
 Junior_High_School_Word(id: 6, english: "clerk", chinese: "店員, 職員", phrase: "desk clerk", sentence: "The clerk assisted the customer."),
 Junior_High_School_Word(id: 7, english: "cook", chinese: "廚師", phrase: "home cook", sentence: "The cook prepared a delicious meal."),
@@ -230,7 +230,7 @@ Junior_High_School_Word(id: 56, english: "electrician", chinese: "電工", phras
 Junior_High_School_Word(id: 57, english: "employ", chinese: "雇用", phrase: "employ tactics", sentence: "They employ over 500 people."),
 Junior_High_School_Word(id: 58, english: "employee", chinese: "雇員", phrase: "full-time employee", sentence: "The employee received a bonus."),
 Junior_High_School_Word(id: 59, english: "employer", chinese: "雇主", phrase: "potential employer", sentence: "The employer conducted interviews."),
-Junior_High_School_Word(id: 60, english: "firm", chinese: "公司, 穩固的", phrase: "law firm", sentence: "The firm has been in business for over 50 years.")
+Junior_High_School_Word(id: 60, english: "firm", chinese: "公司, 穩固的", phrase: "law firm", sentence: "The firm has been in business for over 50 years."),
 Junior_High_School_Word(id: 61, english: "governor", chinese: "州長, 管理者", phrase: "state governor", sentence: "The governor announced new policies."),
 Junior_High_School_Word(id: 62, english: "guard", chinese: "警衛, 保全", phrase: "security guard", sentence: "The guard stood at the entrance."),
 Junior_High_School_Word(id: 63, english: "guide", chinese: "嚮導", phrase: "tour guide", sentence: "The guide explained the history."),
@@ -268,9 +268,9 @@ Junior_High_School_Word(id: 94, english: "sailor", chinese: "航海員", phrase:
 Junior_High_School_Word(id: 95, english: "scientist", chinese: "科學家", phrase: "research scientist", sentence: "The scientist made a discovery."),
 Junior_High_School_Word(id: 96, english: "servant", chinese: "雇工, 僕人", phrase: "domestic servant", sentence: "The servant cleaned the house."),
 Junior_High_School_Word(id: 97, english: "serve", chinese: "供應, 為…工作", phrase: "serve the community", sentence: "She serves in the army."),
-Junior_High_School_Word(id: 98, english: "trade", chinese: "交易, 商業", phrase: "trade agreement", sentence: "The trade between the two countries increased.")
+Junior_High_School_Word(id: 98, english: "trade", chinese: "交易, 商業", phrase: "trade agreement", sentence: "The trade between the two countries increased."),
 Junior_High_School_Word(id: 99, english: "trader", chinese: "商人", phrase: "stock trader", sentence: "The trader made a profit."),
-Junior_High_School_Word(id: 100, english: "vender", chinese: "小販", phrase: "street vendor", sentence: "The vendor sold fresh fruits.")
+Junior_High_School_Word(id: 100, english: "vender", chinese: "小販", phrase: "street vendor", sentence: "The vendor sold fresh fruits."),
 ];
 
 List<Junior_High_School_Word> unit4 = [
@@ -319,7 +319,7 @@ Junior_High_School_Word(id: 42, english: "sleepy", chinese: "想睡覺的", phra
 Junior_High_School_Word(id: 43, english: "stomachache", chinese: "胃痛", phrase: "", sentence: "I have a stomachache after eating too much."),
 Junior_High_School_Word(id: 44, english: "toothache", chinese: "牙痛", phrase: "", sentence: "I need to see a dentist because of my toothache."),
 Junior_High_School_Word(id: 45, english: "treatment", chinese: "治療, , 對待", phrase: "", sentence: "The patient is undergoing treatment for cancer."),
-Junior_High_School_Word(id: 46, english: "wound", chinese: "傷口, , 使受傷", phrase: "", sentence: "The wound took weeks to heal.")
+Junior_High_School_Word(id: 46, english: "wound", chinese: "傷口, , 使受傷", phrase: "", sentence: "The wound took weeks to heal."),
 ];
 
 
@@ -373,7 +373,7 @@ Junior_High_School_Word(id: 46, english: "please", chinese: "取悅", phrase: ""
 Junior_High_School_Word(id: 47, english: "pleasure", chinese: "樂趣", phrase: "", sentence: "It's a pleasure to meet you."),
 Junior_High_School_Word(id: 48, english: "pride", chinese: "驕傲", phrase: "", sentence: "She takes pride in her work."),
 Junior_High_School_Word(id: 49, english: "proud", chinese: "自豪的", phrase: "to be proud of", sentence: "He's proud of his achievements."),
-Junior_High_School_Word(id: 50, english: "relax", chinese: "放鬆", phrase: "relaxed", sentence: "I like to relax by reading a book.")
+Junior_High_School_Word(id: 50, english: "relax", chinese: "放鬆", phrase: "relaxed", sentence: "I like to relax by reading a book."),
 ];
 
 List<Junior_High_School_Word> unit6 = [
@@ -445,7 +445,7 @@ Junior_High_School_Word(id: 65, english: "user", chinese: "使用者", phrase: "
 Junior_High_School_Word(id: 66, english: "visitor", chinese: "參觀者, , 遊客", phrase: "", sentence: "The museum has many visitors every day."),
 Junior_High_School_Word(id: 67, english: "voter", chinese: "投票者", phrase: "", sentence: "Every voter has a voice in the election."),
 Junior_High_School_Word(id: 68, english: "winner", chinese: "贏家", phrase: "", sentence: "She's the winner of the competition."),
-Junior_High_School_Word(id: 69, english: "youth", chinese: "青年", phrase: "", sentence: "Youth is a time of exploration and discovery.")
+Junior_High_School_Word(id: 69, english: "youth", chinese: "青年", phrase: "", sentence: "Youth is a time of exploration and discovery."),
 ];
 
 List<Junior_High_School_Word> unit7 = [
@@ -476,7 +476,7 @@ Junior_High_School_Word(id: 24, english: "skinny", chinese: "皮包骨的", phra
 Junior_High_School_Word(id: 25, english: "slender", chinese: "纖瘦的", phrase: "", sentence: "She has a slender waist."),
 Junior_High_School_Word(id: 26, english: "ugly", chinese: "醜的", phrase: "", sentence: "Beauty and ugliness are subjective."),
 Junior_High_School_Word(id: 27, english: "under-weight", chinese: "體重過輕的", phrase: "", sentence: "She's under-weight and needs to gain some."),
-Junior_High_School_Word(id: 28, english: "youthful", chinese: "年輕的", phrase: "", sentence: "Despite her age, she has a youthful spirit.")
+Junior_High_School_Word(id: 28, english: "youthful", chinese: "年輕的", phrase: "", sentence: "Despite her age, she has a youthful spirit."),
 ];
 
 
@@ -600,6 +600,6 @@ Junior_High_School_Word(id: 116, english: "tolerant", chinese: "寬容的", phra
 Junior_High_School_Word(id: 117, english: "understanding", chinese: "了解的", phrase: "be understanding", sentence: "She was understanding when he explained his reasons."),
 Junior_High_School_Word(id: 118, english: "valiant", chinese: "英勇的", phrase: "valiant effort", sentence: "The soldiers made a valiant effort to defend the city."),
 Junior_High_School_Word(id: 119, english: "wise", chinese: "明智的", phrase: "wise decision", sentence: "Choosing to study was a wise decision."),
-Junior_High_School_Word(id: 120, english: "youthful", chinese: "年輕的", phrase: "youthful energy", sentence: "He has the youthful energy of a teenager.")
+Junior_High_School_Word(id: 120, english: "youthful", chinese: "年輕的", phrase: "youthful energy", sentence: "He has the youthful energy of a teenager."),
 ];
 

@@ -23,6 +23,8 @@ import 'exam.dart';
 import 'exam_fill_word.dart';
 import "juniorhighschool_data.dart"; 
 import 'package:flutter/cupertino.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 class JuniorHighSchoolPage extends StatefulWidget {
   const JuniorHighSchoolPage({Key? key}) : super(key: key);
@@ -114,6 +116,8 @@ for (var entry in unitsData.entries) {
         'category': entry.key,
         'english_word': unit.english,   // Accessing the `english` property directly
         'chinese_word': unit.chinese,   // Accessing the `chinese` property directly
+        'phrase': unit.phrase,
+        'sentence': unit.sentence
       }, conflictAlgorithm: ConflictAlgorithm.ignore);
     }
   }
@@ -153,7 +157,6 @@ for (var entry in unitsData.entries) {
   Future<void> _initializeJuniorHighSchoolDatabase() async {
     final databasePath = await getDatabasesPath();
     final pathToDatabase = path.join(databasePath, _database_name);
-
     _database_juniorhighschool = await openDatabase(
       pathToDatabase,
       version: 1,
@@ -161,10 +164,12 @@ for (var entry in unitsData.entries) {
         return db.execute(
           '''
           CREATE TABLE IF NOT EXISTS words(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            category TEXT,
-            english_word TEXT UNIQUE,
-            chinese_word TEXT
+              id INTEGER PRIMARY KEY AUTOINCREMENT,
+              category TEXT,
+              english_word TEXT UNIQUE,
+              chinese_word TEXT,
+              phrase TEXT,
+              sentence TEXT
           )
           ''',
         );
@@ -218,7 +223,10 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
                       children: [
                         Text(
                           word['english_word'] as String,
-                          style: TextStyle(fontSize: 36.0, color: Colors.black),
+                          style: GoogleFonts.sairaCondensed(
+                            fontSize: 28.0,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -233,15 +241,29 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
                       SizedBox(width: 8.0),  // Provide some spacing between the word and the icon
                       Text(
                         word['chinese_word'] as String,
-                        style: TextStyle(fontSize: 18.0, color: Colors.black),
+                        style: GoogleFonts.sairaCondensed(
+                          fontSize: 20.0,
+                          color: Colors.black,
+                        ),
                       ),
                     ],
                   ),
+                  /*
                   const SizedBox(height: 16.0),
                   // 4. Sentence
                   Text(
-                    'TBD: sentence',
+                    word['phrase'] as String,
                     style: TextStyle(fontSize: 24.0, color: Colors.black),
+                  ),
+                  */
+                  const SizedBox(height: 16.0),
+                  // 4. Sentence
+                  Text(
+                    word['sentence'] as String,
+                        style: GoogleFonts.sairaCondensed(
+                          fontSize: 16.0,
+                          color: Colors.black,
+                        ),
                   ),
                 ],
               );
