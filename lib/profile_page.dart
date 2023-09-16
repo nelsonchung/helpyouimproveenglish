@@ -21,6 +21,17 @@ import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
 
+  Future<void> _deleteDatabase(BuildContext context) async {
+    final databasePath = await getDatabasesPath();
+    final pathToDatabase = path.join(databasePath, 'word_database.db');
+    await deleteDatabase(pathToDatabase);
+    final pathToDatabase_categories = path.join(databasePath, 'categories_database.db');
+    await deleteDatabase(pathToDatabase_categories);
+    final pathToDatabase_juniorhighschool = path.join(databasePath, 'juniorhighschool_database.db');
+    await deleteDatabase(pathToDatabase_juniorhighschool);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Database Deleted!')));
+  }
+
 class ProfilePage extends StatefulWidget {
 	const ProfilePage({Key? key}) : super(key: key);
 
@@ -156,83 +167,97 @@ whereArgs: [existingSettings.first['id']],
 
 @override
 Widget build(BuildContext context) {
-	return Scaffold(
-			appBar: AppBar(
-				title: const Text('個人設定', style: TextStyle(fontSize: 20.0)),
-				),
-			body: FutureBuilder(
-				future: _loadDataFuture,  // 3. 在 FutureBuilder 中使用這個 Future 變數
-				builder: (context, snapshot) {
-				if (snapshot.connectionState == ConnectionState.done) {
-				return Column(
-						children: [
-						Container(
-							height: 100,
-							child: Column(
-								children: [
-								Text("分類數量: $_selectedCategoryCount", style: TextStyle(fontSize: 20)),
-								CupertinoPicker(
-									scrollController: _pickerController,
-									itemExtent: 32.0,
-									useMagnifier: true,
-									magnification: 1.2,
-									diameterRatio: 0.8,
-									onSelectedItemChanged: (int value) {
-									_updateCategoryCountInDatabase(value + 1);
-									},
-children: List.generate(50, (index) => Center(child: Text('${index + 1}'))),
-),
-								],
-								),
-							),
-				Expanded(
-						child: ListView.builder(
-							itemCount: _selectedCategoryCount + 1,  // +1 for the header
-							itemBuilder: (context, index) {
-							if (index == 0) {
-							// This is the header row
-							return Padding(
-									padding: const EdgeInsets.all(8.0),
-									child: Row(
-										mainAxisAlignment: MainAxisAlignment.spaceBetween,
-										children: [
-										Text('分類 Category', style: TextStyle(fontWeight: FontWeight.bold)),
-										Text('功能', style: TextStyle(fontWeight: FontWeight.bold)),
-										Text('編輯', style: TextStyle(fontWeight: FontWeight.bold)),
-										//Icon(Icons.edit, color: Colors.transparent),  // Invisible icon for alignment
-										],
-										),
-								      );
-							}
-							index = index - 1;  // Adjust index for actual data
-							return ListTile(
-									title: Row(
-										mainAxisAlignment: MainAxisAlignment.spaceBetween,
-										children: [
-										Expanded(child: Text(index < _categories.length ? _categories[index] : 'Unknown Category')),
-										Expanded(child: Text(index < _addInfoOneList.length ? _addInfoOneList[index] : '')),
-										IconButton(
-											icon: const Icon(Icons.edit),
-											onPressed: () async {
-											await _editCategory(context, index);
-											_loadCategoriesFromDatabase();
-											},
-											),
-										],
-										),
-								       );
-							},
-							),
-							),
-							],
-							);
-				} else {
-					return Center(child: CircularProgressIndicator()); // 顯示加載指示器
-				}
-				},
-				),
-				);
+  return Scaffold(
+    appBar: AppBar(
+      title: const Text('個人設定', style: TextStyle(fontSize: 20.0)),
+    ),
+    body: Stack(
+      children: [
+        FutureBuilder(
+          future: _loadDataFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return Column(
+                children: [
+                  Container(
+                    height: 100,
+                    child: Column(
+                      children: [
+                        Text("分類數量: $_selectedCategoryCount", style: TextStyle(fontSize: 20)),
+                        CupertinoPicker(
+                          scrollController: _pickerController,
+                          itemExtent: 32.0,
+                          useMagnifier: true,
+                          magnification: 1.2,
+                          diameterRatio: 0.8,
+                          onSelectedItemChanged: (int value) {
+                            _updateCategoryCountInDatabase(value + 1);
+                          },
+                          children: List.generate(50, (index) => Center(child: Text('${index + 1}'))),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: _selectedCategoryCount + 1,  // +1 for the header
+                      itemBuilder: (context, index) {
+                        if (index == 0) {
+                          // This is the header row
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('分類 Category', style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text('功能', style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text('編輯', style: TextStyle(fontWeight: FontWeight.bold)),
+                              ],
+                            ),
+                          );
+                        }
+                        index = index - 1;  // Adjust index for actual data
+                        return ListTile(
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(child: Text(index < _categories.length ? _categories[index] : 'Unknown Category')),
+                              Expanded(child: Text(index < _addInfoOneList.length ? _addInfoOneList[index] : '')),
+                              IconButton(
+                                icon: const Icon(Icons.edit),
+                                onPressed: () async {
+                                  await _editCategory(context, index);
+                                  _loadCategoriesFromDatabase();
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
+        Positioned(
+          bottom: 10,  // Adjust these values as needed
+          left: 10,
+          child: ElevatedButton(
+            onPressed: () {
+              _deleteDatabase(context);
+            },
+            child: const Text('恢復初始設定'),
+          ),
+        ),
+      ],
+    ),
+  );
 }
+
 
 
 Future<void> _editCategory(BuildContext context, int index) async {

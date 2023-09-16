@@ -23,7 +23,7 @@ import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart';
 
 
-
+/* Move to profile_page.dart
   Future<void> _deleteDatabase(BuildContext context) async {
     final databasePath = await getDatabasesPath();
     final pathToDatabase = path.join(databasePath, 'word_database.db');
@@ -34,6 +34,7 @@ import 'package:sqflite/sqflite.dart';
     await deleteDatabase(pathToDatabase_juniorhighschool);
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Database Deleted!')));
   }
+*/
 
 void main() {
   runApp(const MyApp());
@@ -74,7 +75,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/mainPage': (context) => const MainPage(),
       },
-      home: const MyHomePage(title: '助英台'),
+      //home: const MyHomePage(title: '助英台'),
+      home: const MainPage(),
     );
   }
 }
@@ -105,7 +107,7 @@ class MyHomePage extends StatelessWidget {
               child: const Text('進入主畫面'),
             ),
           ),
-
+/* Move to profile_page.dart
           // Positioning the delete button at the bottom left
           Positioned(
             bottom: 10,  // Adjust these values as needed
@@ -117,6 +119,7 @@ class MyHomePage extends StatelessWidget {
               child: const Text('恢復初始設定'),
             ),
           ),
+*/          
         ],
       ),
     );
