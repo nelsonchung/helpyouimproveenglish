@@ -117,7 +117,8 @@ for (var entry in unitsData.entries) {
         'english_word': unit.english,   // Accessing the `english` property directly
         'chinese_word': unit.chinese,   // Accessing the `chinese` property directly
         'phrase': unit.phrase,
-        'sentence': unit.sentence
+        'english_sentence': unit.english_sentence,
+        'chinese_sentence': unit.chinese_sentence,
       }, conflictAlgorithm: ConflictAlgorithm.ignore);
     }
   }
@@ -169,7 +170,8 @@ for (var entry in unitsData.entries) {
               english_word TEXT UNIQUE,
               chinese_word TEXT,
               phrase TEXT,
-              sentence TEXT
+              english_sentence TEXT,
+              chinese_sentence TEXT
           )
           ''',
         );
@@ -208,12 +210,19 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
                 children: [
                   // 1. Image
                   Container(
-                    height: MediaQuery.of(context).size.height / 6,
-                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height / 9,
+                    width: MediaQuery.of(context).size.width / 12,
                     color: Colors.grey,
-                    child: Image.network(
-                      'https://firebasestorage.googleapis.com/v0/b/nelson-orderhotel.appspot.com/o/1.jpeg?alt=media&token=0180045c-af56-44b1-a819-c363f83bfd3a',
-                      fit: BoxFit.cover,
+                    child: Image.asset(
+                      'assets/junior/${(word['english_word'] as String).toLowerCase()}.jpeg',
+                      fit: BoxFit.contain,
+                      errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                        // 图像加载失败时显示备用图像
+                        return Image.asset(
+                          'assets/junior/default.png', // 替换为您的备用图像路径
+                          fit: BoxFit.contain,
+                        );
+                      },
                     ),
                   ),
                   // 2. English Word
@@ -257,14 +266,24 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
                   ),
                   */
                   const SizedBox(height: 16.0),
-                  // 4. Sentence
+                  // 4. English Sentence
                   Text(
-                    word['sentence'] as String,
-                        style: GoogleFonts.sairaCondensed(
-                          fontSize: 42.0,
-                          color: Colors.black,
-                        ),
+                    word['english_sentence'] as String,
+                      style: GoogleFonts.sairaCondensed(
+                        fontSize: 42.0,
+                        color: Colors.black,
+                    ),
                   ),
+                  const SizedBox(height: 16.0),
+                  // 5. Chinese Sentence
+                  Text(
+                    word['chinese_sentence'] as String,
+                      style: GoogleFonts.sairaCondensed(
+                        fontSize: 42.0,
+                        color: Colors.black,
+                    ),
+                  ),
+
                 ],
               );
             },

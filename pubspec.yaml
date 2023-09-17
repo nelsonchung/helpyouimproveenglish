@@ -79,6 +79,36 @@ flutter:
     - assets/Periodic_table_zh-tw.jpeg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
+    - assets/junior/default.png
+    - assets/junior/arm.jpeg
+    - assets/junior/back.jpeg
+    - assets/junior/bite.jpeg
+    - assets/junior/blow.jpeg
+    - assets/junior/body.jpeg
+    - assets/junior/bottom.jpeg
+    - assets/junior/bow.jpeg
+    - assets/junior/carry.jpeg
+    - assets/junior/catch.jpeg
+    - assets/junior/clap.jpeg
+    - assets/junior/drop.jpeg
+    - assets/junior/ear.jpeg
+    - assets/junior/eye.jpeg
+    - assets/junior/face.jpeg
+    - assets/junior/fall.jpeg
+    - assets/junior/finger.jpeg
+    - assets/junior/follow.jpeg
+    - assets/junior/foot.jpeg
+    - assets/junior/hair.jpeg
+    - assets/junior/hand.jpeg
+    - assets/junior/head.jpeg
+    - assets/junior/hit.jpeg
+    - assets/junior/hold.jpeg
+    - assets/junior/hop.jpeg
+    - assets/junior/jump.jpeg
+    - assets/junior/kick.jpeg
+    - assets/junior/kiss.jpeg
+    - assets/junior/knee.jpeg
+    - assets/junior/knock.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
