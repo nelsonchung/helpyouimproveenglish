@@ -198,7 +198,9 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
   showDialog(
     context: context,
     builder: (context) {
+//
       return AlertDialog(
+        backgroundColor: Color.fromARGB(255, 132, 227, 222),
         content: Container(
           width: double.maxFinite,
           height: MediaQuery.of(context).size.height * 0.5,  // Adjust this value if needed
@@ -208,88 +210,117 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
               final word = words[index];
               return Column(
                 children: [
-                  // 1. Image
-                  Container(
-                    height: MediaQuery.of(context).size.height / 9,
-                    width: MediaQuery.of(context).size.width / 12,
-                    color: Colors.grey,
-                    child: Image.asset(
-                      'assets/junior/${(word['english_word'] as String).toLowerCase()}.jpeg',
-                      fit: BoxFit.contain,
-                      errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                        // 图像加载失败时显示备用图像
-                        return Image.asset(
-                          'assets/junior/default.png', // 替换为您的备用图像路径
-                          fit: BoxFit.contain,
-                        );
-                      },
-                    ),
+                  // Row 1: English and Chinese Words
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // English Word
+                              Text(
+                                word['english_word'] as String,
+                                style: GoogleFonts.sairaCondensed(
+                                  fontSize: 48.0,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              // Chinese Word with Heart Icon
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.favorite,  // Heart icon from material icons
+                                    color: Colors.red,
+                                  ),
+                                  SizedBox(width: 8.0),  // Provide some spacing between the word and the icon
+                                  Text(
+                                    word['chinese_word'] as String,
+                                    style: GoogleFonts.sairaCondensed(
+                                      fontSize: 42.0,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  // 2. English Word
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  // Row 2: Image and Sentences
+                  Expanded(
                     child: Row(
                       children: [
-                        Text(
-                          word['english_word'] as String,
-                          style: GoogleFonts.sairaCondensed(
-                            fontSize: 28.0,
-                            color: Colors.black,
+                        // Column for Image
+                        Expanded(
+                          child: Container(
+                            color: Colors.grey,
+                            child: Image.asset(
+                              'assets/junior/${(word['english_word'] as String).toLowerCase()}.png',
+                              fit: BoxFit.contain,
+                              errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                                // 图像加载失败时显示备用图像
+                                return Image.asset(
+                                  'assets/junior/default.png', // 替换为您的备用图像路径
+                                  fit: BoxFit.contain,
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        // Column for Sentences
+                        Expanded(
+                          child: Column(
+                            children: [
+                              // Phrase
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                child: Text(
+                                  word['phrase'] as String,
+                                  style: GoogleFonts.sairaCondensed(
+                                    fontSize: 28.0,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              // English Sentence
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                child: Text(
+                                  word['english_sentence'] as String,
+                                  style: GoogleFonts.sairaCondensed(
+                                    fontSize: 28.0,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              // Chinese Sentence
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                child: Text(
+                                  word['chinese_sentence'] as String,
+                                  style: GoogleFonts.sairaCondensed(
+                                    fontSize: 28.0,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
                   ),
-                  // 3. Chinese Word with Heart Icon
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.favorite,  // Heart icon from material icons
-                        color: Colors.red,
-                      ),
-                      SizedBox(width: 8.0),  // Provide some spacing between the word and the icon
-                      Text(
-                        word['chinese_word'] as String,
-                        style: GoogleFonts.sairaCondensed(
-                          fontSize: 20.0,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                  /*
-                  const SizedBox(height: 16.0),
-                  // 4. Sentence
-                  Text(
-                    word['phrase'] as String,
-                    style: TextStyle(fontSize: 24.0, color: Colors.black),
-                  ),
-                  */
-                  const SizedBox(height: 16.0),
-                  // 4. English Sentence
-                  Text(
-                    word['english_sentence'] as String,
-                      style: GoogleFonts.sairaCondensed(
-                        fontSize: 42.0,
-                        color: Colors.black,
-                    ),
-                  ),
-                  const SizedBox(height: 16.0),
-                  // 5. Chinese Sentence
-                  Text(
-                    word['chinese_sentence'] as String,
-                      style: GoogleFonts.sairaCondensed(
-                        fontSize: 42.0,
-                        color: Colors.black,
-                    ),
-                  ),
-
                 ],
               );
             },
           ),
         ),
       );
+//
     },
   );
 }
