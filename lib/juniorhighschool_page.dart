@@ -24,6 +24,23 @@ import 'exam_fill_word.dart';
 import "juniorhighschool_data.dart"; 
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_device_type/flutter_device_type.dart';
+import 'dart:io';
+
+
+class iPad_FontSizes {
+  static const double english_word_fontsize           = 48.0;
+  static const double chinese_word_fontsize           = 42.0;
+  static const double phrase_fontsize                 = 28.0;
+  static const double english_sentence_fontsize       = 28.0;
+  static const double chinese_sentence_fontsize       = 28.0;
+}class iPhone_FontSizes {
+  static const double english_word_fontsize           = 32.0;
+  static const double chinese_word_fontsize           = 24.0;
+  static const double phrase_fontsize                 = 16.0;
+  static const double english_sentence_fontsize       = 16.0;
+  static const double chinese_sentence_fontsize       = 16.0;
+}
 
 
 class JuniorHighSchoolPage extends StatefulWidget {
@@ -45,6 +62,8 @@ class _JuniorHighSchoolPageState extends State<JuniorHighSchoolPage> {
   String _database_name = 'juniorhighschool_database.db';
   
   bool _isLoading = false;
+
+  double _english_word_fontsize=0.0, _chinese_word_fontsize=0.0, _phrase_fontsize=0.0, _english_sentence_fontsize=0.0, _chinese_sentence_fontsize=0.0;
 
   @override
   void initState() {
@@ -195,6 +214,30 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
     whereArgs: [_selectedCategory],
   );
 
+
+
+  //Set the FontSize
+  if (Platform.isIOS) {
+    if (Device.get().isTablet) {
+      // iPad
+      // 在此設定 iPad 的字型大小
+      _english_word_fontsize      = iPad_FontSizes.english_word_fontsize;
+      _chinese_word_fontsize      = iPad_FontSizes.chinese_word_fontsize;
+      _phrase_fontsize            = iPad_FontSizes.phrase_fontsize;
+      _english_sentence_fontsize  = iPad_FontSizes.english_sentence_fontsize;
+      _chinese_sentence_fontsize  = iPad_FontSizes.chinese_sentence_fontsize;
+    } else {
+      // iPhone
+      // 在此設定 iPhone 的字型大小
+      _english_word_fontsize      = iPhone_FontSizes.english_word_fontsize;
+      _chinese_word_fontsize      = iPhone_FontSizes.chinese_word_fontsize;
+      _phrase_fontsize            = iPhone_FontSizes.phrase_fontsize;
+      _english_sentence_fontsize  = iPhone_FontSizes.english_sentence_fontsize;
+      _chinese_sentence_fontsize  = iPhone_FontSizes.chinese_sentence_fontsize;
+    }
+  }
+
+
   showDialog(
     context: context,
     builder: (context) {
@@ -223,7 +266,7 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
                               Text(
                                 word['english_word'] as String,
                                 style: GoogleFonts.sairaCondensed(
-                                  fontSize: 48.0,
+                                  fontSize: _english_word_fontsize,
                                   color: Colors.black,
                                 ),
                               ),
@@ -238,7 +281,7 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
                                   Text(
                                     word['chinese_word'] as String,
                                     style: GoogleFonts.sairaCondensed(
-                                      fontSize: 42.0,
+                                      fontSize: _chinese_word_fontsize,
                                       color: Colors.black,
                                     ),
                                   ),
@@ -281,7 +324,7 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
                                 child: Text(
                                   word['phrase'] as String,
                                   style: GoogleFonts.sairaCondensed(
-                                    fontSize: 28.0,
+                                    fontSize: _phrase_fontsize,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -292,7 +335,7 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
                                 child: Text(
                                   word['english_sentence'] as String,
                                   style: GoogleFonts.sairaCondensed(
-                                    fontSize: 28.0,
+                                    fontSize: _english_sentence_fontsize,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -303,7 +346,7 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
                                 child: Text(
                                   word['chinese_sentence'] as String,
                                   style: GoogleFonts.sairaCondensed(
-                                    fontSize: 28.0,
+                                    fontSize: _chinese_sentence_fontsize,
                                     color: Colors.black,
                                   ),
                                 ),
