@@ -119,6 +119,16 @@ Map<String, List<Junior_High_School_Word>> unitsData = {
   'unit6': unit6,
   'unit7': unit7,
   'unit8': unit8,
+  'unit9': unit9,
+  'unit10': unit10,
+  'unit11': unit11,
+  'unit12': unit12,
+  'unit13': unit13,
+  'unit14': unit14,
+  'unit15': unit15,
+  'unit16': unit16,
+  'unit17': unit17,
+  'unit18': unit18,
 };
 
 
@@ -522,7 +532,9 @@ Future<void> _integratePhraseData() async {
                   itemExtent: 52.0, // Adjust the item height as needed
                   onSelectedItemChanged: (int index) {
                     setState(() {
-                      _selectedCategory = ['unit1', 'unit2', 'unit3', 'unit4', 'unit5', 'unit6', 'unit7', 'unit8'][index];
+                      _selectedCategory = ['unit1', 'unit2', 'unit3', 'unit4', 'unit5', 'unit6', 'unit7', 'unit8',
+                                           'unit9', 'unit10', 'unit11', 'unit12', 'unit13', 'unit14', 'unit15', 'unit16',
+                                          'unit17', 'unit18'][index];
                     });
                   },
                   children: const [
@@ -534,6 +546,16 @@ Future<void> _integratePhraseData() async {
                     Text('unit6', style: TextStyle(color: Colors.white, fontSize: 44.0)),
                     Text('unit7', style: TextStyle(color: Colors.white, fontSize: 44.0)),
                     Text('unit8', style: TextStyle(color: Colors.white, fontSize: 44.0)),
+                    Text('unit9', style: TextStyle(color: Colors.white, fontSize: 44.0)),
+                    Text('unit10', style: TextStyle(color: Colors.white, fontSize: 44.0)),
+                    Text('unit11', style: TextStyle(color: Colors.white, fontSize: 44.0)),
+                    Text('unit12', style: TextStyle(color: Colors.white, fontSize: 44.0)),
+                    Text('unit13', style: TextStyle(color: Colors.white, fontSize: 44.0)),
+                    Text('unit14', style: TextStyle(color: Colors.white, fontSize: 44.0)),
+                    Text('unit15', style: TextStyle(color: Colors.white, fontSize: 44.0)),
+                    Text('unit16', style: TextStyle(color: Colors.white, fontSize: 44.0)),
+                    Text('unit17', style: TextStyle(color: Colors.white, fontSize: 44.0)),
+                    Text('unit18', style: TextStyle(color: Colors.white, fontSize: 44.0)),
                   ],
                 ),
               ),
