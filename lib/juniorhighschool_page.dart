@@ -32,8 +32,8 @@ class iPad_FontSizes {
   static const double english_word_fontsize           = 48.0;
   static const double chinese_word_fontsize           = 42.0;
   static const double phrase_fontsize                 = 28.0;
-  static const double english_sentence_fontsize       = 28.0;
-  static const double chinese_sentence_fontsize       = 28.0;
+  static const double english_sentence_fontsize       = 24.0;
+  static const double chinese_sentence_fontsize       = 24.0;
 }class iPhone_FontSizes {
   static const double english_word_fontsize           = 32.0;
   static const double chinese_word_fontsize           = 24.0;
@@ -313,12 +313,14 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
                             color: Colors.grey,
                             child: Image.asset(
                               'assets/junior/${(word['english_word'] as String).toLowerCase()}.png',
-                              fit: BoxFit.contain,
+                              //fit: BoxFit.contain,
+                              fit: BoxFit.cover,
                               errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
                                 // 图像加载失败时显示备用图像
                                 return Image.asset(
                                   'assets/junior/default.png', // 替换为您的备用图像路径
-                                  fit: BoxFit.contain,
+                                  //fit: BoxFit.contain,
+                                  fit: BoxFit.cover,
                                 );
                               },
                             ),
@@ -328,8 +330,17 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
                         Expanded(
                           child: Column(
                             children: [
-                              // Phrase
-                              Padding(
+                              Expanded(
+                                flex: 1,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                ),
+                              ),
+                              /* Not show the information of Phrase
+                              // PhraseR
+                              Expanded(
+                              flex: 1
+                              child: Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                                 child: Text(
                                   word['phrase'] as String,
@@ -339,25 +350,36 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
                                   ),
                                 ),
                               ),
-                              // English Sentence
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                                child: Text(
-                                  word['english_sentence'] as String,
-                                  style: GoogleFonts.sairaCondensed(
-                                    fontSize: _english_sentence_fontsize,
-                                    color: Colors.black,
+                              */
+                              Expanded(
+                                // English Sentence
+                                flex: 1, //Take 1/2 of the available space
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: Center(  // Wrap the Text widget with a Center widget
+                                    child: Text(
+                                      word['english_sentence'] as String,
+                                      style: GoogleFonts.sairaCondensed(
+                                        fontSize: _english_sentence_fontsize,
+                                        color: Colors.black,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                              // Chinese Sentence
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                                child: Text(
-                                  word['chinese_sentence'] as String,
-                                  style: GoogleFonts.sairaCondensed(
-                                    fontSize: _chinese_sentence_fontsize,
-                                    color: Colors.black,
+                              Expanded(
+                                  // Chinese Sentence
+                                flex: 2, //Take 1/2 of the available space
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                  child: Center(  // Wrap the Text widget with a Center widget
+                                    child: Text(
+                                      word['chinese_sentence'] as String,
+                                      style: GoogleFonts.sairaCondensed(
+                                        fontSize: _chinese_sentence_fontsize,
+                                        color: Colors.black,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
