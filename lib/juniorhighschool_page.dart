@@ -129,6 +129,9 @@ Map<String, List<Junior_High_School_Word>> unitsData = {
   'unit16': unit16,
   'unit17': unit17,
   'unit18': unit18,
+  'unit19': unit19,
+  'unit20': unit20,
+  'unit21': unit21,
 };
 
 
@@ -556,7 +559,7 @@ Future<void> _integratePhraseData() async {
                     setState(() {
                       _selectedCategory = ['unit1', 'unit2', 'unit3', 'unit4', 'unit5', 'unit6', 'unit7', 'unit8',
                                            'unit9', 'unit10', 'unit11', 'unit12', 'unit13', 'unit14', 'unit15', 'unit16',
-                                          'unit17', 'unit18'][index];
+                                          'unit17', 'unit18', 'unit19', 'unit20', 'unit21'][index];
                     });
                   },
                   children: const [
@@ -578,6 +581,9 @@ Future<void> _integratePhraseData() async {
                     Text('unit16', style: TextStyle(color: Colors.white, fontSize: 44.0)),
                     Text('unit17', style: TextStyle(color: Colors.white, fontSize: 44.0)),
                     Text('unit18', style: TextStyle(color: Colors.white, fontSize: 44.0)),
+                    Text('unit19', style: TextStyle(color: Colors.white, fontSize: 44.0)),
+                    Text('unit20', style: TextStyle(color: Colors.white, fontSize: 44.0)),
+                    Text('unit21', style: TextStyle(color: Colors.white, fontSize: 44.0)),
                   ],
                 ),
               ),
