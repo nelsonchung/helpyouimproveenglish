@@ -366,9 +366,9 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
                               */
                               Expanded(
                                 // English Sentence
-                                flex: 1, //Take 1/2 of the available space
+                                flex: 2, //Take 1/2 of the available space
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                  padding: const EdgeInsets.symmetric(vertical: 16.0),
                                   child: Center(  // Wrap the Text widget with a Center widget
                                     child: Text(
                                       word['english_sentence'] as String,
