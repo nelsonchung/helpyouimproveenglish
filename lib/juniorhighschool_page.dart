@@ -65,6 +65,45 @@ class _JuniorHighSchoolPageState extends State<JuniorHighSchoolPage> {
 
   double _english_word_fontsize=0.0, _chinese_word_fontsize=0.0, _phrase_fontsize=0.0, _english_sentence_fontsize=0.0, _chinese_sentence_fontsize=0.0;
 
+  bool isFavorite = false;  // 在這裡添加一個新的狀態變數
+
+  //我的最愛-toggleFavorite function
+  // 修改後的 toggleFavorite 函數
+  Future<bool> toggleFavorite(String englishWord, String chineseWord, String englishSentence, String chineseSentence, String unit) async {
+    final List<Map<String, dynamic>> existingWords = await _database_juniorhighschool!.query(
+      'favorite_words',
+      where: 'english_word = ? AND unit = ?',
+      whereArgs: [englishWord, unit],
+    );
+
+    if (existingWords.isEmpty) {
+      await _database_juniorhighschool!.insert('favorite_words', {
+        'english_word': englishWord,
+        'chinese_word': chineseWord,
+        'english_sentence': englishSentence,
+        'chinese_sentence': chineseSentence,
+        'unit': unit,
+      });
+      return true; // 表示詞已添加到“我的最愛”
+    } else {
+      await _database_juniorhighschool!.delete(
+        'favorite_words',
+        where: 'english_word = ? AND unit = ?',
+        whereArgs: [englishWord, unit],
+      );
+      return false; // 表示詞已從“我的最愛”中移除
+    }
+  }
+
+  Future<bool> checkIfWordIsFavorite(String englishWord, String category) async {
+    final existingWords = await _database_juniorhighschool!.query(
+      'favorite_words',
+      where: 'english_word = ? AND unit = ?',
+      whereArgs: [englishWord, category],
+    );
+    return existingWords.isNotEmpty;
+  }  
+  
   @override
   void initState() {
     super.initState();
@@ -74,32 +113,6 @@ class _JuniorHighSchoolPageState extends State<JuniorHighSchoolPage> {
       });
     });
   }
-
-/*
-  Future<void> _loadJuniorHighSchoolCountFromDatabase() async {
-    if (_database_juniorhighschool == null) {
-      final databasePath = await getDatabasesPath();
-      final pathToDatabase = path.join(databasePath, 'juniorhighschool_database.db');
-
-      _database_juniorhighschool = await openDatabase(
-        pathToDatabase,
-        version: 1,
-      );
-    }
-    
-    final settingsData = await _database_juniorhighschool!.query('settings');
-    if (settingsData.isNotEmpty) {
-      _categoryCount = settingsData.first['category_count'] as int?;
-      if (_categoryCount == null) {
-        print("Failed to load category_count from settings table");
-        return;
-      }
-      print("_categoryCount is $_categoryCount");
-    } else {
-      print("Settings table returned empty data");
-    }
-  }
-*/
 
 Future<void> _integrateJuniorHighSchoolData() async {
     setState(() {
@@ -220,6 +233,10 @@ for (var entry in unitsData.entries) {
       },
     );
 
+    //我的最愛 - favority_words表格不存在就create table
+    await _database_juniorhighschool!.execute(
+      'CREATE TABLE IF NOT EXISTS favorite_words(id INTEGER PRIMARY KEY, english_word TEXT, chinese_word TEXT, english_sentence TEXT, chinese_sentence TEXT, unit TEXT)',
+    );
   }
 
 //word['english_word']
@@ -237,181 +254,176 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
     whereArgs: [_selectedCategory],
   );
 
-
-
-  //Set the FontSize
+  // Set the FontSize
   if (Platform.isIOS) {
     if (Device.get().isTablet) {
       // iPad
-      // 在此設定 iPad 的字型大小
-      _english_word_fontsize      = iPad_FontSizes.english_word_fontsize;
-      _chinese_word_fontsize      = iPad_FontSizes.chinese_word_fontsize;
-      _phrase_fontsize            = iPad_FontSizes.phrase_fontsize;
-      _english_sentence_fontsize  = iPad_FontSizes.english_sentence_fontsize;
-      _chinese_sentence_fontsize  = iPad_FontSizes.chinese_sentence_fontsize;
+      _english_word_fontsize = iPad_FontSizes.english_word_fontsize;
+      _chinese_word_fontsize = iPad_FontSizes.chinese_word_fontsize;
+      _phrase_fontsize = iPad_FontSizes.phrase_fontsize;
+      _english_sentence_fontsize = iPad_FontSizes.english_sentence_fontsize;
+      _chinese_sentence_fontsize = iPad_FontSizes.chinese_sentence_fontsize;
     } else {
       // iPhone
-      // 在此設定 iPhone 的字型大小
-      _english_word_fontsize      = iPhone_FontSizes.english_word_fontsize;
-      _chinese_word_fontsize      = iPhone_FontSizes.chinese_word_fontsize;
-      _phrase_fontsize            = iPhone_FontSizes.phrase_fontsize;
-      _english_sentence_fontsize  = iPhone_FontSizes.english_sentence_fontsize;
-      _chinese_sentence_fontsize  = iPhone_FontSizes.chinese_sentence_fontsize;
+      _english_word_fontsize = iPhone_FontSizes.english_word_fontsize;
+      _chinese_word_fontsize = iPhone_FontSizes.chinese_word_fontsize;
+      _phrase_fontsize = iPhone_FontSizes.phrase_fontsize;
+      _english_sentence_fontsize = iPhone_FontSizes.english_sentence_fontsize;
+      _chinese_sentence_fontsize = iPhone_FontSizes.chinese_sentence_fontsize;
     }
   }
-
 
   showDialog(
     context: context,
     builder: (context) {
-//
       return AlertDialog(
         backgroundColor: Color.fromARGB(255, 132, 227, 222),
         content: Container(
           width: double.maxFinite,
-          height: MediaQuery.of(context).size.height * 0.5,  // Adjust this value if needed
+          height: MediaQuery.of(context).size.height * 0.5,
           child: PageView.builder(
             itemCount: words.length,
             itemBuilder: (context, index) {
               final word = words[index];
-              return Column(
-                children: [
-                  // Row 1: English and Chinese Words
-                  Row(
+              return FutureBuilder<bool>(
+                future: checkIfWordIsFavorite(word['english_word'] as String, word['category'] as String),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  }
+                  bool isFavorite = snapshot.data ?? false;
+                  return Column(
                     children: [
+                      // Row 1: English and Chinese Words
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    word['english_word'] as String,
+                                    style: GoogleFonts.sairaCondensed(
+                                      fontSize: _english_word_fontsize,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () async {
+                                          bool newStatus = await toggleFavorite(
+                                            word['english_word'] as String,
+                                            word['chinese_word'] as String,
+                                            word['english_sentence'] as String,
+                                            word['chinese_sentence'] as String,
+                                            word['category'] as String
+                                          );
+                                          setState(() {
+                                            isFavorite = newStatus;
+                                          });
+                                        },
+                                        child: Icon(
+                                          Icons.favorite,
+                                          color: isFavorite ? Colors.red : Colors.grey,
+                                        ),
+                                      ),
+                                      SizedBox(width: 8.0),
+                                      Text(
+                                        word['chinese_word'] as String,
+                                        style: GoogleFonts.sairaCondensed(
+                                          fontSize: _chinese_word_fontsize,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      // Row 2: Image and Sentences
                       Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // English Word
-                              Text(
-                                word['english_word'] as String,
-                                style: GoogleFonts.sairaCondensed(
-                                  fontSize: _english_word_fontsize,
-                                  color: Colors.black,
+                        child: Row(
+                          children: [
+                            // Column for Image
+                            Expanded(
+                              child: Container(
+                                color: Colors.grey,
+                                child: Image.asset(
+                                  'assets/junior/${(word['english_word'] as String).toLowerCase()}.png',
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                                    return Image.asset(
+                                      'assets/junior/default.png',
+                                      fit: BoxFit.cover,
+                                    );
+                                  },
                                 ),
                               ),
-                              // Chinese Word with Heart Icon
-                              Row(
+                            ),
+                            // Column for Sentences
+                            Expanded(
+                              child: Column(
                                 children: [
-                                  Icon(
-                                    Icons.favorite,  // Heart icon from material icons
-                                    color: Colors.red,
+                                  Expanded(
+                                    flex: 1,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                    ),
                                   ),
-                                  SizedBox(width: 8.0),  // Provide some spacing between the word and the icon
-                                  Text(
-                                    word['chinese_word'] as String,
-                                    style: GoogleFonts.sairaCondensed(
-                                      fontSize: _chinese_word_fontsize,
-                                      color: Colors.black,
+                                  Expanded(
+                                    flex: 2,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                      child: Center(
+                                        child: Text(
+                                          word['english_sentence'] as String,
+                                          style: GoogleFonts.sairaCondensed(
+                                            fontSize: _english_sentence_fontsize,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                      child: Center(
+                                        child: Text(
+                                          word['chinese_sentence'] as String,
+                                          style: GoogleFonts.sairaCondensed(
+                                            fontSize: _chinese_sentence_fontsize,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
-                  ),
-                  // Row 2: Image and Sentences
-                  Expanded(
-                    child: Row(
-                      children: [
-                        // Column for Image
-                        Expanded(
-                          child: Container(
-                            color: Colors.grey,
-                            child: Image.asset(
-                              'assets/junior/${(word['english_word'] as String).toLowerCase()}.png',
-                              //fit: BoxFit.contain,
-                              fit: BoxFit.cover,
-                              errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                // 图像加载失败时显示备用图像
-                                return Image.asset(
-                                  'assets/junior/default.png', // 替换为您的备用图像路径
-                                  //fit: BoxFit.contain,
-                                  fit: BoxFit.cover,
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        // Column for Sentences
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                                ),
-                              ),
-                              /* Not show the information of Phrase
-                              // PhraseR
-                              Expanded(
-                              flex: 1
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                                child: Text(
-                                  word['phrase'] as String,
-                                  style: GoogleFonts.sairaCondensed(
-                                    fontSize: _phrase_fontsize,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              */
-                              Expanded(
-                                // English Sentence
-                                flex: 2, //Take 1/2 of the available space
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                                  child: Center(  // Wrap the Text widget with a Center widget
-                                    child: Text(
-                                      word['english_sentence'] as String,
-                                      style: GoogleFonts.sairaCondensed(
-                                        fontSize: _english_sentence_fontsize,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                  // Chinese Sentence
-                                flex: 2, //Take 1/2 of the available space
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                                  child: Center(  // Wrap the Text widget with a Center widget
-                                    child: Text(
-                                      word['chinese_sentence'] as String,
-                                      style: GoogleFonts.sairaCondensed(
-                                        fontSize: _chinese_sentence_fontsize,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                  );
+                },
               );
             },
           ),
         ),
       );
-//
     },
   );
 }
+
 
   void _showAllWords(BuildContext context) async {
     if (_database_juniorhighschool == null || !_database_juniorhighschool!.isOpen) {
@@ -529,6 +541,34 @@ Future<void> _integratePhraseData() async {
     setState(() {
       _isLoading = false;  // Hide loading indicator
     });
+}
+
+// 在 _showFavoriteWords 方法中
+void _showFavoriteWords(BuildContext context) async {
+  final favoriteWords = await _database_juniorhighschool!.query('favorite_words');
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('我的最愛'),
+        content: SingleChildScrollView( // 加入 SingleChildScrollView
+          child: Container(
+            width: double.maxFinite,
+            child: ListView.builder(
+              shrinkWrap: true,  // 讓 ListView 盡量收縮
+              itemCount: favoriteWords.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  title: Text(favoriteWords[index]['english_word'] as String),
+                  subtitle: Text(favoriteWords[index]['chinese_word'] as String),
+                );
+              },
+            ),
+          ),
+        ),
+      );
+    },
+  );
 }
 
 
@@ -680,6 +720,16 @@ Future<void> _integratePhraseData() async {
                   style: TextStyle(fontSize: 18.0),
                 ),
               ),
+              const SizedBox(height: 16.0), // 為了空間
+              ElevatedButton(
+                onPressed: () {
+                  _showFavoriteWords(context);  // 這是新的 "我的最愛" 按鈕
+                },
+                child: const Text(
+                  '顯示我的最愛',
+                  style: TextStyle(fontSize: 18.0),
+                ),
+              ),              
             ],
           ),
         ),
