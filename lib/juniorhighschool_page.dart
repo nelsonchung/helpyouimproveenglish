@@ -560,7 +560,14 @@ void _showFavoriteWords(BuildContext context) async {
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                   title: Text(favoriteWords[index]['english_word'] as String),
-                  subtitle: Text(favoriteWords[index]['chinese_word'] as String),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(favoriteWords[index]['chinese_word'] as String),
+                      Text(favoriteWords[index]['english_sentence'] as String),
+                      Text(favoriteWords[index]['chinese_sentence'] as String),
+                    ],
+                  ),
                 );
               },
             ),
