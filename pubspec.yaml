@@ -182,7 +182,48 @@ flutter:
     - assets/junior/unit1/wave.png
     - assets/junior/unit1/waist.png
     - assets/junior/unit1/yell.png
-    
+    #unit2
+    - assets/junior/unit2/adoable.png
+    - assets/junior/unit2/born.png
+    - assets/junior/unit2/daughter.png
+    - assets/junior/unit2/generation.png
+    - assets/junior/unit2/growth.png
+    - assets/junior/unit2/married.png
+    - assets/junior/unit2/nephew.png
+    - assets/junior/unit2/related.png
+    - assets/junior/unit2/single.png
+    - assets/junior/unit2/tradition.png
+    - assets/junior/unit2/affair.png
+    - assets/junior/unit2/brother.png
+    - assets/junior/unit2/elder.png
+    - assets/junior/unit2/grandfather.png
+    - assets/junior/unit2/husband.png
+    - assets/junior/unit2/marry.png
+    - assets/junior/unit2/niece.png
+    - assets/junior/unit2/relation.png
+    - assets/junior/unit2/sister.png
+    - assets/junior/unit2/uncle.png
+    - assets/junior/unit2/affect.png
+    - assets/junior/unit2/children.png
+    - assets/junior/unit2/family.png
+    - assets/junior/unit2/grandmother.png
+    - assets/junior/unit2/live.png
+    - assets/junior/unit2/member.png
+    - assets/junior/unit2/parent.png
+    - assets/junior/unit2/relative.png
+    - assets/junior/unit2/son.png
+    - assets/junior/unit2/wedding.png
+    - assets/junior/unit2/aunt.png
+    - assets/junior/unit2/cousin.png
+    - assets/junior/unit2/father.png
+    - assets/junior/unit2/grandson.png
+    - assets/junior/unit2/marriage.png
+    - assets/junior/unit2/mother.png
+    - assets/junior/unit2/raise.png
+    - assets/junior/unit2/role.png
+    - assets/junior/unit2/support.png
+    - assets/junior/unit2/wife.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
