@@ -97,9 +97,10 @@ flutter:
     - assets/junior/unit1/brain.png
     - assets/junior/unit1/carry.png
     - assets/junior/unit1/catch.png
+    - assets/junior/unit1/clap.png
     - assets/junior/unit1/chase.png
     - assets/junior/unit1/clap.jpeg
-    - assets/junior/unit1/cry.jpeg
+    - assets/junior/unit1/cry.png
     - assets/junior/default.png
     - assets/junior/unit1/drop.png
     - assets/junior/unit1/ear.png
@@ -117,7 +118,7 @@ flutter:
     - assets/junior/unit1/hip.png
     - assets/junior/unit1/hit.png
     - assets/junior/unit1/hold.png
-    - assets/junior/unit1/hop.jpeg
+    - assets/junior/unit1/hop.png
     - assets/junior/unit1/hug.png
     - assets/junior/unit1/joint.png
     - assets/junior/unit1/jump.png

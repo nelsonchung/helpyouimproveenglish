@@ -282,7 +282,7 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
         backgroundColor: Color.fromARGB(255, 132, 227, 222),
         content: Container(
           width: double.maxFinite,
-          height: MediaQuery.of(context).size.height * 0.5,
+          height: MediaQuery.of(context).size.height * 0.8,
           child: PageView.builder(
             itemCount: words.length,
             itemBuilder: (context, index) {
@@ -358,7 +358,8 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
                                 color: Colors.grey,
                                 child: Image.asset(
                                   'assets/junior/${(word['category'] as String).toLowerCase()}/${(word['english_word'] as String).toLowerCase()}.png',
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.cover, //等比例顯示，但會有部分資訊無法顯示
+                                  //fit: BoxFit.contain,  //等比例顯示，但圖會過小 = BoxFit.scaleDown
                                   errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
                                     return Image.asset(
                                       'assets/junior/default.png',

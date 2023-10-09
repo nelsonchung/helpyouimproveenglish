@@ -31,7 +31,7 @@ class Junior_High_School_Word {
 
 List<Junior_High_School_Word> unit1 = [
 Junior_High_School_Word(id: 1, english: "arm", chinese: "手臂", phrase: "armpit腋下", english_sentence: "My brother carried a book under his arm.", chinese_sentence: "我弟弟手臂下夾著一本書。"),
-Junior_High_School_Word(id: 2, english: "back", chinese: "背部, 背面, 退後", phrase: "behind sb’s back背地裡;to knowsb/sth like the back of sb’s hand對…嘹若指掌", english_sentence: "She always talks about me behind my back.", chinese_sentence: "她總是在我背後說我。"),
+Junior_High_School_Word(id: 2, english: "back", chinese: "背部, 背面, 退後", phrase: "behind sb’s back背地裡;to knowsb/sth like the back of sb’s hand對…嘹若指掌", english_sentence: "He always talks about me behind my back.", chinese_sentence: "他總是在我背後說我。"),
 Junior_High_School_Word(id: 3, english: "bite", chinese: "咬", phrase: "bite off more than one can chew咬得比嘴大", english_sentence: "Be careful, that dog might bite.", chinese_sentence: "小心，那隻狗可能會咬人。"),
 Junior_High_School_Word(id: 4, english: "blow", chinese: "吹氣", phrase: "blow off steam發洩情緒", english_sentence: "The wind blew the leaves away.", chinese_sentence: "風把樹葉吹走了。"),
 Junior_High_School_Word(id: 5, english: "body", chinese: "身體", phrase: "body language身體語言", english_sentence: "She has a strong body.", chinese_sentence: "她有強壯的身體。"),
