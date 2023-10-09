@@ -13,7 +13,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  * Author: Nelson Chung
- * Creation Date: August 10, 2023
+ * Creation Date: Oct 10, 2023
  */
 
 import 'package:flutter/material.dart';
@@ -35,9 +35,9 @@ class ExamPageState extends State<ExamPage> {
   String? _englishWord;
   String? _correctChineseWord;
   List<String> _otherChineseWords = [];
+  List<String> _shuffledOptions = []; // 新增的狀態變量
   String? _selectedOption;
   String? _correctOption;
-  bool _isShuffled = false;
 
   @override
   void initState() {
@@ -76,7 +76,14 @@ class ExamPageState extends State<ExamPage> {
     }
 
     database.close();
-    _isShuffled = false;  // Ensure options will be shuffled again for the next question
+
+    if (_correctChineseWord != null) {
+      _shuffledOptions = List.from(_otherChineseWords)..add(_correctChineseWord!);
+      _shuffledOptions.shuffle();
+    } else {
+      _shuffledOptions.clear();
+    }
+    
     setState(() {});
   }
 
@@ -84,11 +91,6 @@ class ExamPageState extends State<ExamPage> {
   Widget build(BuildContext context) {
     final options = List<String>.from(_otherChineseWords);
     options.add(_correctChineseWord ?? '');
-
-    if (!_isShuffled) {
-      options.shuffle();
-      _isShuffled = true;
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -109,11 +111,11 @@ class ExamPageState extends State<ExamPage> {
               ),
             ),
             const SizedBox(height: 48.0),
-            _buildOptionButton(options, 0),
+            _buildOptionButton(_shuffledOptions, 0),
             const SizedBox(height: 32.0),
-            _buildOptionButton(options, 1),
+            _buildOptionButton(_shuffledOptions, 1),
             const SizedBox(height: 32.0),
-            _buildOptionButton(options, 2),
+            _buildOptionButton(_shuffledOptions, 2),
           ],
         ),
       ),
@@ -123,10 +125,12 @@ class ExamPageState extends State<ExamPage> {
   Widget _buildOptionButton(List<String> options, int index) {
     Color? backgroundColor;
     if (_selectedOption == options[index]) {
-      backgroundColor = Colors.deepOrange;
+      //backgroundColor = Colors.deepOrange;
+      backgroundColor = Colors.red[400];
     }
     if (_correctOption == options[index]) {
-      backgroundColor = Colors.yellow;
+      //backgroundColor = Colors.yellow;
+      backgroundColor = Colors.lightGreen;
     }
 
     return ElevatedButton(
@@ -144,7 +148,6 @@ class ExamPageState extends State<ExamPage> {
             );
             Future.delayed(Duration(seconds: 3), () {
               _loadWordsFromDatabase();
-              _isShuffled = false;
             });
           }
         });
