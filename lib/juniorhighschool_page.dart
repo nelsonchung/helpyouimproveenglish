@@ -67,6 +67,8 @@ class _JuniorHighSchoolPageState extends State<JuniorHighSchoolPage> {
 
   bool isFavorite = false;  // 在這裡添加一個新的狀態變數
 
+  double unitFontSize = 34.0;  // 可以根據需要更改這個數值
+
   //我的最愛-toggleFavorite function
   // 修改後的 toggleFavorite 函數
   Future<bool> toggleFavorite(String englishWord, String chineseWord, String englishSentence, String chineseSentence, String unit) async {
@@ -355,7 +357,7 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
                               child: Container(
                                 color: Colors.grey,
                                 child: Image.asset(
-                                  'assets/junior/${(word['english_word'] as String).toLowerCase()}.png',
+                                  'assets/junior/${(word['category'] as String).toLowerCase()}/${(word['english_word'] as String).toLowerCase()}.png',
                                   fit: BoxFit.cover,
                                   errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
                                     return Image.asset(
@@ -621,39 +623,38 @@ void _showFavoriteWords(BuildContext context) async {
                                           ][index];
                     });
                   },
-                  children: const [
-                    Text('unit1', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit2', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit3', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit4', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit5', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit6', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit7', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit8', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit9', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit10', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit11', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit12', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit13', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit14', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit15', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit16', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit17', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit18', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit19', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit20', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit21', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit21', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit22', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit23', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit24', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit25', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit26', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit27', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit28', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    Text('unit29', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    //Text('unit30', style: TextStyle(color: Colors.white, fontSize: 44.0)),
-                    //Text('unit31', style: TextStyle(color: Colors.white, fontSize: 44.0)),
+                  children: [
+                    Text('Unit 1: Parts of the body', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 2: Family', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 3: Emotion', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 4: Health', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 5: Occupation', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 6: People & Forms of Addresses', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 7: Appearance', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 8: Personal Characteristics', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 9: ', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 10: Color&Clothing', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 11: House,Funiture,Electronic,Appliances', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 12: Transportation,Place,Locations', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 13: School，Subject& Stationery', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 14: Sports,Interests&Hobbies', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 15: Numbers', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 16: Time', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 17: Money', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 18: Size、Shape、Measurements', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 19: Holidays&Festivals', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 20: Countries、Cities&Languages', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 21: Law', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 22: Animals&Insects', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 23: Animals&Insects', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 24: Articles、Pronouns、Determiners', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 25: Wh-word&Interjections', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 26: Conjunctions', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 27: Prepositions', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 28: Be&Auxiliaries', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 29: Other Adjectives', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    //Text('unit30', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    //Text('unit31', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
                   ],
                 ),
               ),
