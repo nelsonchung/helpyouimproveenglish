@@ -82,6 +82,9 @@ flutter:
     - assets/Periodic_table_zh-tw.jpeg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
+    - assets/junior/right_icon.png
+    - assets/junior/wrong_icon.png
+    #unit1
     - assets/junior/unit1/ankle.png
     - assets/junior/unit1/arm.png
     - assets/junior/unit1/back.png
@@ -223,6 +226,105 @@ flutter:
     - assets/junior/unit2/role.png
     - assets/junior/unit2/support.png
     - assets/junior/unit2/wife.png
+    #unit3
+    - assets/junior/unit3/ability.png
+    - assets/junior/unit3/actor.png
+    - assets/junior/unit3/actress.png
+    - assets/junior/unit3/adviser.png
+    - assets/junior/unit3/army.png
+    - assets/junior/unit3/artist.png
+    - assets/junior/unit3/assistant.png
+    - assets/junior/unit3/babysitter.png
+    - assets/junior/unit3/banker.png
+    - assets/junior/unit3/barker.png
+    - assets/junior/unit3/bonus.png
+    - assets/junior/unit3/boss.png
+    - assets/junior/unit3/builder.png
+    - assets/junior/unit3/business.png
+    - assets/junior/unit3/businessman.png
+    - assets/junior/unit3/career.png
+    - assets/junior/unit3/chairman.png
+    - assets/junior/unit3/chief.png
+    - assets/junior/unit3/clerk.png
+    - assets/junior/unit3/coach.png
+    - assets/junior/unit3/collector.png
+    - assets/junior/unit3/company.png
+    - assets/junior/unit3/cook.png
+    - assets/junior/unit3/cowboy.png
+    - assets/junior/unit3/dealer.png
+    - assets/junior/unit3/dentist.png
+    - assets/junior/unit3/designer.png
+    - assets/junior/unit3/diplomat.png
+    - assets/junior/unit3/director.png
+    - assets/junior/unit3/doctor.png
+    - assets/junior/unit3/dramatist.png
+    - assets/junior/unit3/driver.png
+    - assets/junior/unit3/educator.png
+    - assets/junior/unit3/electrician.png
+    - assets/junior/unit3/employ.png
+    - assets/junior/unit3/employer.png
+    - assets/junior/unit3/engineer.png
+    - assets/junior/unit3/farmer.png
+    - assets/junior/unit3/firm.png
+    - assets/junior/unit3/fisherman.png
+    - assets/junior/unit3/governor.png
+    - assets/junior/unit3/guard.png
+    - assets/junior/unit3/guide.png
+    - assets/junior/unit3/hire.png
+    - assets/junior/unit3/historian.png
+    - assets/junior/unit3/housewife.png
+    - assets/junior/unit3/hunter.png
+    - assets/junior/unit3/industry.png
+    - assets/junior/unit3/interview.png
+    - assets/junior/unit3/job.png
+    - assets/junior/unit3/journalist.png
+    - assets/junior/unit3/judge.png
+    - assets/junior/unit3/lawyer.png
+    - assets/junior/unit3/magician.png
+    - assets/junior/unit3/mainman.png
+    - assets/junior/unit3/manager.png
+    - assets/junior/unit3/mechanic.png
+    - assets/junior/unit3/meeting.png
+    - assets/junior/unit3/military.png
+    - assets/junior/unit3/model.png
+    - assets/junior/unit3/musician.png
+    - assets/junior/unit3/nurse.png
+    - assets/junior/unit3/occupation.png
+    - assets/junior/unit3/official.png
+    - assets/junior/unit3/operator.png
+    - assets/junior/unit3/own.png
+    - assets/junior/unit3/owner.png
+    - assets/junior/unit3/painter.png
+    - assets/junior/unit3/personnel.png
+    - assets/junior/unit3/photographer.png
+    - assets/junior/unit3/physician.png
+    - assets/junior/unit3/physicist.png
+    - assets/junior/unit3/priest.png
+    - assets/junior/unit3/printer.png
+    - assets/junior/unit3/produce.png
+    - assets/junior/unit3/product.png
+    - assets/junior/unit3/production.png
+    - assets/junior/unit3/profession.png
+    - assets/junior/unit3/professor.png
+    - assets/junior/unit3/rent.png
+    - assets/junior/unit3/reporter.png
+    - assets/junior/unit3/sailor.png
+    - assets/junior/unit3/salesman.png
+    - assets/junior/unit3/scientist.png
+    - assets/junior/unit3/secretary.png
+    - assets/junior/unit3/servant.png
+    - assets/junior/unit3/serve.png
+    - assets/junior/unit3/shopkeeper.png
+    - assets/junior/unit3/singer.png
+    - assets/junior/unit3/soldier.png
+    - assets/junior/unit3/trade.png
+    - assets/junior/unit3/trader.png
+    - assets/junior/unit3/vendor.png
+    - assets/junior/unit3/waiter.png
+    - assets/junior/unit3/waitress.png
+    - assets/junior/unit3/work.png
+    - assets/junior/unit3/worker.png
+    - assets/junior/unit3/writer.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
