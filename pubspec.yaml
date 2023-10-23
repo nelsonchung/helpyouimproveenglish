@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 0.1.19+1
+version: 0.1.20+1
 
 
 
@@ -325,6 +325,87 @@ flutter:
     - assets/junior/unit3/work.png
     - assets/junior/unit3/worker.png
     - assets/junior/unit3/writer.png
+    #unit4
+    - assets/junior/unit4/AIDS.png
+    - assets/junior/unit4/cancer.png
+    - assets/junior/unit4/cold.png
+    - assets/junior/unit4/comfortable.png
+    - assets/junior/unit4/cough.png
+    - assets/junior/unit4/cure.png
+    - assets/junior/unit4/dead.png
+    - assets/junior/unit4/death.png
+    - assets/junior/unit4/die.png
+    - assets/junior/unit4/dizzy.png
+    - assets/junior/unit4/drug.png
+    - assets/junior/unit4/drugstore.png
+    - assets/junior/unit4/ease.png
+    - assets/junior/unit4/effect.png
+    - assets/junior/unit4/ese.png
+    - assets/junior/unit4/fever.png
+    - assets/junior/unit4/fine.png
+    - assets/junior/unit4/flu.png
+    - assets/junior/unit4/headache.png
+    - assets/junior/unit4/health.png
+    - assets/junior/unit4/healthy.png
+    - assets/junior/unit4/homesick.png
+    - assets/junior/unit4/hurt.png
+    - assets/junior/unit4/ill.png
+    - assets/junior/unit4/injury.png
+    - assets/junior/unit4/life.png
+    - assets/junior/unit4/medical.png
+    - assets/junior/unit4/medicine.png
+    - assets/junior/unit4/pain.png
+    - assets/junior/unit4/painful.png
+    - assets/junior/unit4/pale.png
+    - assets/junior/unit4/physical.png
+    - assets/junior/unit4/poison.png
+    - assets/junior/unit4/recover.png
+    - assets/junior/unit4/sick.png
+    - assets/junior/unit4/sleepy.png
+    - assets/junior/unit4/stomachache.png
+    - assets/junior/unit4/strong.png
+    - assets/junior/unit4/tired.png
+    - assets/junior/unit4/toothache.png
+    - assets/junior/unit4/treatment.png
+    - assets/junior/unit4/weak.png
+    - assets/junior/unit4/well.png
+    - assets/junior/unit4/wound.png
+    #unit 5
+    - assets/junior/unit5/afraid.png
+    - assets/junior/unit5/ander.png
+    - assets/junior/unit5/bored.png
+    - assets/junior/unit5/boring.png
+    - assets/junior/unit5/burst.png
+    - assets/junior/unit5/busy.png
+    - assets/junior/unit5/complain.png
+    - assets/junior/unit5/concern.png
+    - assets/junior/unit5/crazy.png
+    - assets/junior/unit5/cruel.png
+    - assets/junior/unit5/embarrass.png
+    - assets/junior/unit5/emotion.png
+    - assets/junior/unit5/excited.png
+    - assets/junior/unit5/exciting.png
+    - assets/junior/unit5/glad.png
+    - assets/junior/unit5/happy.png
+    - assets/junior/unit5/interested.png
+    - assets/junior/unit5/jealous.png
+    - assets/junior/unit5/joy.png
+    - assets/junior/unit5/lonely.png
+    - assets/junior/unit5/mad.png
+    - assets/junior/unit5/nervous.png
+    - assets/junior/unit5/patience.png
+    - assets/junior/unit5/pity.png
+    - assets/junior/unit5/please.png
+    - assets/junior/unit5/pleased.png
+    - assets/junior/unit5/pride.png
+    - assets/junior/unit5/proud.png
+    - assets/junior/unit5/surprise.png
+    - assets/junior/unit5/surprised.png
+    - assets/junior/unit5/terrible.png
+    - assets/junior/unit5/unhappy.png
+    - assets/junior/unit5/worry.png
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
