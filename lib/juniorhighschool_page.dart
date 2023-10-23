@@ -34,12 +34,14 @@ class iPad_FontSizes {
   static const double phrase_fontsize                 = 28.0;
   static const double english_sentence_fontsize       = 24.0;
   static const double chinese_sentence_fontsize       = 24.0;
+  static const double unitFontSize                    = 34.0;
 }class iPhone_FontSizes {
   static const double english_word_fontsize           = 32.0;
   static const double chinese_word_fontsize           = 24.0;
   static const double phrase_fontsize                 = 16.0;
   static const double english_sentence_fontsize       = 16.0;
   static const double chinese_sentence_fontsize       = 16.0;
+  static const double unitFontSize                    = 24.0;
 }
 
 
@@ -67,7 +69,7 @@ class _JuniorHighSchoolPageState extends State<JuniorHighSchoolPage> {
 
   bool isFavorite = false;  // 在這裡添加一個新的狀態變數
 
-  double unitFontSize = 34.0;  // 可以根據需要更改這個數值
+  double _unit_fontsize = 34.0;  // 可以根據需要更改這個數值
 
   //我的最愛-toggleFavorite function
   // 修改後的 toggleFavorite 函數
@@ -155,8 +157,9 @@ Map<String, List<Junior_High_School_Word>> unitsData = {
   'unit27': unit27,
   'unit28': unit28,
   'unit29': unit29,
-  //'unit30': unit30,
-  //'unit31': unit31,
+  'unit30': unit30,
+  'unit31': unit31,
+  'unit32': unit32,
 };
 
 
@@ -265,6 +268,7 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
       _phrase_fontsize = iPad_FontSizes.phrase_fontsize;
       _english_sentence_fontsize = iPad_FontSizes.english_sentence_fontsize;
       _chinese_sentence_fontsize = iPad_FontSizes.chinese_sentence_fontsize;
+      _unit_fontsize          = iPad_FontSizes.unitFontSize;
     } else {
       // iPhone
       _english_word_fontsize = iPhone_FontSizes.english_word_fontsize;
@@ -272,159 +276,131 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
       _phrase_fontsize = iPhone_FontSizes.phrase_fontsize;
       _english_sentence_fontsize = iPhone_FontSizes.english_sentence_fontsize;
       _chinese_sentence_fontsize = iPhone_FontSizes.chinese_sentence_fontsize;
+      _unit_fontsize          = iPhone_FontSizes.unitFontSize;
     }
   }
 
-  showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        backgroundColor: Color.fromARGB(255, 132, 227, 222),
-        content: Container(
-          width: double.maxFinite,
-          height: MediaQuery.of(context).size.height * 0.8,
-          child: PageView.builder(
-            itemCount: words.length,
-            itemBuilder: (context, index) {
-              final word = words[index];
-              return FutureBuilder<bool>(
-                future: checkIfWordIsFavorite(word['english_word'] as String, word['category'] as String),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  }
-                  bool isFavorite = snapshot.data ?? false;
-                  return Column(
-                    children: [
-                      // Row 1: English and Chinese Words
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    word['english_word'] as String,
-                                    style: GoogleFonts.sairaCondensed(
-                                      fontSize: _english_word_fontsize,
-                                      color: Colors.black,
+showDialog(
+  context: context,
+  builder: (context) {
+    return AlertDialog(
+      backgroundColor: Color.fromARGB(255, 132, 227, 222),
+      content: Container(
+        width: double.maxFinite,
+        height: MediaQuery.of(context).size.height * 0.8,
+        child: PageView.builder(
+          itemCount: words.length,
+          itemBuilder: (context, index) {
+            final word = words[index];
+            return FutureBuilder<bool>(
+              future: checkIfWordIsFavorite(word['english_word'] as String, word['category'] as String),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                }
+                bool isFavorite = snapshot.data ?? false;
+                return Column(
+                  children: [
+                    // Row 1: English and Chinese Words
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  word['english_word'] as String,
+                                  style: GoogleFonts.sairaCondensed(
+                                    fontSize: _english_word_fontsize,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () async {
+                                        bool newStatus = await toggleFavorite(
+                                          word['english_word'] as String,
+                                          word['chinese_word'] as String,
+                                          word['english_sentence'] as String,
+                                          word['chinese_sentence'] as String,
+                                          word['category'] as String
+                                        );
+                                        setState(() {
+                                          isFavorite = newStatus;
+                                        });
+                                      },
+                                      child: Icon(
+                                        Icons.favorite,
+                                        color: isFavorite ? Colors.red : Colors.grey,
+                                      ),
                                     ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () async {
-                                          bool newStatus = await toggleFavorite(
-                                            word['english_word'] as String,
-                                            word['chinese_word'] as String,
-                                            word['english_sentence'] as String,
-                                            word['chinese_sentence'] as String,
-                                            word['category'] as String
-                                          );
-                                          setState(() {
-                                            isFavorite = newStatus;
-                                          });
-                                        },
-                                        child: Icon(
-                                          Icons.favorite,
-                                          color: isFavorite ? Colors.red : Colors.grey,
-                                        ),
+                                    SizedBox(width: 8.0),
+                                    Text(
+                                      word['chinese_word'] as String,
+                                      style: GoogleFonts.sairaCondensed(
+                                        fontSize: _chinese_word_fontsize,
+                                        color: Colors.black,
                                       ),
-                                      SizedBox(width: 8.0),
-                                      Text(
-                                        word['chinese_word'] as String,
-                                        style: GoogleFonts.sairaCondensed(
-                                          fontSize: _chinese_word_fontsize,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                      // Row 2: Image and Sentences
-                      Expanded(
-                        child: Row(
-                          children: [
-                            // Column for Image
-                            Expanded(
-                              child: Container(
-                                color: Colors.grey,
-                                child: Image.asset(
-                                  'assets/junior/${(word['category'] as String).toLowerCase()}/${(word['english_word'] as String).toLowerCase()}.png',
-                                  fit: BoxFit.cover, //等比例顯示，但會有部分資訊無法顯示
-                                  //fit: BoxFit.contain,  //等比例顯示，但圖會過小 = BoxFit.scaleDown
-                                  errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                    return Image.asset(
-                                      'assets/junior/default.png',
-                                      fit: BoxFit.cover,
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                            // Column for Sentences
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Expanded(
-                                    flex: 1,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                                      child: Center(
-                                        child: Text(
-                                          word['english_sentence'] as String,
-                                          style: GoogleFonts.sairaCondensed(
-                                            fontSize: _english_sentence_fontsize,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                                      child: Center(
-                                        child: Text(
-                                          word['chinese_sentence'] as String,
-                                          style: GoogleFonts.sairaCondensed(
-                                            fontSize: _chinese_sentence_fontsize,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                        ),
+                      ],
+                    ),
+                    // Image
+                    Expanded(
+                      child: Container(
+                        color: Colors.grey,
+                        child: Image.asset(
+                          'assets/junior/${(word['category'] as String).toLowerCase()}/${(word['english_word'] as String).toLowerCase()}.png',
+                          fit: BoxFit.cover,
+                          errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                            return Image.asset(
+                              'assets/junior/default.png',
+                              fit: BoxFit.cover,
+                            );
+                          },
                         ),
                       ),
-                    ],
-                  );
-                },
-              );
-            },
-          ),
+                    ),
+                    // English Sentence
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24.0),
+                      child: Text(
+                        word['english_sentence'] as String,
+                        style: GoogleFonts.sairaCondensed(
+                          fontSize: _english_sentence_fontsize,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    // Chinese Sentence
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24.0),
+                      child: Text(
+                        word['chinese_sentence'] as String,
+                        style: GoogleFonts.sairaCondensed(
+                          fontSize: _chinese_sentence_fontsize,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
         ),
-      );
-    },
-  );
+      ),
+    );
+  },
+);
 }
 
 
@@ -455,11 +431,11 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
                         children: [
                           Text(
                             '分類: ${word['category'] as String}',
-                            style: const TextStyle(fontSize: 18.0),
+                            style: const TextStyle(fontSize: 24.0),
                           ),
                           Text(
                             '中文: ${word['chinese_word'] as String}',
-                            style: const TextStyle(fontSize: 18.0),
+                            style: const TextStyle(fontSize: 24.0),
                           ),
                         ],
                       ),
@@ -620,42 +596,43 @@ void _showFavoriteWords(BuildContext context) async {
                       _selectedCategory = ['unit1', 'unit2', 'unit3', 'unit4', 'unit5', 'unit6', 'unit7', 'unit8',
                                            'unit9', 'unit10', 'unit11', 'unit12', 'unit13', 'unit14', 'unit15', 'unit16',
                                           'unit17', 'unit18', 'unit19', 'unit20', 'unit21', 'unit22', 'unit23', 'unit24',
-                                          'unit25', 'unit26', 'unit27', 'unit28', 'unit29'/*, 'unit30', 'unit31'*/
+                                          'unit25', 'unit26', 'unit27', 'unit28', 'unit29', 'unit30', 'unit31', 'unit32',
                                           ][index];
                     });
                   },
                   children: [
-                    Text('Unit 1: Parts of the body', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 2: Family', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 3: Emotion', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 4: Health', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 5: Occupation', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 6: People & Forms of Addresses', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 7: Appearance', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 8: Personal Characteristics', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 9: ', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 10: Color&Clothing', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 11: House,Funiture,Electronic,Appliances', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 12: Transportation,Place,Locations', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 13: School，Subject& Stationery', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 14: Sports,Interests&Hobbies', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 15: Numbers', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 16: Time', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 17: Money', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 18: Size、Shape、Measurements', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 19: Holidays&Festivals', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 20: Countries、Cities&Languages', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 21: Law', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 22: Animals&Insects', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 23: Animals&Insects', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 24: Articles、Pronouns、Determiners', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 25: Wh-word&Interjections', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 26: Conjunctions', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 27: Prepositions', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 28: Be&Auxiliaries', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    Text('Unit 29: Other Adjectives', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    //Text('unit30', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
-                    //Text('unit31', style: TextStyle(color: Colors.white, fontSize: unitFontSize)),
+                    Text('Unit 1: Parts of the body', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 2: Family', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 3: Emotion', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 4: Health', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 5: Occupation', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 6: People & Forms of Addresses', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 7: Appearance', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 8: Personal Characteristics', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 9: ', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 10: Color&Clothing', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 11: House,Funiture,Electronic,Appliances', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 12: Transportation,Place,Locations', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 13: School，Subject& Stationery', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 14: Sports,Interests&Hobbies', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 15: Numbers', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 16: Time', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 17: Money', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 18: Size、Shape、Measurements', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 19: Holidays&Festivals', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 20: Countries、Cities&Languages', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 21: Law', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 22: Animals&Insects', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 23: Animals&Insects', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 24: Articles、Pronouns、Determiners', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 25: Wh-word&Interjections', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 26: Conjunctions', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 27: Prepositions', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 28: Be&Auxiliaries', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('Unit 29: Other Adjectives', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('unit 30: Adverbs', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('unit 31: Other Nouns', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
+                    Text('unit 32: Other Verbs', style: TextStyle(color: Colors.white, fontSize: _unit_fontsize)),
                   ],
                 ),
               ),
@@ -735,7 +712,7 @@ void _showFavoriteWords(BuildContext context) async {
                   _showFavoriteWords(context);  // 這是新的 "我的最愛" 按鈕
                 },
                 child: const Text(
-                  '顯示我的最愛',
+                  '顯示我的收藏',
                   style: TextStyle(fontSize: 18.0),
                 ),
               ),              
