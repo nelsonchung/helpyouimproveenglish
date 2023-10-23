@@ -51,7 +51,7 @@ class _EnglishPageState extends State<EnglishPage> {
     _initializeCategoriesDatabase().then((_) {
       _loadCategoryCountFromDatabase().then((_) {
         _loadCategoriesFromDatabase().then((_) {
-          _integratePhraseData();
+          //_integratePhraseData();
         });
       });
     });
