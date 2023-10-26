@@ -286,7 +286,6 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
 showDialog(
   context: context,
   builder: (context) {
-    
     return AlertDialog(
       backgroundColor: Color.fromARGB(255, 132, 227, 222),
       content: Container(
@@ -328,7 +327,6 @@ showDialog(
                                       icon: Icon(Icons.volume_up),
                                       onPressed: () async {
                                         await flutterTts.speak(word['english_word'] as String);
-                                        //await flutterTts.speak("This");
                                       },
                                     ),
                                   ],
@@ -339,14 +337,10 @@ showDialog(
                                       onTap: () async {
                                         bool newStatus =
                                             await toggleFavorite(
-                                                word['english_word']
-                                                    as String,
-                                                word['chinese_word']
-                                                    as String,
-                                                word['english_sentence']
-                                                    as String,
-                                                word['chinese_sentence']
-                                                    as String,
+                                                word['english_word'] as String,
+                                                word['chinese_word'] as String,
+                                                word['english_sentence'] as String,
+                                                word['chinese_sentence'] as String,
                                                 word['category'] as String);
                                         setState(() {
                                           isFavorite = newStatus;
@@ -394,12 +388,14 @@ showDialog(
                     ),
                     // English Sentence
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 24.0),
                             child: Text(
                               word['english_sentence'] as String,
+                              textAlign: TextAlign.center,
                               style: GoogleFonts.sairaCondensed(
                                 fontSize: _english_sentence_fontsize,
                                 color: Colors.black,
@@ -407,37 +403,12 @@ showDialog(
                             ),
                           ),
                         ),
-                        ///
-                        /*
-                        IconButton(
-                            icon: Icon(Icons.volume_up),
-                            onPressed: () async {
-                              try {
-                                // Check if the given language is available
-                                bool isAvailable = await flutterTts.isLanguageAvailable("en-US");
-                                if (isAvailable) {
-                                  print("The language is available and you can go ahead by sentence!");
-                                  await flutterTts.setLanguage("en-US");
-                                  await flutterTts.speak("This is the joke");
-                                } else {
-                                  print("The language is not available!");
-                                }
-                              } catch (e) {
-                                print("Error in text to speech: $e");
-                              }
-                            },
-                          ),
-                          */
-                        
                         IconButton(
                           icon: Icon(Icons.volume_up),
                           onPressed: () async {
                             await flutterTts.speak(word['english_sentence'] as String);
-                            //await flutterTts.speak("This is the joke");
                           },
                         ),
-                        
-                        ///
                       ],
                     ),
                     // Chinese Sentence
@@ -445,6 +416,7 @@ showDialog(
                       padding: const EdgeInsets.symmetric(vertical: 24.0),
                       child: Text(
                         word['chinese_sentence'] as String,
+                        textAlign: TextAlign.center,
                         style: GoogleFonts.sairaCondensed(
                           fontSize: _chinese_sentence_fontsize,
                           color: Colors.black,
@@ -461,6 +433,7 @@ showDialog(
     );
   },
 );
+
 
   }
 
