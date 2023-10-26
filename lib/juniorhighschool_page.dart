@@ -26,6 +26,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
 import 'dart:io';
+import 'package:flutter_tts/flutter_tts.dart';
 
 
 class iPad_FontSizes {
@@ -70,6 +71,8 @@ class _JuniorHighSchoolPageState extends State<JuniorHighSchoolPage> {
   bool isFavorite = false;  // 在這裡添加一個新的狀態變數
 
   double _unit_fontsize = 34.0;  // 可以根據需要更改這個數值
+
+  FlutterTts flutterTts = FlutterTts();
 
   //我的最愛-toggleFavorite function
   // 修改後的 toggleFavorite 函數
@@ -280,37 +283,39 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
     }
   }
 
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: Color.fromARGB(255, 132, 227, 222),
-          content: Container(
-            width: double.maxFinite,
-            height: MediaQuery.of(context).size.height * 0.8,
-            child: PageView.builder(
-              itemCount: words.length,
-              itemBuilder: (context, index) {
-                final word = words[index];
-                return FutureBuilder<bool>(
-                  future: checkIfWordIsFavorite(word['english_word'] as String,
-                      word['category'] as String),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
-                    }
-                    bool isFavorite = snapshot.data ?? false;
-                    return Column(
+showDialog(
+  context: context,
+  builder: (context) {
+    
+    return AlertDialog(
+      backgroundColor: Color.fromARGB(255, 132, 227, 222),
+      content: Container(
+        width: double.maxFinite,
+        height: MediaQuery.of(context).size.height * 0.8,
+        child: PageView.builder(
+          itemCount: words.length,
+          itemBuilder: (context, index) {
+            final word = words[index];
+            return FutureBuilder<bool>(
+              future: checkIfWordIsFavorite(word['english_word'] as String,
+                  word['category'] as String),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                }
+                bool isFavorite = snapshot.data ?? false;
+                return Column(
+                  children: [
+                    // Row 1: English and Chinese Words
+                    Row(
                       children: [
-                        // Row 1: English and Chinese Words
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
                                   children: [
                                     Text(
                                       word['english_word'] as String,
@@ -319,97 +324,144 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
                                         color: Colors.black,
                                       ),
                                     ),
-                                    Row(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () async {
-                                            bool newStatus =
-                                                await toggleFavorite(
-                                                    word['english_word']
-                                                        as String,
-                                                    word['chinese_word']
-                                                        as String,
-                                                    word['english_sentence']
-                                                        as String,
-                                                    word['chinese_sentence']
-                                                        as String,
-                                                    word['category'] as String);
-                                            setState(() {
-                                              isFavorite = newStatus;
-                                            });
-                                          },
-                                          child: Icon(
-                                            Icons.favorite,
-                                            color: isFavorite
-                                                ? Colors.red
-                                                : Colors.grey,
-                                          ),
-                                        ),
-                                        SizedBox(width: 8.0),
-                                        Text(
-                                          word['chinese_word'] as String,
-                                          style: GoogleFonts.sairaCondensed(
-                                            fontSize: _chinese_word_fontsize,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ],
+                                    IconButton(
+                                      icon: Icon(Icons.volume_up),
+                                      onPressed: () async {
+                                        await flutterTts.speak(word['english_word'] as String);
+                                        //await flutterTts.speak("This");
+                                      },
                                     ),
                                   ],
                                 ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        // Image
-                        Expanded(
-                          child: Container(
-                            color: Colors.grey,
-                            child: Image.asset(
-                              'assets/junior/${(word['category'] as String).toLowerCase()}/${(word['english_word'] as String).toLowerCase()}.png',
-                              fit: BoxFit.cover,
-                              errorBuilder: (BuildContext context, Object error,
-                                  StackTrace? stackTrace) {
-                                return Image.asset(
-                                  'assets/junior/default.png',
-                                  fit: BoxFit.cover,
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        // English Sentence
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Text(
-                            word['english_sentence'] as String,
-                            style: GoogleFonts.sairaCondensed(
-                              fontSize: _english_sentence_fontsize,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        // Chinese Sentence
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Text(
-                            word['chinese_sentence'] as String,
-                            style: GoogleFonts.sairaCondensed(
-                              fontSize: _chinese_sentence_fontsize,
-                              color: Colors.black,
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () async {
+                                        bool newStatus =
+                                            await toggleFavorite(
+                                                word['english_word']
+                                                    as String,
+                                                word['chinese_word']
+                                                    as String,
+                                                word['english_sentence']
+                                                    as String,
+                                                word['chinese_sentence']
+                                                    as String,
+                                                word['category'] as String);
+                                        setState(() {
+                                          isFavorite = newStatus;
+                                        });
+                                      },
+                                      child: Icon(
+                                        Icons.favorite,
+                                        color: isFavorite
+                                            ? Colors.red
+                                            : Colors.grey,
+                                      ),
+                                    ),
+                                    SizedBox(width: 8.0),
+                                    Text(
+                                      word['chinese_word'] as String,
+                                      style: GoogleFonts.sairaCondensed(
+                                        fontSize: _chinese_word_fontsize,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       ],
-                    );
-                  },
+                    ),
+                    // Image
+                    Expanded(
+                      child: Container(
+                        color: Colors.grey,
+                        child: Image.asset(
+                          'assets/junior/${(word['category'] as String).toLowerCase()}/${(word['english_word'] as String).toLowerCase()}.png',
+                          fit: BoxFit.cover,
+                          errorBuilder: (BuildContext context, Object error,
+                              StackTrace? stackTrace) {
+                            return Image.asset(
+                              'assets/junior/default.png',
+                              fit: BoxFit.cover,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    // English Sentence
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 24.0),
+                            child: Text(
+                              word['english_sentence'] as String,
+                              style: GoogleFonts.sairaCondensed(
+                                fontSize: _english_sentence_fontsize,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                        ///
+                        /*
+                        IconButton(
+                            icon: Icon(Icons.volume_up),
+                            onPressed: () async {
+                              try {
+                                // Check if the given language is available
+                                bool isAvailable = await flutterTts.isLanguageAvailable("en-US");
+                                if (isAvailable) {
+                                  print("The language is available and you can go ahead by sentence!");
+                                  await flutterTts.setLanguage("en-US");
+                                  await flutterTts.speak("This is the joke");
+                                } else {
+                                  print("The language is not available!");
+                                }
+                              } catch (e) {
+                                print("Error in text to speech: $e");
+                              }
+                            },
+                          ),
+                          */
+                        
+                        IconButton(
+                          icon: Icon(Icons.volume_up),
+                          onPressed: () async {
+                            await flutterTts.speak(word['english_sentence'] as String);
+                            //await flutterTts.speak("This is the joke");
+                          },
+                        ),
+                        
+                        ///
+                      ],
+                    ),
+                    // Chinese Sentence
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24.0),
+                      child: Text(
+                        word['chinese_sentence'] as String,
+                        style: GoogleFonts.sairaCondensed(
+                          fontSize: _chinese_sentence_fontsize,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ],
                 );
               },
-            ),
-          ),
-        );
-      },
+            );
+          },
+        ),
+      ),
     );
+  },
+);
+
   }
 
 
