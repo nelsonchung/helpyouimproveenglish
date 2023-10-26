@@ -280,128 +280,137 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
     }
   }
 
-showDialog(
-  context: context,
-  builder: (context) {
-    return AlertDialog(
-      backgroundColor: Color.fromARGB(255, 132, 227, 222),
-      content: Container(
-        width: double.maxFinite,
-        height: MediaQuery.of(context).size.height * 0.8,
-        child: PageView.builder(
-          itemCount: words.length,
-          itemBuilder: (context, index) {
-            final word = words[index];
-            return FutureBuilder<bool>(
-              future: checkIfWordIsFavorite(word['english_word'] as String, word['category'] as String),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                }
-                bool isFavorite = snapshot.data ?? false;
-                return Column(
-                  children: [
-                    // Row 1: English and Chinese Words
-                    Row(
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Color.fromARGB(255, 132, 227, 222),
+          content: Container(
+            width: double.maxFinite,
+            height: MediaQuery.of(context).size.height * 0.8,
+            child: PageView.builder(
+              itemCount: words.length,
+              itemBuilder: (context, index) {
+                final word = words[index];
+                return FutureBuilder<bool>(
+                  future: checkIfWordIsFavorite(word['english_word'] as String,
+                      word['category'] as String),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    }
+                    bool isFavorite = snapshot.data ?? false;
+                    return Column(
                       children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  word['english_word'] as String,
-                                  style: GoogleFonts.sairaCondensed(
-                                    fontSize: _english_word_fontsize,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Row(
+                        // Row 1: English and Chinese Words
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    GestureDetector(
-                                      onTap: () async {
-                                        bool newStatus = await toggleFavorite(
-                                          word['english_word'] as String,
-                                          word['chinese_word'] as String,
-                                          word['english_sentence'] as String,
-                                          word['chinese_sentence'] as String,
-                                          word['category'] as String
-                                        );
-                                        setState(() {
-                                          isFavorite = newStatus;
-                                        });
-                                      },
-                                      child: Icon(
-                                        Icons.favorite,
-                                        color: isFavorite ? Colors.red : Colors.grey,
-                                      ),
-                                    ),
-                                    SizedBox(width: 8.0),
                                     Text(
-                                      word['chinese_word'] as String,
+                                      word['english_word'] as String,
                                       style: GoogleFonts.sairaCondensed(
-                                        fontSize: _chinese_word_fontsize,
+                                        fontSize: _english_word_fontsize,
                                         color: Colors.black,
                                       ),
                                     ),
+                                    Row(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () async {
+                                            bool newStatus =
+                                                await toggleFavorite(
+                                                    word['english_word']
+                                                        as String,
+                                                    word['chinese_word']
+                                                        as String,
+                                                    word['english_sentence']
+                                                        as String,
+                                                    word['chinese_sentence']
+                                                        as String,
+                                                    word['category'] as String);
+                                            setState(() {
+                                              isFavorite = newStatus;
+                                            });
+                                          },
+                                          child: Icon(
+                                            Icons.favorite,
+                                            color: isFavorite
+                                                ? Colors.red
+                                                : Colors.grey,
+                                          ),
+                                        ),
+                                        SizedBox(width: 8.0),
+                                        Text(
+                                          word['chinese_word'] as String,
+                                          style: GoogleFonts.sairaCondensed(
+                                            fontSize: _chinese_word_fontsize,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ],
                                 ),
-                              ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        // Image
+                        Expanded(
+                          child: Container(
+                            color: Colors.grey,
+                            child: Image.asset(
+                              'assets/junior/${(word['category'] as String).toLowerCase()}/${(word['english_word'] as String).toLowerCase()}.png',
+                              fit: BoxFit.cover,
+                              errorBuilder: (BuildContext context, Object error,
+                                  StackTrace? stackTrace) {
+                                return Image.asset(
+                                  'assets/junior/default.png',
+                                  fit: BoxFit.cover,
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        // English Sentence
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24.0),
+                          child: Text(
+                            word['english_sentence'] as String,
+                            style: GoogleFonts.sairaCondensed(
+                              fontSize: _english_sentence_fontsize,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        // Chinese Sentence
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24.0),
+                          child: Text(
+                            word['chinese_sentence'] as String,
+                            style: GoogleFonts.sairaCondensed(
+                              fontSize: _chinese_sentence_fontsize,
+                              color: Colors.black,
                             ),
                           ),
                         ),
                       ],
-                    ),
-                    // Image
-                    Expanded(
-                      child: Container(
-                        color: Colors.grey,
-                        child: Image.asset(
-                          'assets/junior/${(word['category'] as String).toLowerCase()}/${(word['english_word'] as String).toLowerCase()}.png',
-                          fit: BoxFit.cover,
-                          errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                            return Image.asset(
-                              'assets/junior/default.png',
-                              fit: BoxFit.cover,
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    // English Sentence
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 24.0),
-                      child: Text(
-                        word['english_sentence'] as String,
-                        style: GoogleFonts.sairaCondensed(
-                          fontSize: _english_sentence_fontsize,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    // Chinese Sentence
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 24.0),
-                      child: Text(
-                        word['chinese_sentence'] as String,
-                        style: GoogleFonts.sairaCondensed(
-                          fontSize: _chinese_sentence_fontsize,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ],
+                    );
+                  },
                 );
               },
-            );
-          },
-        ),
-      ),
+            ),
+          ),
+        );
+      },
     );
-  },
-);
-}
+  }
 
 
   void _showAllWords(BuildContext context) async {
@@ -419,7 +428,7 @@ showDialog(
           title: const Text('所有單字'),
           content: SingleChildScrollView(
             child: Column(
-              children: words
+              children: wordsgit 
                   .map(
                     (word) => ListTile(
                       title: Text(
