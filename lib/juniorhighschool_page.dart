@@ -428,7 +428,7 @@ void _showWordsOfSelectedCategory(BuildContext context) async {
           title: const Text('所有單字'),
           content: SingleChildScrollView(
             child: Column(
-              children: wordsgit 
+              children: words
                   .map(
                     (word) => ListTile(
                       title: Text(
