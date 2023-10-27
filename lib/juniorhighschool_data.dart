@@ -2301,7 +2301,7 @@ List<Junior_High_School_Word> unit31 = [
   Junior_High_School_Word(id: 23, english: "absence", chinese: "缺席", phrase: "absence from", english_sentence: "Her absence from school was unexpected.", chinese_sentence: "她突然缺席學校了。"),
   Junior_High_School_Word(id: 24, english: "acceptance", chinese: "贊同", phrase: "acceptance of", english_sentence: "The acceptance of the proposal was unanimous.", chinese_sentence: "對提議的贊同是一致的。"),
   Junior_High_School_Word(id: 25, english: "advantage", chinese: "優勢;優點", phrase: "take advantage of", english_sentence: "You should take advantage of this opportunity.", chinese_sentence: "你應該利用這個機會。"),
-  Junior_High_School_Word(id: 26, english: "arriva", chinese: "抵達;新品;剛出生的人", phrase: "arrival time", english_sentence: "The arrival time of the train is 3:30 PM.", chinese_sentence: "火車的抵達時間是下午3:30。"),
+  Junior_High_School_Word(id: 26, english: "arrival1", chinese: "抵達;新品;剛出生的人", phrase: "arrival time", english_sentence: "The arrival time of the train is 3:30 PM.", chinese_sentence: "火車的抵達時間是下午3:30。"),
   Junior_High_School_Word(id: 27, english: "assistance", chinese: "援助", phrase: "offer assistance", english_sentence: "Thank you for offering your assistance.", chinese_sentence: "謝謝你提供幫助。"),
   Junior_High_School_Word(id: 28, english: "avoidance", chinese: "迴避", phrase: "avoidance of", english_sentence: "The avoidance of conflict is important.", chinese_sentence: "避免衝突是重要的。"),
   Junior_High_School_Word(id: 29, english: "balloon", chinese: "氣球", phrase: "inflate a balloon", english_sentence: "Let's inflate the balloons for the party.", chinese_sentence: "我們為派對吹氣球。"),
